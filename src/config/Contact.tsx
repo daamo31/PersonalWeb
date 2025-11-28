@@ -1,7 +1,7 @@
 export const contactConfig = {
-  title: 'Contact',
+  title: 'Contact Daniel Del Amo',
   description:
-    'Get in touch with me. I will get back to you as soon as possible.',
+    'Get in touch with me using the form below. I will get back to you as soon as possible. You can also reach me directly at danieldelamo31@gmail.com or +34 626448645. Based in Zaragoza, Spain.',
   form: {
     labels: {
       name: 'Name',
@@ -12,7 +12,7 @@ export const contactConfig = {
     placeholders: {
       name: 'Your name',
       email: 'your.email@example.com',
-      phone: '+1 (555) 123-4567',
+      phone: '+34 626448645',
       message: 'Tell me about your project...',
     },
     submitButton: 'Send Message',

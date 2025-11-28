@@ -53,8 +53,8 @@ export const skillComponents = {
 
 export const heroConfig = {
   // Personal Information
-  name: 'Ram',
-  title: 'A Full Stack web developer.',
+  name: 'Daniel Del Amo',
+  title: 'Full Stack Developer & Automation Specialist',
   avatar: '/assets/logo.png',
 
   // Skills Configuration
@@ -89,7 +89,7 @@ export const heroConfig = {
   // Description Configuration
   description: {
     template:
-      'I build interactive web apps using {skills:0}, {skills:1}, {skills:2}, {skills:3} and {skills:4}. With a focus on <b>UI</b> design. Enthusiastic about <b>Three.js</b>, driven by a keen eye for design.',
+      "👨‍💻 About Me: Full Stack Developer & Automation Specialist\nI am a Programmer in Training with a solid track record of over 6 years of technical experience in industrial environments, where I developed strong skills in automation and analytical problem solving. My career is currently focused on software development with an emphasis on scalability, security, and—crucially—exceptional user experience (UX).",
   },
 
   // Buttons Configuration

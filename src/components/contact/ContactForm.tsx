@@ -21,6 +21,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import emailjs from 'emailjs-com';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
@@ -69,29 +70,36 @@ export default function ContactForm() {
 
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
-
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      // Enviar email al propietario
+      await emailjs.send(
+        'service_zpmvv1a',
+        'template_gfu4g94',
+        {
+          from_name: data.name,
+          from_email: data.email,
+          from_phone: data.phone,
+          message: data.message,
         },
-        body: JSON.stringify(data),
-      });
+        'BvSw1ljmiwXBUO5wA'
+      );
 
-      const result = await response.json();
+      // Enviar email de confirmación al usuario
+      await emailjs.send(
+        'service_zpmvv1a',
+        'template_xu8y26g',
+        {
+          to_name: data.name,
+          to_email: data.email,
+        },
+        'BvSw1ljmiwXBUO5wA'
+      );
 
-      if (response.ok) {
-        toast.success('Message sent successfully!');
-        form.reset();
-      } else {
-        toast.error(
-          result.error || 'Failed to send message. Please try again.',
-        );
-      }
+      toast.success('Message sent successfully!');
+      form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Something went wrong. Please try again later.');
+      toast.error('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
