@@ -39,19 +39,68 @@ export function ProjectContent({ frontmatter, content }: ProjectContentProps) {
         ? 'secondary'
         : 'outline';
 
+  // Renderizar video de YouTube si existe
+  let videoSection;
+  if (frontmatter.youtube) {
+    const youtubeId = frontmatter.youtube.split('/').pop();
+    videoSection = (
+      <div className="mb-8">
+        <div className="aspect-video rounded-lg overflow-hidden">
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}`}
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full border-none"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  let heroSection;
+  if (frontmatter.youtube) {
+    // Extraer el ID del video de cualquier formato de URL de YouTube
+    let youtubeId = '';
+    const url = frontmatter.youtube;
+    if (url.includes('shorts/')) {
+      youtubeId = url.split('shorts/')[1].split(/[?&/]/)[0];
+    } else if (url.includes('watch?v=')) {
+      youtubeId = url.split('watch?v=')[1].split(/[?&]/)[0];
+    } else {
+      const parts = url.split('/');
+      youtubeId = parts[parts.length - 1].split(/[?&]/)[0] || '';
+    }
+    heroSection = (
+      <div className="relative aspect-video overflow-hidden rounded-lg">
+        <iframe
+          src={`https://www.youtube.com/embed/${youtubeId}`}
+          title="YouTube video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full border-none"
+        />
+      </div>
+    );
+  } else {
+    heroSection = (
+      <div className="relative aspect-video overflow-hidden rounded-lg">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+    );
+  }
+
   return (
     <article className="mx-auto max-w-4xl">
       {/* Hero Section */}
       <header className="mb-8 space-y-6">
-        <div className="relative aspect-video overflow-hidden rounded-lg">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        {heroSection}
 
         <div className="space-y-4">
           {/* Project Status and Technologies */}
@@ -142,7 +191,7 @@ export function ProjectContent({ frontmatter, content }: ProjectContentProps) {
 
         <Separator />
       </header>
-
+      {videoSection}
       {/* Technology Stack */}
       <div className="mb-8">
         <div className="rounded-lg border bg-muted/20 p-4">

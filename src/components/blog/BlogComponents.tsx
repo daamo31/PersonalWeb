@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
 
+// import BlogCard from "./BlogCard";
 import { CodeCopyButton } from './CodeCopyButton';
 
+// export { BlogCard, BlogContent };
+// Blog deshabilitado temporalmente
 export const BlogComponents = {
   // Override default image component
   img: ({

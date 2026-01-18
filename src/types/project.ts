@@ -27,6 +27,7 @@ export interface ProjectCaseStudyFrontmatter {
   challenges?: string[];
   learnings?: string[];
   isPublished: boolean;
+  youtube?: string;
 }
 
 export interface ProjectCaseStudy {

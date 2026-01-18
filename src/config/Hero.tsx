@@ -106,6 +106,13 @@ export const heroConfig = {
       href: '/contact',
       icon: 'Chat',
     },
+    // Blog oculto temporalmente
+    // {
+    //   variant: 'default',
+    //   text: 'Blog',
+    //   href: '/blog',
+    //   icon: 'Blog',
+    // },
   ],
 };
 

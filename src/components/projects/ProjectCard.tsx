@@ -52,13 +52,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </DialogTrigger>
               <DialogContent className="max-w-4xl w-full p-0 border-0">
                 <div className="aspect-video w-full">
-                  <video
-                    className="h-full w-full object-cover rounded-lg"
-                    src={project.video}
-                    autoPlay
-                    loop
-                    controls
-                  />
+                  {project.video && project.video.startsWith('https://www.youtube.com/embed/') ? (
+                    <iframe
+                      className="h-full w-full object-cover rounded-lg border-none"
+                      src={project.video}
+                      title="YouTube video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      className="h-full w-full object-cover rounded-lg"
+                      src={project.video}
+                      autoPlay
+                      loop
+                      controls
+                    />
+                  )}
                 </div>
                 <DialogTitle className="sr-only">{project.title}</DialogTitle>
               </DialogContent>

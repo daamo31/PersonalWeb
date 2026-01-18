@@ -13,16 +13,8 @@ export default function Blog() {
   return (
     <Container className="mt-20">
       <SectionHeading subHeading="Featured" heading="Blogs" />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-        {posts.slice(0, 2).map((post) => (
-          <BlogCard key={post.slug} post={post} />
-        ))}
-      </div>
-      <div className="mt-8 flex justify-center">
-        <Button variant="outline">
-          <Link href="/blog">Show all blogs</Link>
-        </Button>
-      </div>
+    // Blog deshabilitado temporalmente
+    return null;
     </Container>
   );
 }

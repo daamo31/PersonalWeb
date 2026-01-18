@@ -1,4 +1,3 @@
-// ...existing code...
 import Appwrite from '@/components/technologies/Appwrite';
 import Bun from '@/components/technologies/Bun';
 import ExpressJs from '@/components/technologies/ExpressJs';
@@ -79,7 +78,7 @@ export const projects: Project[] = [
     description:
       'Digital Content Authenticity Verification Platform using blockchain and zkTLS. Mobile app, web app, and real-time statistics system.',
     image: '/project/noircheck.png',
-    video: '',
+    video: 'https://www.youtube.com/embed/Wh0uridrBIg',
     link: '',
     technologies: [
       { name: 'Python', icon: <Github key="python" /> },

@@ -37,12 +37,8 @@ const contactFormSchema = z.object({
   }),
   phone: z
     .string()
-    .min(10, {
-      message: 'Phone number must be at least 10 characters.',
-    })
-    .regex(/^[\+]?[1-9][\d]{0,15}$/, {
-      message: 'Please enter a valid phone number.',
-    }),
+    .optional()
+    .or(z.string().regex(/^[\+]?[0-9]{6,15}$/).optional()),
   message: z
     .string()
     .min(10, {
@@ -84,6 +80,13 @@ export default function ContactForm() {
         'BvSw1ljmiwXBUO5wA'
       );
 
+      // Depuración: mostrar datos enviados al cliente
+      console.log('Datos enviados al cliente:', {
+        to_name: data.name,
+        to_email: data.email,
+        message: data.message,
+      });
+
       // Enviar email de confirmación al usuario
       await emailjs.send(
         'service_zpmvv1a',
@@ -91,6 +94,7 @@ export default function ContactForm() {
         {
           to_name: data.name,
           to_email: data.email,
+          message: data.message,
         },
         'BvSw1ljmiwXBUO5wA'
       );
@@ -99,7 +103,11 @@ export default function ContactForm() {
       form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Failed to send message. Please try again.');
+      if (error && error.text) {
+        toast.error(`EmailJS error: ${error.text}`);
+      } else {
+        toast.error('Failed to send message. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -136,9 +144,56 @@ export default function ContactForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone *</FormLabel>
+                    <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (123) xxx-xxxx" {...field} />
+                      <div className="flex gap-2">
+                        <select
+                          className="border rounded px-2 py-1 bg-background"
+                          style={{ minWidth: '80px' }}
+                          defaultValue="+34"
+                          onChange={e => {
+                            field.onChange(e.target.value + (field.value?.replace(/^\+?[0-9]*/, '') || ''));
+                          }}
+                        >
+                          <option value="+1">🇺🇸 +1</option>
+                          <option value="+34">🇪🇸 +34</option>
+                          <option value="+44">🇬🇧 +44</option>
+                          <option value="+33">🇫🇷 +33</option>
+                          <option value="+49">🇩🇪 +49</option>
+                          <option value="+52">🇲🇽 +52</option>
+                          <option value="+91">🇮🇳 +91</option>
+                          <option value="+81">🇯🇵 +81</option>
+                          <option value="+55">🇧🇷 +55</option>
+                          <option value="+61">🇦🇺 +61</option>
+                          <option value="+86">🇨🇳 +86</option>
+                          <option value="+7">🇷🇺 +7</option>
+                          <option value="+39">🇮🇹 +39</option>
+                          <option value="+351">🇵🇹 +351</option>
+                          <option value="+20">🇪🇬 +20</option>
+                          <option value="+212">🇲🇦 +212</option>
+                          <option value="+90">🇹🇷 +90</option>
+                          <option value="+62">🇮🇩 +62</option>
+                          <option value="+234">🇳🇬 +234</option>
+                          <option value="+82">🇰🇷 +82</option>
+                          <option value="+972">🇮🇱 +972</option>
+                          <option value="+420">🇨🇿 +420</option>
+                          <option value="+358">🇫🇮 +358</option>
+                          <option value="+48">🇵🇱 +48</option>
+                          <option value="+370">🇱🇹 +370</option>
+                          <option value="+386">🇸🇮 +386</option>
+                          <option value="+372">🇪🇪 +372</option>
+                          <option value="+371">🇱🇻 +371</option>
+                          <option value="+353">🇮🇪 +353</option>
+                          <option value="+47">🇳🇴 +47</option>
+                          <option value="+46">🇸🇪 +46</option>
+                          <option value="+41">🇨🇭 +41</option>
+                          <option value="+43">🇦🇹 +43</option>
+                          <option value="+31">🇳🇱 +31</option>
+                          <option value="+32">🇧🇪 +32</option>
+                          <option value="+420">🇨🇿 +420</option>
+                        </select>
+                        <Input placeholder="Número móvil" {...field} />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -68,12 +68,9 @@ function BlogPageLoading() {
 }
 
 export default function BlogPage() {
-  const allPosts = getPublishedBlogPosts();
-  const allTags = getAllTags();
-
   return (
-    <Suspense fallback={<BlogPageLoading />}>
-      <BlogPageClient initialPosts={allPosts} initialTags={allTags} />
-    </Suspense>
+    <div className="text-center py-20 text-2xl font-bold text-gray-400">
+      Blog is currently disabled.
+    </div>
   );
 }
