@@ -33,7 +33,7 @@ export default function ResumePage() {
           </p>
           <div className="mt-4 space-y-2 text-base">
             <div><strong>Location:</strong> Zaragoza (Spain)</div>
-            <div><strong>Phone:</strong> +34 626448645</div>
+
             <div><strong>Email:</strong> <a href="mailto:danieldelamo31@gmail.com" className="underline">danieldelamo31@gmail.com</a></div>
             <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/danieldelamotarrero/" target="_blank" className="underline">danieldelamotarrero</a></div>
             <div><strong>GitHub:</strong> <a href="https://github.com/daamo31" target="_blank" className="underline">daamo31</a></div>
@@ -45,17 +45,16 @@ export default function ResumePage() {
             <h2 className="text-2xl font-semibold mb-2">Personal Projects</h2>
             <ul className="list-disc pl-5 space-y-2 text-left">
               <li>
-                <strong>NoirCheck:</strong> A decentralized content verification tool using zero-knowledge proofs for enhanced privacy and trust.<br />
-                <em>Goal:</em> Verify content integrity without revealing the content or private keys.<br />
-                <em>Tech:</em> Python 3.11+ (FastAPI, SQLAlchemy, Pydantic, SQLite), TypeScript/JavaScript (React, Next.js, Lucide-react), Dart (Flutter, Riverpod, Material Design 3), XION SDK / Abstraxion (Blockchain, zkTLS, Zero-Knowledge Proofs), SHA-256.
+                <strong>NoirCheck:</strong> Digital content authenticity verification platform combating misinformation using blockchain and zkTLS (Zero-Knowledge Transport Layer Security). Includes a complete mobile application for content registration and author attribution.<br />
+                <em>Tech:</em> Python 3.11 (FastAPI, SQLAlchemy, Computer Vision), Next.js 15, TypeScript, React Native (Expo), XION zkTLS, SHA-256.
               </li>
               <li>
-                <strong>Web Consulting Platform (New Project):</strong> Manage consulting services, client appointments, and documentation.<br />
-                <em>Tech:</em> Java (Backend), Superbase (Database/Backend as a Service).
+                <strong>BSB Capital:</strong> Financial investment and consulting platform specializing in cryptocurrencies. Features a membership system, educational academy, and administrative dashboard.<br />
+                <em>Tech:</em> React 18, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui, Supabase (PostgreSQL, RLS), Stripe, Hotmart API, Resend.
               </li>
               <li>
-                <strong>Mobile Inventory App for Local Store:</strong> Manage products by batches and expiration dates for small businesses.<br />
-                <em>Tech:</em> Python, Kivy, SQLite.
+                <strong>Chuches Inventario:</strong> Professional inventory management system for retail stores with Android and Desktop support. Features batch and expiration tracking, camera search, and OCR label scanning.<br />
+                <em>Tech:</em> Python, Kivy, KivyMD, OpenCV, pytesseract (OCR), SQLite, Pandas (Reports).
               </li>
               <li>
                 <strong>Restaurant Management System:</strong> Manage menus, orders, and reservations from any device.<br />
@@ -77,30 +76,23 @@ export default function ResumePage() {
           <section>
             <h2 className="text-2xl font-semibold mb-2">Hard Skills</h2>
             <ul className="list-disc pl-5 space-y-2 text-left">
-              <li>Python Programming (scripting, object-oriented programming)</li>
-              <li>Web development with Django (backend) and React (frontend)</li>
-              <li>HTML, CSS, Bootstrap y Tailwind CSS</li>
-              <li>Relational and NoSQL databases: SQLite, PostgreSQL, Superbase</li>
-              <li>REST API consumption and creation</li>
-              <li>Automation with Python (bots, functional scripts)</li>
-              <li>Software testing with pytest and unittest</li>
-              <li>Version control with Git</li>
-              <li>Mobile app development with Kivy (Python), Flutter</li>
-              <li>Automation tools (IA, N8n..)</li>
+              <li><strong>Backend Development:</strong> Python (FastAPI, Django, SQLAlchemy), Node.js, RESTful APIs.</li>
+              <li><strong>Frontend Development:</strong> React 18/19, Next.js 15, TypeScript, Tailwind CSS, Framer Motion.</li>
+              <li><strong>Mobile Development:</strong> React Native (Expo), Kivy/KivyMD.</li>
+              <li><strong>Databases & BaaS:</strong> PostgreSQL, Supabase (RLS, Edge Functions), SQLite, MongoDB.</li>
+              <li><strong>Integrations:</strong> Stripe (Payments), Hotmart API, Resend (Email), XION zkTLS (Blockchain).</li>
+              <li><strong>Testing & DevOps:</strong> Pytest, Unittest, Git, GitFlow, CI/CD foundations.</li>
+              <li><strong>Automation:</strong> Python scripting, document processing, OCR (Tesseract), AI-driven workflows.</li>
             </ul>
           </section>
           <section>
             <h2 className="text-2xl font-semibold mb-2">Soft Skills</h2>
             <ul className="list-disc pl-5 space-y-2 text-left">
-              <li>Analytical thinking and problem-solving focus</li>
-              <li>Self-taught learning ability</li>
-              <li>Adaptability to new technologies and methodologies</li>
-              <li>Organization and time management</li>
-              <li>Teamwork and interdisciplinary collaboration</li>
-              <li>Autonomy and responsibility in work environments</li>
-              <li>Proactivity and results orientation</li>
-              <li>Commitment to quality and continuous improvement</li>
-              <li>Empathy and customer needs orientation</li>
+              <li><strong>Strategic Problem Solving:</strong> Analytical mindset focused on creating scalable and efficient solutions.</li>
+              <li><strong>Continuous Learner:</strong> Rapidly adaptable to new frameworks, languages, and technical challenges.</li>
+              <li><strong>Communication & Empathy:</strong> Ability to translate business needs into technical requirements with a user-centric focus.</li>
+              <li><strong>Organization & Proactivity:</strong> Self-managed, reliable, and committed to meeting deadlines and project goals.</li>
+              <li><strong>Team Collaboration:</strong> Experience working in multi-disciplinary environments and version control (Git).</li>
             </ul>
           </section>
         </div>

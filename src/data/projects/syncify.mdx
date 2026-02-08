@@ -1,6 +1,6 @@
 ---
 title: 'Syncify'
-description: 'A Music streaming web app with Realtime chat functionality with see what others are listening.'
+description: 'A Music streaming web app with Realtime chat functionality to see what others are listening to.'
 image: '/project/syncify.png'
 technologies:
   [
@@ -20,14 +20,14 @@ live: 'https://syncify.rocks'
 timeline: '1 month'
 role: 'Full Stack'
 team: 'Solo'
-status: 'completed'
+status: 'Completed'
 featured: true
 challenges:
   [
     'WebSocket connection management',
     'Real-time synchronization',
     'Audio streaming optimization',
-    'Handling multiple users',
+    'Handling multiple concurrent users',
   ]
 learnings:
   [
@@ -43,122 +43,43 @@ isPublished: true
 
 ## Overview
 
-Syncify is a social music streaming platform that allows users to listen to music together in real-time. It's built with `MERN` stack.
+Syncify is a social music streaming platform that allows users to listen to music together in real-time. Built with the `MERN` stack, it focuses on real-time interactions and seamless audio playback.
 
 ## Features
 
-- Real-time music streaming
-- Social features
-- Chat functionality
-- Playlist
-title: 'BSB Capital'
-description: 'Plataforma completa de servicios financieros especializada en criptomonedas e inversiones. Incluye sistema de membresías, consultoría personalizada, herramientas de análisis (BSB Maker), academia educativa y dashboard administrativo con interfaz moderna y animaciones interactivas.'
-image: '/project/bsbcapital.png'
-technologies:
-  [
-    'React 18',
-    'Vite',
-    'TypeScript',
-    'Tailwind CSS',
-    'Framer Motion',
-    'shadcn/ui',
-    'Lucide React',
-    'React Router',
-    'Context API',
-    'Supabase',
-    'Stripe',
-    'Hotmart API',
-    'Resend',
-    'PostgreSQL',
-  ]
-github: 'https://github.com/daamo31/bsbcapital'
-live: 'https://bsbcapital.com'
-timeline: '6 meses'
-role: 'Full Stack Developer'
-team: 'Solo'
-status: 'En desarrollo'
-featured: true
-challenges:
-  [
-    'Integración de pagos y membresías',
-    'Animaciones avanzadas con Framer Motion',
-    'Seguridad con RLS y JWT',
-    'Optimización de UI/UX',
-    'Integración de múltiples APIs (Stripe, Hotmart, Resend)',
-  ]
-learnings:
-  [
-    'Gestión de roles y membresías',
-    'Integración de sistemas de pago',
-    'Diseño de dashboards administrativos',
-    'Implementación de seguridad avanzada',
-    'Optimización de animaciones y experiencia de usuario',
-  ]
-isPublished: true
-
-# BSB Capital - Plataforma de Inversiones y Consultoría Financiera 🚀
-
-## Descripción del Proyecto
-
-Plataforma completa de servicios financieros especializada en criptomonedas e inversiones. Incluye sistema de membresías, consultoría personalizada, herramientas de análisis (BSB Maker), academia educativa y dashboard administrativo con interfaz moderna y animaciones interactivas.
-
-## Características Principales
-
-- Interfaz moderna y animaciones con Framer Motion
-- Sistema de membresías y roles
-- Consultoría personalizada y formularios dinámicos
-- Herramientas de análisis financiero (BSB Maker)
-- Academia educativa con contenido premium
-- Dashboard administrativo completo
-- Integración de pagos con Stripe y Hotmart
-- Seguridad avanzada con Supabase Auth y RLS
-- Emails transaccionales con Resend
-
-## Tecnologías y Herramientas
-
-- React 18 + Vite + TypeScript
-- Tailwind CSS + shadcn/ui
-- Framer Motion
-- Supabase (PostgreSQL, Auth)
-- Stripe, Hotmart API, Resend
-
-## Enlaces
-
-- [Sitio Web](https://bsbcapital.com)
-- [GitHub](https://github.com/daamo31/bsbcapital)
-
-## Estado
-
-Proyecto en desarrollo, con despliegue en producción y mejoras continuas en UI/UX y funcionalidades.
+- **Real-time Music Streaming**: Synchronized playback across multiple users.
+- **Social Interaction**: See what others are listening to in real-time.
+- **Chat Functionality**: Integrated chat for social listening rooms.
+- **Playlist Management**: Create and manage personalized music collections.
 
 ## Technical Challenges & Solutions
 
 ### Challenge 1: WebSocket Connection Management
 
-- **Problem**: Handling multiple concurrent WebSocket connections efficiently
-- **Solution**: Implemented connection pooling and heartbeat mechanism
+- **Problem**: Handling multiple concurrent WebSocket connections efficiently.
+- **Solution**: Implemented connection pooling and a heartbeat mechanism with Socket.io.
 
 ### Challenge 2: Audio Streaming Optimization
 
-- **Problem**: Reducing latency in music playback
-- **Solution**: Implemented progressive loading and caching strategies
+- **Problem**: Reducing latency and ensuring smooth playback.
+- **Solution**: Implemented progressive loading and efficient caching strategies for audio assets.
 
 ### Challenge 3: Real-time Synchronization
 
-- **Problem**: Keeping user statuses and activities in sync
-- **Solution**: Built a pub/sub system with Socket.io for efficient updates
+- **Problem**: Keeping user statuses and playback activities perfectly synchronized.
+- **Solution**: Built a robust pub/sub system with Socket.io for efficient state updates.
 
 ## Performance Optimizations
 
-- Implemented lazy loading for better initial load times
-- Used proper caching strategies for static assets
-- Optimized database queries for faster response times
-- Added rate limiting to prevent API abuse
+- **Lazy Loading**: Implemented for components to improve initial load times.
+- **Asset Caching**: optimized static asset delivery via Cloudinary and Vercel.
+- **Database Indexing**: Optimized MongoDB queries for faster user and track lookups.
+- **Rate Limiting**: Added to prevent API abuse and ensure system stability.
 
 ## Future Technical Improvements
 
-- Implement service workers for offline functionality
-- Add WebRTC for peer-to-peer streaming
-- Enhance caching with Redis
-- Implement server-side rendering for better SEO
-- Add end-to-end encryption for chat
+- **Service Workers**: For offline music playback functionality.
+- **WebRTC**: For peer-to-peer audio streaming to reduce server load.
+- **Redis Caching**: To enhance real-time state management performance.
+- **Server-Side Rendering (SSR)**: For better SEO and initial page visibility.
+- **End-to-End Encryption**: For secure private chat messages.

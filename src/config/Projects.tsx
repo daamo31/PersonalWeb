@@ -18,36 +18,17 @@ import TailwindCss from '@/components/technologies/TailwindCss';
 import ThreeJs from '@/components/technologies/ThreeJs';
 import TypeScript from '@/components/technologies/TypeScript';
 import Vercel from '@/components/technologies/Vercel';
+import Python from '@/components/technologies/Python';
+import FastAPI from '@/components/technologies/FastAPI';
+import Stripe from '@/components/technologies/Stripe';
+import Expo from '@/components/technologies/Expo';
 import { Project } from '@/types/project';
 
 export const projects: Project[] = [
   {
-    title: 'NotesBuddy',
-    description:
-      'A comprehensive study platform with notes, flashcards, quizzes, AI chatbot, and interactive learning tools',
-    image: '/project/notesbuddy.png',
-    video: 'https://ik.imagekit.io/hokb3mrdr/notesbuddy.mp4?tr=orig',
-    link: 'https://notesbuddy.in',
-    technologies: [
-      { name: 'Next.js', icon: <NextJs key="nextjs" /> },
-      { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
-      { name: 'React', icon: <ReactIcon key="react" /> },
-      { name: 'Vercel', icon: <Vercel key="vercel" /> },
-      { name: 'MongoDB', icon: <MongoDB key="mongodb" /> },
-      { name: 'Tailwind CSS', icon: <TailwindCss key="tailwindcss" /> },
-      { name: 'shadcn/ui', icon: <Shadcn key="shadcn" /> },
-      { name: 'MDX', icon: <MDXIcon key="mdx" /> },
-    ],
-    github: 'https://github.com/ramxcodes/notesbuddy',
-    live: 'https://notesbuddy.in',
-    details: true,
-    projectDetailsPageSlug: '/projects/notesbuddy',
-    isWorking: true,
-  },
-  {
     title: 'BSB Capital',
     description:
-      'Plataforma completa de servicios financieros especializada en criptomonedas e inversiones. Incluye sistema de membresías, consultoría personalizada, herramientas de análisis (BSB Maker), academia educativa y dashboard administrativo con interfaz moderna y animaciones interactivas.',
+      'A comprehensive financial services platform specializing in cryptocurrencies and investments. It includes a membership system, personalized consulting, analysis tools (BSB Maker), an educational academy, and an administrative dashboard with a modern interface and interactive animations.',
     image: '/project/bsbcapital.png',
     video: '',
     link: 'https://bsbcapital.io',
@@ -62,7 +43,7 @@ export const projects: Project[] = [
       { name: 'React Router', icon: <ReactIcon key="reactrouter" /> },
       { name: 'Context API', icon: <ReactIcon key="contextapi" /> },
       { name: 'Supabase', icon: <PostgreSQL key="supabase" /> },
-      { name: 'Stripe', icon: <Github key="stripe" /> },
+      { name: 'Stripe', icon: <Stripe key="stripe" /> },
       { name: 'Hotmart API', icon: <Github key="hotmart" /> },
       { name: 'Resend', icon: <Github key="resend" /> },
       { name: 'PostgreSQL', icon: <PostgreSQL key="postgresql" /> },
@@ -81,12 +62,12 @@ export const projects: Project[] = [
     video: 'https://www.youtube.com/embed/Wh0uridrBIg',
     link: '',
     technologies: [
-      { name: 'Python', icon: <Github key="python" /> },
-      { name: 'FastAPI', icon: <Github key="fastapi" /> },
+      { name: 'Python', icon: <Python key="python" /> },
+      { name: 'FastAPI', icon: <FastAPI key="fastapi" /> },
       { name: 'Next.js', icon: <NextJs key="nextjs" /> },
       { name: 'React', icon: <ReactIcon key="react" /> },
       { name: 'React Native', icon: <ReactIcon key="reactnative" /> },
-      { name: 'Expo', icon: <Github key="expo" /> },
+      { name: 'Expo', icon: <Expo key="expo" /> },
       { name: 'Tailwind CSS', icon: <TailwindCss key="tailwindcss" /> },
       { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
       { name: 'XION zkTLS', icon: <Github key="xion" /> },
@@ -100,26 +81,26 @@ export const projects: Project[] = [
     projectDetailsPageSlug: '/projects/noircheck',
     isWorking: true,
   },
-    {
-      title: 'Chuches Inventario',
-      description:
-        'Gestión profesional de inventario para comercios, con soporte para Android y escritorio, cámara, OCR y reportes. Interfaz moderna con Kivy/KivyMD, permisos robustos y tests unitarios.',
-      image: '/project/chuches-inventario.png',
-      video: '',
-      link: '',
-      technologies: [
-        { name: 'Python', icon: <Github key="python" /> },
-        { name: 'Kivy', icon: <Github key="kivy" /> },
-        { name: 'KivyMD', icon: <Github key="kivymd" /> },
-        { name: 'OCR', icon: <Github key="ocr" /> },
-        { name: 'Buildozer', icon: <Github key="buildozer" /> },
-        { name: 'Cython', icon: <Github key="cython" /> },
-        { name: 'pytest', icon: <Github key="pytest" /> },
-      ],
-      github: '',
-      live: '',
-      details: true,
-      projectDetailsPageSlug: '/projects/chuches-inventario',
-      isWorking: true,
-    },
+  {
+    title: 'Chuches Inventario',
+    description:
+      'Professional inventory management for businesses, with support for Android and desktop, camera, OCR, and reports. Modern interface with Kivy/KivyMD, robust permissions and unit tests.',
+    image: '/project/chuches-inventario.png',
+    video: '',
+    link: '',
+    technologies: [
+      { name: 'Python', icon: <Python key="python" /> },
+      { name: 'Kivy', icon: <Github key="kivy" /> },
+      { name: 'KivyMD', icon: <Github key="kivymd" /> },
+      { name: 'OCR', icon: <Github key="ocr" /> },
+      { name: 'Buildozer', icon: <Github key="buildozer" /> },
+      { name: 'Cython', icon: <Github key="cython" /> },
+      { name: 'pytest', icon: <Github key="pytest" /> },
+    ],
+    github: '',
+    live: '',
+    details: true,
+    projectDetailsPageSlug: '/projects/chuches-inventario',
+    isWorking: true,
+  },
 ];

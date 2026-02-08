@@ -55,7 +55,7 @@ export const heroConfig = {
   // Personal Information
   name: 'Daniel Del Amo',
   title: 'Full Stack Developer & Automation Specialist',
-  avatar: '/assets/logo.png',
+  avatar: '/assets/avatar.jpg',
 
   // Skills Configuration
   skills: [
@@ -119,23 +119,18 @@ export const heroConfig = {
 // Social Links Configuration
 export const socialLinks = [
   {
-    name: 'X',
-    href: 'https://x.com/ramxcodes',
-    icon: <X />,
-  },
-  {
     name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/ramxcodes/',
+    href: 'https://www.linkedin.com/in/danieldelamotarrero/',
     icon: <LinkedIn />,
   },
   {
     name: 'Github',
-    href: 'https://github.com/ramxcodes',
+    href: 'https://github.com/daamo31',
     icon: <Github />,
   },
   {
     name: 'Email',
-    href: 'mailto:ramxcodes@gmail.com',
+    href: 'mailto:danieldelamo31@gmail.com',
     icon: <Mail />,
   },
 ];
