@@ -31,7 +31,7 @@ interface Message {
 const initialMessages: Message[] = [
   {
     id: 1,
-    text: "Hello! I'm Ram's Portfolio Assistant. How can I help you?",
+    text: `Hello! I'm ${heroConfig.name}'s Portfolio Assistant. How can I help you?`,
     sender: 'bot',
     timestamp: new Date().toLocaleTimeString([], {
       hour: '2-digit',
@@ -234,10 +234,10 @@ const ChatBubble: React.FC = () => {
         prev.map((msg) =>
           msg.id === botMessageId
             ? {
-                ...msg,
-                text: "I'm sorry, I'm having trouble responding right now. Please try again later.",
-                isStreaming: false,
-              }
+              ...msg,
+              text: "I'm sorry, I'm having trouble responding right now. Please try again later.",
+              isStreaming: false,
+            }
             : msg,
         ),
       );
@@ -249,7 +249,7 @@ const ChatBubble: React.FC = () => {
 
   return (
     <ExpandableChat
-      className="hover:cursor-pointer max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-4rem)] md:max-w-xl max-h-[95vh] mt-4 ml-4"
+      className="hover:cursor-pointer max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-4rem)] md:max-w-xl max-h-[95vh] mt-4 ml-4 no-print"
       position="bottom-right"
       size="lg"
       icon={<ChatBubbleIcon className="h-6 w-6" />}
