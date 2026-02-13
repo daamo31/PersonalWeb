@@ -28,22 +28,28 @@ interface Message {
   isStreaming?: boolean;
 }
 
-const initialMessages: Message[] = [
-  {
-    id: 1,
-    text: `Hello! I'm ${heroConfig.name}'s Portfolio Assistant. How can I help you?`,
-    sender: 'bot',
-    timestamp: new Date().toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-    }),
-  },
-];
-
 const ChatBubble: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Initialize messages on client mount to avoid hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+    const initialMessages: Message[] = [
+      {
+        id: 1,
+        text: `Hello! I'm ${heroConfig.name}'s Portfolio Assistant. How can I help you?`,
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      },
+    ];
+    setMessages(initialMessages);
+  }, []);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { triggerHaptic, isMobile } = useHapticFeedback();
 
@@ -168,7 +174,14 @@ const ChatBubble: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          if (errorData.error) errorMessage = errorData.error;
+        } catch {
+          // Fallback to default message
+        }
+        throw new Error(errorMessage);
       }
 
       const reader = response.body?.getReader();
@@ -230,12 +243,14 @@ const ChatBubble: React.FC = () => {
     } catch (error) {
       console.error('Error sending message:', error);
 
+      const errorMessage = error instanceof Error ? error.message : "I'm sorry, I'm having trouble responding right now. Please try again later.";
+
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === botMessageId
             ? {
               ...msg,
-              text: "I'm sorry, I'm having trouble responding right now. Please try again later.",
+              text: errorMessage,
               isStreaming: false,
             }
             : msg,
@@ -246,6 +261,8 @@ const ChatBubble: React.FC = () => {
       setNewMessage('');
     }
   };
+
+  if (!isMounted) return null;
 
   return (
     <ExpandableChat

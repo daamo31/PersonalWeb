@@ -142,29 +142,21 @@ export async function POST(request: NextRequest) {
 
     // Prepare the request body for Gemini REST API
     const requestBody = {
+      system_instruction: {
+        parts: [{ text: systemPrompt }]
+      },
       contents: [
-        {
-          parts: [{ text: systemPrompt }],
-          role: 'user',
-        },
-        {
-          parts: [
-            { text: 'I understand. I will act as your portfolio assistant.' },
-          ],
-          role: 'model',
-        },
         // Add conversation history
         ...validatedData.history.map((msg) => ({
-          ...msg,
+          role: msg.role,
           parts: msg.parts.map((part) => ({
-            ...part,
             text: msg.role === 'user' ? sanitizeInput(part.text) : part.text,
           })),
         })),
         // Add current message
         {
-          parts: [{ text: sanitizeInput(validatedData.message) }],
           role: 'user',
+          parts: [{ text: sanitizeInput(validatedData.message) }],
         },
       ],
       generationConfig: {
@@ -175,7 +167,7 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:streamGenerateContent?alt=sse&key=${apiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${apiKey}`;
 
     const response = await fetch(geminiUrl, {
       method: 'POST',
@@ -186,6 +178,12 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
+      if (response.status === 429) {
+        return NextResponse.json(
+          { error: 'El servicio está saturado temporalmente. Por favor, espera 10-15 segundos y vuelve a intentarlo.' },
+          { status: 429 }
+        );
+      }
       throw new Error(`Gemini API error: ${response.status}`);
     }
 
