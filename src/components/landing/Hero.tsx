@@ -34,7 +34,7 @@ export default function Hero() {
         );
       } else if (part.type === 'bold' && 'text' in part) {
         return (
-          <b key={part.key} className="whitespace-pre-wrap text-primary">
+          <b key={part.key} className="whitespace-pre-wrap text-secondary">
             {part.text}
           </b>
         );
@@ -50,68 +50,82 @@ export default function Hero() {
   };
 
   return (
-    <Container className="mx-auto max-w-5xl">
-      {/* Image */}
-      <Image
-        src={avatar}
-        alt="hero"
-        width={100}
-        height={100}
-        className="size-24 rounded-full dark:bg-yellow-300 bg-blue-300"
-      />
-
-      {/* Text Area */}
-      <div className="mt-8 flex flex-col gap-2">
-        <h1 className="text-4xl font-bold">
-          Hi, I&apos;m {name} — <span className="text-secondary">{title}</span>
-        </h1>
-
-        <div className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-base md:text-lg text-neutral-500 whitespace-pre-wrap">
-          {renderDescription()}
+    <Container className="mx-auto max-w-5xl animate-fade-in-blur">
+      <div className="flex flex-col gap-8">
+        {/* Image */}
+        <div className="flex justify-start">
+          <div className="relative">
+            <Image
+              src={avatar}
+              alt="hero"
+              width={120}
+              height={120}
+              className="size-32 rounded-2xl border-2 border-primary shadow-lg transition-transform hover:scale-105"
+            />
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-secondary/10 to-accent/10 pointer-events-none" />
+          </div>
         </div>
-      </div>
 
-      {/* Buttons */}
-      <div className="mt-8 flex gap-4">
-        {buttons.map((button, index) => {
-          const IconComponent =
-            buttonIcons[button.icon as keyof typeof buttonIcons];
-          return (
-            <Button
-              key={index}
-              variant={button.variant as 'outline' | 'default'}
-              className={cn(
-                button.variant === 'outline' &&
-                  'inset-shadow-indigo-500',
-                button.variant === 'default' &&
-                  'inset-shadow-indigo-500',
-              )}
-            >
-              {IconComponent && <IconComponent />}
-              <Link href={button.href}>{button.text}</Link>
-            </Button>
-          );
-        })}
-      </div>
+        {/* Text Area */}
+        <div className="flex flex-col gap-6">
+          <div>
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-2">
+              Hey, I&apos;m <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">{name}</span>
+            </h1>
+            <p className="text-2xl md:text-3xl font-semibold text-primary">
+              {title}
+            </p>
+          </div>
 
-      {/* Social Links */}
-      <div className="mt-8 flex gap-2">
-        {socialLinks.map((link) => (
-          <Tooltip key={link.name} delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Link
-                href={link.href}
-                key={link.name}
-                className="text-secondary flex items-center gap-2"
+          <div className="max-w-2xl">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-base md:text-lg text-muted-foreground leading-relaxed">
+              {renderDescription()}
+            </div>
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-4 pt-4">
+          {buttons.map((button, index) => {
+            const IconComponent =
+              buttonIcons[button.icon as keyof typeof buttonIcons];
+            return (
+              <Button
+                key={index}
+                variant={button.variant as 'outline' | 'default'}
+                className={cn(
+                  'group px-6 py-2.5 text-base font-medium transition-all duration-300',
+                  button.variant === 'default' &&
+                    'bg-primary hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1',
+                  button.variant === 'outline' &&
+                    'border-2 border-primary hover:border-secondary hover:bg-secondary/5',
+                )}
               >
-                <span className="size-6">{link.icon}</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{link.name}</p>
-            </TooltipContent>
-          </Tooltip>
-        ))}
+                {IconComponent && <IconComponent />}
+                <Link href={button.href}>{button.text}</Link>
+              </Button>
+            );
+          })}
+        </div>
+
+        {/* Social Links */}
+        <div className="flex gap-4 pt-4">
+          {socialLinks.map((link) => (
+            <Tooltip key={link.name} delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href={link.href}
+                  className="text-muted-foreground hover:text-secondary transition-colors duration-300 hover:scale-110 inline-flex"
+                >
+                  <span className="size-6">{link.icon}</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{link.name}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </div>
       </div>
     </Container>
   );

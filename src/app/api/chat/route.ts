@@ -1,7 +1,9 @@
 import { systemPrompt } from '@/config/ChatPrompt';
-import { createParser } from 'eventsource-parser';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
 import * as z from 'zod';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
@@ -137,89 +139,72 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
+    let body;
+    try {
+      const text = await request.text();
+      if (!text) {
+        return NextResponse.json(
+          { error: 'Empty request body' },
+          { status: 400 }
+        );
+      }
+      body = JSON.parse(text);
+    } catch (e) {
+      console.error('Error parsing request body:', e);
+      return NextResponse.json(
+        { error: 'Invalid JSON body' },
+        { status: 400 }
+      );
+    }
+
     const validatedData = chatSchema.parse(body);
 
-    // Prepare the request body for Gemini REST API
-    const requestBody = {
-      system_instruction: {
-        parts: [{ text: systemPrompt }]
-      },
-      contents: [
-        // Add conversation history
-        ...validatedData.history.map((msg) => ({
-          role: msg.role,
-          parts: msg.parts.map((part) => ({
-            text: msg.role === 'user' ? sanitizeInput(part.text) : part.text,
-          })),
-        })),
-        // Add current message
-        {
-          role: 'user',
-          parts: [{ text: sanitizeInput(validatedData.message) }],
-        },
-      ],
+    // Initialize Gemini client
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-2.5-flash',
+      systemInstruction: systemPrompt,
+    });
+
+    // Prepare chat history - SDK requires first message to be from user
+    let chatHistory = validatedData.history.map((msg) => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: msg.parts.map((part) => ({
+        text: msg.role === 'user' ? sanitizeInput(part.text) : part.text,
+      })),
+    }));
+
+    // Remove any leading model messages to ensure first message is from user
+    while (chatHistory.length > 0 && chatHistory[0].role === 'model') {
+      chatHistory.shift();
+    }
+
+    // Start a new chat session
+    const chat = model.startChat({
+      history: chatHistory,
       generationConfig: {
         maxOutputTokens: 512,
         temperature: 0.7,
         topP: 0.8,
         topK: 40,
       },
-    };
-
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${apiKey}`;
-
-    const response = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
     });
-
-    if (!response.ok) {
-      if (response.status === 429) {
-        return NextResponse.json(
-          { error: 'El servicio está saturado temporalmente. Por favor, espera 10-15 segundos y vuelve a intentarlo.' },
-          { status: 429 }
-        );
-      }
-      throw new Error(`Gemini API error: ${response.status}`);
-    }
 
     const encoder = new TextEncoder();
 
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          const parser = createParser({
-            onEvent: (event) => {
-              try {
-                const data = JSON.parse(event.data);
-                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (text) {
-                  // Send as Server-Sent Event format
-                  const sseData = `data: ${JSON.stringify({ text })}\n\n`;
-                  controller.enqueue(encoder.encode(sseData));
-                }
-              } catch (parseError) {
-                console.error('Parse error:', parseError);
-              }
-            },
-          });
+          const response = await chat.sendMessageStream(
+            sanitizeInput(validatedData.message),
+          );
 
-          if (!response.body) {
-            throw new Error('No response body');
-          }
-
-          const reader = response.body.getReader();
-          const decoder = new TextDecoder();
-
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            parser.feed(decoder.decode(value));
+          for await (const chunk of response.stream) {
+            const text = chunk.text();
+            if (text) {
+              const sseData = `data: ${JSON.stringify({ text })}\n\n`;
+              controller.enqueue(encoder.encode(sseData));
+            }
           }
 
           // Send completion signal
@@ -247,6 +232,18 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Chat API Error:', error);
+
+    // Write error to file for debugging
+    try {
+      const logPath = path.join(process.cwd(), 'debug-log.txt');
+      const timestamp = new Date().toISOString();
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorStack = error instanceof Error ? error.stack : '';
+      const logEntry = `[${timestamp}] API Error: ${errorMessage}\nStack: ${errorStack}\n\n`;
+      fs.appendFileSync(logPath, logEntry);
+    } catch (logError) {
+      console.error('Failed to write to debug log:', logError);
+    }
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(

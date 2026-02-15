@@ -31,11 +31,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   return (
-    <Card className="group h-full w-full overflow-hidden transition-all p-0 border-gray-100 dark:border-gray-800 shadow-none">
+    <Card className="group h-full w-full overflow-hidden transition-all duration-300 p-0 border border-border shadow-md hover:shadow-xl hover:border-primary dark:hover:border-secondary">
       <CardHeader className="p-0">
-        <div className="group relative aspect-video overflow-hidden">
+        <div className="group relative aspect-video overflow-hidden bg-gradient-to-br from-muted to-muted-foreground/20">
           <Image
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             src={project.image}
             alt={project.title}
             width={1920}
@@ -44,9 +44,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.video && (
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
-                <div className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 hover:backdrop-blur-xs">
-                  <button className="flex size-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-colors duration-200 group-hover:cursor-pointer hover:bg-white/30">
-                    <PlayCircle />
+                <div className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/30 opacity-0 transition-all duration-300 group-hover:opacity-100 backdrop-blur-sm">
+                  <button className="flex size-16 items-center justify-center rounded-full bg-secondary/90 backdrop-blur-sm transition-all duration-300 group-hover:bg-primary group-hover:scale-110 hover:scale-110">
+                    <PlayCircle className="text-white" />
                   </button>
                 </div>
               </DialogTrigger>
@@ -77,20 +77,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="px-6">
+      <CardContent className="px-6 pt-6">
         <div className="space-y-4">
           {/* Project Header - Title and Icons */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-start justify-between gap-4">
             <Link href={project.projectDetailsPageSlug}>
-              <h3 className="text-xl font-semibold leading-tight group-hover:text-primary hover:cursor-pointer">
+              <h3 className="text-xl font-bold leading-tight text-foreground group-hover:text-secondary transition-colors duration-300">
                 {project.title}
               </h3>
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 flex-shrink-0">
               <Tooltip>
                 <TooltipTrigger>
                   <Link
-                    className="text-secondary flex size-6 items-center justify-center hover:text-primary transition-colors"
+                    className="text-muted-foreground flex size-6 items-center justify-center hover:text-primary transition-all duration-300 hover:scale-110"
                     href={project.link}
                     target="_blank"
                   >
@@ -105,7 +105,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 <TooltipTrigger>
                   {project.github && (
                     <Link
-                      className="text-secondary flex size-6 items-center justify-center hover:text-primary transition-colors"
+                      className="text-muted-foreground flex size-6 items-center justify-center hover:text-primary transition-all duration-300 hover:scale-110"
                       href={project.github}
                       target="_blank"
                     >
@@ -121,23 +121,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
 
           {/* Description */}
-          <p className="text-secondary line-clamp-3">{project.description}</p>
+          <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed">{project.description}</p>
 
           {/* Technologies */}
           <div>
-            <h4 className="text-sm font-medium mb-2 text-secondary">
-              Technologies
+            <h4 className="text-xs font-semibold mb-3 text-foreground uppercase tracking-wide">
+              Tech Stack
             </h4>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {project.technologies.map((technology, index) => (
-                <Tooltip key={index}>
-                  <TooltipTrigger>
-                    <div className="size-6 hover:scale-120 transition-all duration-300 hover:cursor-pointer">
+                <Tooltip key={index} delayDuration={200}>
+                  <TooltipTrigger asChild>
+                    <div className="size-7 flex items-center justify-center hover:scale-125 transition-all duration-300 cursor-pointer hover:brightness-125">
                       {technology.icon}
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{technology.name}</p>
+                  <TooltipContent className="bg-foreground text-background">
+                    <p className="text-xs font-medium">{technology.name}</p>
                   </TooltipContent>
                 </Tooltip>
               ))}
@@ -147,31 +147,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </CardContent>
 
       {project.details && (
-        <CardFooter className="p-6 pt-0 flex justify-between">
+        <CardFooter className="p-6 flex items-center justify-between border-t border-border">
           <div
-            className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs ${
+            className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ${
               project.isWorking
-                ? 'border-green-300 bg-green-500/10'
-                : 'border-red-300 bg-red-500/10'
+                ? 'border border-green-500/50 bg-green-500/10 text-green-700 dark:text-green-300'
+                : 'border border-orange-500/50 bg-orange-500/10 text-orange-700 dark:text-orange-300'
             }`}
           >
-            {project.isWorking ? (
-              <>
-                <div className="size-2 rounded-full bg-green-500 animate-pulse" />
-                All Systems Operational
-              </>
-            ) : (
-              <>
-                <div className="size-2 rounded-full bg-red-500 animate-pulse" />
-                Building
-              </>
-            )}
+            <div className={`size-2 rounded-full ${project.isWorking ? 'bg-green-500 animate-pulse' : 'bg-orange-500 animate-pulse'}`} />
+            {project.isWorking ? 'Live' : 'In Development'}
           </div>
           <Link
             href={project.projectDetailsPageSlug}
-            className="text-secondary flex items-center gap-2 text-sm hover:underline underline-offset-4 hover:text-primary transition-colors"
+            className="text-secondary font-medium flex items-center gap-2 text-sm hover:text-primary hover:gap-3 transition-all duration-300 group/link"
           >
-            View Details <ArrowRight className="size-4" />
+            Details
+            <ArrowRight className="size-4 group-hover/link:translate-x-1 transition-transform" />
           </Link>
         </CardFooter>
       )}

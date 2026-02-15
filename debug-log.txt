@@ -1,0 +1,141 @@
+[2026-02-13T19:07:00.719Z] API Error: Gemini API error: 404 - {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+Stack: Error: Gemini API error: 404 - {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+    at POST (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/[root-of-the-server]__49ce5877._.js:2162:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45978)
+    at async responseGenerator (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18872:38)
+    at async AppRouteRouteModule.handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187643)
+    at async handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18934:32)
+    at async handler (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18986:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1514:32)
+    at async DevServer.pipeImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1025:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/next-server.js:393:17)
+    at async DevServer.handleRequestImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:916:17)
+    at async /Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:399:20
+    at async Span.traceAsyncFn (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:395:24)
+    at async invokeRender (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async requestHandlerImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:485:13)
+    at async Server.requestListener (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/start-server.js:226:13)
+
+[2026-02-13T19:08:49.481Z] API Error: Gemini API error: 404 - {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+Stack: Error: Gemini API error: 404 - {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+    at POST (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/[root-of-the-server]__49ce5877._.js:2162:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45978)
+    at async responseGenerator (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18872:38)
+    at async AppRouteRouteModule.handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187643)
+    at async handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18934:32)
+    at async handler (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18986:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1514:32)
+    at async DevServer.pipeImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1025:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/next-server.js:393:17)
+    at async DevServer.handleRequestImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:916:17)
+    at async /Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:399:20
+    at async Span.traceAsyncFn (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:395:24)
+    at async invokeRender (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async requestHandlerImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:485:13)
+    at async Server.requestListener (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/start-server.js:226:13)
+
+[2026-02-13T19:11:35.469Z] API Error: Gemini API error: 404 - {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+Stack: Error: Gemini API error: 404 - {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+    at POST (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/[root-of-the-server]__49ce5877._.js:2162:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45978)
+    at async responseGenerator (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18872:38)
+    at async AppRouteRouteModule.handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187643)
+    at async handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18934:32)
+    at async handler (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_3ec7696a._.js:18986:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1514:32)
+    at async DevServer.pipeImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1025:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/next-server.js:393:17)
+    at async DevServer.handleRequestImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:916:17)
+    at async /Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:399:20
+    at async Span.traceAsyncFn (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:395:24)
+    at async invokeRender (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async requestHandlerImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:485:13)
+    at async Server.requestListener (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/start-server.js:226:13)
+
+[2026-02-13T19:29:15.958Z] API Error: [GoogleGenerativeAI Error]: First content should be with role 'user', got model
+Stack: Error: [GoogleGenerativeAI Error]: First content should be with role 'user', got model
+    at validateChatHistory (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_6d71906e._.js:9038:19)
+    at new ChatSession (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_6d71906e._.js:9130:13)
+    at GenerativeModel.startChat (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_6d71906e._.js:9384:16)
+    at POST (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/[root-of-the-server]__49ce5877._.js:2124:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async AppRouteRouteModule.do (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:38696)
+    at async AppRouteRouteModule.handle (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45978)
+    at async responseGenerator (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_6d71906e._.js:20290:38)
+    at async AppRouteRouteModule.handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187643)
+    at async handleResponse (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_6d71906e._.js:20352:32)
+    at async handler (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/.next/server/chunks/node_modules_6d71906e._.js:20404:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1422:9)
+    at async DevServer.renderPageComponent (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1474:24)
+    at async DevServer.renderToResponseImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1514:32)
+    at async DevServer.pipeImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:1025:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/next-server.js:393:17)
+    at async DevServer.handleRequestImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/base-server.js:916:17)
+    at async /Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:399:20
+    at async Span.traceAsyncFn (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/dev/next-dev-server.js:395:24)
+    at async invokeRender (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async requestHandlerImpl (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/router-server.js:485:13)
+    at async Server.requestListener (/Users/daniel/Desktop/proyectos/plantilla/sleek-portfolio/node_modules/next/dist/server/lib/start-server.js:226:13)
+
