@@ -62,7 +62,7 @@ export default function Hero() {
               height={120}
               className="size-32 rounded-2xl border-2 border-primary shadow-lg transition-transform hover:scale-105"
             />
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-secondary/10 to-accent/10 pointer-events-none" />
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-secondary/10 to-accent/10 pointer-events-none" />
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export default function Hero() {
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-2">
-              Hey, I&apos;m <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">{name}</span>
+              Hey, I&apos;m <span className="bg-linear-to-r from-secondary to-accent bg-clip-text text-transparent">{name}</span>
             </h1>
             <p className="text-2xl md:text-3xl font-semibold text-primary">
               {title}

@@ -1,3 +1,4 @@
+import AnimatedBackground from '@/components/common/AnimatedBackground';
 import ChatBubble from '@/components/common/ChatBubble';
 import Footer from '@/components/common/Footer';
 import Navbar from '@/components/common/Navbar';
@@ -20,6 +21,7 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
         <body className={`font-hanken-grotesk antialiased`}>
+          <AnimatedBackground />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
