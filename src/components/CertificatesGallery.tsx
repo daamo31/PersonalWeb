@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Dialog, DialogContent, DialogTrigger, DialogTitle } from './ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { certificates } from '@/config/Achievements';
 
 export default function CertificatesGallery() {
@@ -26,7 +26,7 @@ export default function CertificatesGallery() {
 
       {/* Fullscreen viewer */}
       <Dialog open={!!active} onOpenChange={(open) => { if (!open) setActive(null); }}>
-        <DialogContent className="!max-w-[90vw] !max-h-[90vh] p-0 bg-transparent shadow-none rounded-none">
+        <DialogContent className="max-w-[90vw]! max-h-[90vh]! p-0 bg-transparent shadow-none rounded-none">
           {/* Accessible title required by Radix Dialog (hidden visually) */}
           <DialogTitle className="sr-only">Certificate viewer</DialogTitle>
           <div className="w-full h-[80vh] flex items-center justify-center">

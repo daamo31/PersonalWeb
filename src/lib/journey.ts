@@ -17,5 +17,3 @@ export function getJourneyContent() {
     return null;
   }
 }
-
-export default { getJourneyContent };

@@ -103,8 +103,8 @@ export default function ContactForm() {
       form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
-      if (error && error.text) {
-        toast.error(`EmailJS error: ${error.text}`);
+      if (error && typeof error === 'object' && 'text' in error) {
+        toast.error(`EmailJS error: ${(error as { text: string }).text}`);
       } else {
         toast.error('Failed to send message. Please try again.');
       }

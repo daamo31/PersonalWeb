@@ -33,7 +33,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="group h-full w-full overflow-hidden transition-all duration-300 p-0 border border-border shadow-md hover:shadow-xl hover:border-primary dark:hover:border-secondary">
       <CardHeader className="p-0">
-        <div className="group relative aspect-video overflow-hidden bg-gradient-to-br from-muted to-muted-foreground/20">
+        <div className="group relative aspect-video overflow-hidden bg-linear-to-br from-muted to-muted-foreground/20">
           <Image
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             src={project.image}
@@ -86,7 +86,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 {project.title}
               </h3>
             </Link>
-            <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="flex items-center gap-3 shrink-0">
               <Tooltip>
                 <TooltipTrigger>
                   <Link
