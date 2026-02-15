@@ -167,7 +167,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Prepare chat history - SDK requires first message to be from user
-    let chatHistory = validatedData.history.map((msg) => ({
+    const chatHistory = validatedData.history.map((msg) => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: msg.parts.map((part) => ({
         text: msg.role === 'user' ? sanitizeInput(part.text) : part.text,
