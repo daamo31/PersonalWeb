@@ -181,7 +181,18 @@ const ChatBubble: React.FC = () => {
         } catch {
           // Fallback to default message
         }
-        throw new Error(errorMessage);
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === botMessageId
+              ? {
+                ...msg,
+                text: errorMessage,
+                isStreaming: false,
+              }
+              : msg,
+          ),
+        );
+        return;
       }
 
       const reader = response.body?.getReader();
@@ -322,7 +333,7 @@ const ChatBubble: React.FC = () => {
                                   {...props}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-blue-500 hover:text-blue-700 underline break-words"
+                                  className="text-blue-500 hover:text-blue-700 underline wrap-break-word"
                                 />
                               ),
                               // Custom paragraph component to remove default margins

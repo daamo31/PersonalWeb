@@ -13,11 +13,11 @@ type ProjectsSectionProps = {
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
-    <section id="proyectos" className="mt-20">
+    <section id="projects" className="mt-20">
       <div className="mb-8 flex items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Portafolio</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Proyectos destacados</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Portfolio</p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Featured projects</h2>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                     rel="noreferrer"
                     className="rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-primary"
                   >
-                    Codigo
+                    Code
                   </a>
                 ) : null}
               </div>

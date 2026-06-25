@@ -1,20 +1,20 @@
 {
   "site": {
     "title": "Daniel Del Amo | Full Stack Developer & Automation Specialist",
-    "description": "Full Stack Developer con mas de 6 anos de experiencia construyendo soluciones escalables, seguras y centradas en el usuario."
+    "description": "Full Stack Developer with over 6 years of technical experience building scalable, secure, user-centered software."
   },
   "hero": {
     "name": "Daniel Del Amo",
     "role": "Full Stack Developer & Automation Specialist",
     "headline": "Escalabilidad, seguridad y UX para tu producto digital",
-    "summary": "Programador en formacion con mas de 6 anos de experiencia tecnica en entornos industriales, especializado en automatizacion y en construir software escalable, seguro y con gran experiencia de usuario.",
+    "summary": "Developer with over 6 years of technical experience in industrial environments, specialized in automation and in building scalable, secure software with excellent user experience.",
     "primaryCta": {
-      "label": "Hablemos de tu proyecto",
-      "href": "#contacto"
+      "label": "Let's discuss your project",
+      "href": "#contact"
     },
     "secondaryCta": {
-      "label": "Ver proyectos",
-      "href": "#proyectos"
+      "label": "View projects",
+      "href": "#projects"
     },
     "badges": ["TypeScript", "React", "Next.js", "Bun", "PostgreSQL"]
   },
@@ -72,7 +72,7 @@
   ],
   "contact": {
     "email": "danieldelamo31@gmail.com",
-    "phone": "Disponible bajo solicitud",
+    "phone": "Available on request",
     "availability": "Based in Zaragoza, Spain. Open to collaborations and freelance projects.",
     "linkedin": "https://www.linkedin.com/in/danieldelamotarrero/",
     "github": "https://github.com/daamo31"

@@ -11,10 +11,10 @@ type ServicesSectionProps = {
 
 export default function ServicesSection({ services }: ServicesSectionProps) {
   return (
-    <section id="servicios" className="mt-20">
+    <section id="services" className="mt-20">
       <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Servicios</p>
-        <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Cómo puedo ayudarte</h2>
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Services</p>
+        <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">How I can help</h2>
       </div>
 
       <div className="grid gap-5 md:grid-cols-3">

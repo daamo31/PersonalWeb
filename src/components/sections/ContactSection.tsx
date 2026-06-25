@@ -50,17 +50,17 @@ export default function ContactSection({ contact }: ContactSectionProps) {
   }
 
   return (
-    <section id="contacto" className="mt-20 rounded-3xl border border-primary/15 bg-card p-8 shadow-sm md:p-10">
+    <section id="contact" className="mt-20 rounded-3xl border border-primary/15 bg-card p-8 shadow-sm md:p-10">
       <div className="grid gap-8 md:grid-cols-2">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Contacto</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Cuéntame tu idea y la construimos</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Contact</p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Tell me your idea and let's build it</h2>
           <p className="mt-4 text-muted-foreground">{contact.availability}</p>
           <p className="mt-6 text-sm text-muted-foreground">
             Email: <span className="font-medium text-foreground">{contact.email}</span>
           </p>
           <p className="text-sm text-muted-foreground">
-            Teléfono: <span className="font-medium text-foreground">{contact.phone}</span>
+            Phone: <span className="font-medium text-foreground">{contact.phone}</span>
           </p>
           {contact.linkedin ? (
             <p className="text-sm text-muted-foreground">
@@ -71,7 +71,7 @@ export default function ContactSection({ contact }: ContactSectionProps) {
                 rel="noreferrer"
                 className="font-medium text-primary underline-offset-4 hover:underline"
               >
-                Perfil profesional
+                Professional profile
               </a>
             </p>
           ) : null}
@@ -118,7 +118,7 @@ export default function ContactSection({ contact }: ContactSectionProps) {
             minLength={10}
             rows={5}
             className="w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-primary/20 focus:ring"
-            placeholder="Cuéntame qué necesitas"
+            placeholder="Tell me what you need"
           />
 
           <button
@@ -126,14 +126,14 @@ export default function ContactSection({ contact }: ContactSectionProps) {
             disabled={status === 'sending'}
             className="rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
+            {status === 'sending' ? 'Sending...' : 'Send message'}
           </button>
 
           {status === 'success' ? (
-            <p className="text-sm text-green-600">Mensaje enviado. Te responderé pronto.</p>
+            <p className="text-sm text-green-600">Message sent. I will reply soon.</p>
           ) : null}
           {status === 'error' ? (
-            <p className="text-sm text-red-600">No se pudo enviar el mensaje. Inténtalo de nuevo.</p>
+            <p className="text-sm text-red-600">Could not send the message. Please try again.</p>
           ) : null}
         </form>
       </div>
