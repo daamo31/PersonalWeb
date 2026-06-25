@@ -1,0 +1,80 @@
+{
+  "site": {
+    "title": "Daniel Del Amo | Full Stack Developer & Automation Specialist",
+    "description": "Full Stack Developer con mas de 6 anos de experiencia construyendo soluciones escalables, seguras y centradas en el usuario."
+  },
+  "hero": {
+    "name": "Daniel Del Amo",
+    "role": "Full Stack Developer & Automation Specialist",
+    "headline": "Escalabilidad, seguridad y UX para tu producto digital",
+    "summary": "Programador en formacion con mas de 6 anos de experiencia tecnica en entornos industriales, especializado en automatizacion y en construir software escalable, seguro y con gran experiencia de usuario.",
+    "primaryCta": {
+      "label": "Hablemos de tu proyecto",
+      "href": "#contacto"
+    },
+    "secondaryCta": {
+      "label": "Ver proyectos",
+      "href": "#proyectos"
+    },
+    "badges": ["TypeScript", "React", "Next.js", "Bun", "PostgreSQL"]
+  },
+  "services": [
+    {
+      "id": "web-dev",
+      "title": "Web Development",
+      "description": "Full-stack web applications built with modern frameworks. From frontend to backend, API design to deployment.",
+      "items": ["Next.js", "React", "Tailwind CSS"]
+    },
+    {
+      "id": "api-dev",
+      "title": "Backend Development",
+      "description": "Robust backend solutions using Python, FastAPI, and cloud platforms. Scalable APIs and microservices.",
+      "items": ["Python", "FastAPI", "Microservices"]
+    },
+    {
+      "id": "automation",
+      "title": "Frontend Development",
+      "description": "Beautiful, responsive UI/UX with React and Next.js. Performance optimization and modern design principles.",
+      "items": ["UI/UX", "Performance", "Responsive Design"]
+    },
+    {
+      "id": "consulting",
+      "title": "Technical Consulting",
+      "description": "Architecture guidance, best practices, and technology selection for your projects.",
+      "items": ["Architecture", "Best Practices", "Tech Selection"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "bsb-capital",
+      "title": "BSB Capital",
+      "description": "Comprehensive financial platform for crypto and investments, including memberships, academy, admin dashboard and interactive animations.",
+      "stack": ["React 18", "TypeScript", "Tailwind CSS", "Stripe", "PostgreSQL"],
+      "url": "https://bsbcapital.io",
+      "repo": "https://github.com/daamo31/bsbcapital"
+    },
+    {
+      "id": "noircheck",
+      "title": "NoirCheck",
+      "description": "Digital content authenticity verification platform using blockchain and zkTLS, with mobile app, web app and realtime stats.",
+      "stack": ["Python", "FastAPI", "Next.js", "React Native", "TypeScript"],
+      "url": "",
+      "repo": "https://github.com/daamo31/noircheck"
+    },
+    {
+      "id": "chuches-inventario",
+      "title": "Chuches Inventario",
+      "description": "Professional inventory management app for Android and desktop with OCR, camera support, reporting and tests.",
+      "stack": ["Python", "Kivy", "KivyMD", "OCR", "pytest"],
+      "url": "",
+      "repo": ""
+    }
+  ],
+  "contact": {
+    "email": "danieldelamo31@gmail.com",
+    "phone": "Disponible bajo solicitud",
+    "availability": "Based in Zaragoza, Spain. Open to collaborations and freelance projects.",
+    "linkedin": "https://www.linkedin.com/in/danieldelamotarrero/",
+    "github": "https://github.com/daamo31"
+  }
+}
