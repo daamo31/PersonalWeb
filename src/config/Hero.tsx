@@ -129,7 +129,7 @@ export const socialLinks = [
   },
   {
     name: 'Email',
-    href: 'mailto:danieldelamo31@gmail.com',
+    href: 'mailto:danieldelamo31@protonmail.com',
     icon: <Mail />,
   },
 ];

@@ -16,10 +16,12 @@ type ContactSectionProps = {
 
 export default function ContactSection({ contact }: ContactSectionProps) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('Could not send the message. Please try again.');
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus('sending');
+    setErrorMessage('Could not send the message. Please try again.');
 
     const formData = new FormData(event.currentTarget);
     const payload = {
@@ -39,12 +41,19 @@ export default function ContactSection({ contact }: ContactSectionProps) {
       });
 
       if (!response.ok) {
-        throw new Error('Request failed');
+        const body = await response.json().catch(() => ({}));
+        const message = typeof body?.error === 'string' ? body.error : 'Request failed';
+        throw new Error(message);
       }
 
       event.currentTarget.reset();
       setStatus('success');
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('Failed to send message')) {
+        setErrorMessage('Could not send message. Configure TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in your environment variables.');
+      } else {
+        setErrorMessage('Could not send the message. Please try again.');
+      }
       setStatus('error');
     }
   }
@@ -96,14 +105,14 @@ export default function ContactSection({ contact }: ContactSectionProps) {
             required
             minLength={2}
             className="w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-primary/20 focus:ring"
-            placeholder="Tu nombre"
+            placeholder="Your name"
           />
           <input
             name="email"
             type="email"
             required
             className="w-full rounded-xl border border-input bg-background px-4 py-3 outline-none ring-primary/20 focus:ring"
-            placeholder="tu@email.com"
+            placeholder="your@email.com"
           />
           <input
             name="phone"
@@ -133,7 +142,7 @@ export default function ContactSection({ contact }: ContactSectionProps) {
             <p className="text-sm text-green-600">Message sent. I will reply soon.</p>
           ) : null}
           {status === 'error' ? (
-            <p className="text-sm text-red-600">Could not send the message. Please try again.</p>
+            <p className="text-sm text-red-600">{errorMessage}</p>
           ) : null}
         </form>
       </div>

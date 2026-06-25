@@ -21,7 +21,7 @@ export const siteConfig = {
     twitter: '',
     github: 'daamo31',
     linkedin: 'danieldelamotarrero',
-    email: 'danieldelamo31@gmail.com',
+    email: 'danieldelamo31@protonmail.com',
   },
   keywords: [
     'portfolio',

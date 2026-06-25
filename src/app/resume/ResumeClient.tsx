@@ -47,7 +47,7 @@ export default function ResumeClient() {
                 {/* Print-friendly contact info */}
                 <div className="cv-contact mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-base">
                     <div><strong>Location:</strong> Zaragoza (Spain)</div>
-                    <div><strong>Email:</strong> <a href="mailto:danieldelamo31@gmail.com" className="underline">danieldelamo31@gmail.com</a></div>
+                    <div><strong>Email:</strong> <a href="mailto:danieldelamo31@protonmail.com" className="underline">danieldelamo31@protonmail.com</a></div>
                     <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/danieldelamotarrero/" target="_blank" className="underline">danieldelamotarrero</a></div>
                     <div><strong>GitHub:</strong> <a href="https://github.com/daamo31" target="_blank" className="underline">daamo31</a></div>
                 </div>
