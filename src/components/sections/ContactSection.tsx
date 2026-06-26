@@ -20,10 +20,11 @@ export default function ContactSection({ contact }: ContactSectionProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setStatus('sending');
     setErrorMessage('Could not send the message. Please try again.');
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const payload = {
       name: String(formData.get('name') ?? ''),
       email: String(formData.get('email') ?? ''),
@@ -52,7 +53,7 @@ export default function ContactSection({ contact }: ContactSectionProps) {
         return;
       }
 
-      event.currentTarget.reset();
+      form.reset();
       setStatus('success');
     } catch {
       setErrorMessage('Network error. Please try again.');

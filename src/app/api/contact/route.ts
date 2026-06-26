@@ -81,6 +81,13 @@ async function sendToTelegram(data: {
     return false;
   }
 
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const submittedAt = new Intl.DateTimeFormat('es-ES', {
+    dateStyle: 'full',
+    timeStyle: 'medium',
+    timeZone: timezone,
+  }).format(new Date());
+
   const message = `
 🔔 *New Contact Form Submission*
 
@@ -91,8 +98,8 @@ async function sendToTelegram(data: {
 💬 *Message:*
 ${data.message.trim()}
 
-⏰ *Submitted:* ${new Date().toISOString()}
-📍 *Timezone:* ${Intl.DateTimeFormat().resolvedOptions().timeZone}
+⏰ *Submitted:* ${submittedAt}
+📍 *Timezone:* ${timezone}
   `.trim();
 
   try {
