@@ -22,22 +22,21 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <Container className="py-16">
+    <Container className="py-14">
       <div className="space-y-8">
-        {/* Header */}
-        <div className="space-y-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
+        <div className="line-grid rounded-3xl border border-primary/15 bg-card/80 p-7 text-center backdrop-blur-md sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">Portfolio</p>
+          <h1 className="mt-2 text-4xl font-black tracking-tight lg:text-6xl">
             Projects
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
             My projects and work across different technologies and domains.
           </p>
         </div>
 
         <Separator />
 
-        {/* Projects */}
-        <div className="space-y-6">
+        <div className="space-y-6 rounded-3xl border border-primary/15 bg-card/90 p-6 sm:p-8">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">
               All Projects

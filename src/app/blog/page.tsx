@@ -22,8 +22,14 @@ export const generateMetadata = (): Metadata => {
 
 export default function BlogPage() {
   return (
-    <div className="text-center py-20 text-2xl font-bold text-gray-400">
-      Blog is currently disabled.
+    <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-10">
+      <div className="line-grid rounded-3xl border border-primary/15 bg-card/80 p-10 text-center backdrop-blur-md">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">Editorial</p>
+        <h1 className="mt-2 text-4xl font-black tracking-tight lg:text-6xl">Blog</h1>
+        <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+          This section is being redesigned and will be available soon.
+        </p>
+      </div>
     </div>
   );
 }
