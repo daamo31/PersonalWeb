@@ -33,6 +33,12 @@
     },
     {
       "id": "automation",
+      "title": "AI Process Automation",
+      "description": "Automate repetitive workflows with AI assistants, integrations, and custom process logic to save time and reduce errors.",
+      "items": ["Workflow automation", "AI-powered assistants", "API integrations"]
+    },
+    {
+      "id": "frontend-dev",
       "title": "Frontend Development",
       "description": "Beautiful, responsive UI/UX with React and Next.js. Performance optimization and modern design principles.",
       "items": ["UI/UX", "Performance", "Responsive Design"]

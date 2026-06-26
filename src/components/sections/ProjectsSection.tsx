@@ -44,7 +44,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                     rel="noreferrer"
                     className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
                   >
-                    Ver demo
+                    View demo
                   </a>
                 ) : null}
                 {project.repo ? (

@@ -21,7 +21,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import emailjs from 'emailjs-com';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
@@ -35,10 +34,9 @@ const contactFormSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address.',
   }),
-  phone: z
-    .string()
-    .optional()
-    .or(z.string().regex(/^[\+]?[0-9]{6,15}$/).optional()),
+  phone: z.string().regex(/^[\+]?[0-9]{10,20}$/, {
+    message: 'Please enter a valid phone number (10-20 digits).',
+  }),
   message: z
     .string()
     .min(10, {
@@ -67,47 +65,32 @@ export default function ContactForm() {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      // Enviar email al propietario
-      await emailjs.send(
-        'service_zpmvv1a',
-        'template_gfu4g94',
-        {
-          from_name: data.name,
-          from_email: data.email,
-          from_phone: data.phone,
-          message: data.message,
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        'BvSw1ljmiwXBUO5wA'
-      );
-
-      // Depuración: mostrar datos enviados al cliente
-      console.log('Datos enviados al cliente:', {
-        to_name: data.name,
-        to_email: data.email,
-        message: data.message,
+        body: JSON.stringify(data),
       });
 
-      // Enviar email de confirmación al usuario
-      await emailjs.send(
-        'service_zpmvv1a',
-        'template_xu8y26g',
-        {
-          to_name: data.name,
-          to_email: data.email,
-          message: data.message,
-        },
-        'BvSw1ljmiwXBUO5wA'
-      );
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        const message =
+          typeof body?.error === 'string'
+            ? body.error
+            : 'Failed to send message. Please try again.';
+        throw new Error(message);
+      }
 
       toast.success('Message sent successfully!');
       form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
-      if (error && typeof error === 'object' && 'text' in error) {
-        toast.error(`EmailJS error: ${(error as { text: string }).text}`);
-      } else {
-        toast.error('Failed to send message. Please try again.');
-      }
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Failed to send message. Please try again.',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -144,7 +127,7 @@ export default function ContactForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone</FormLabel>
+                    <FormLabel>Phone *</FormLabel>
                     <FormControl>
                       <div className="flex gap-2">
                         <select
@@ -192,7 +175,7 @@ export default function ContactForm() {
                           <option value="+32">🇧🇪 +32</option>
                           <option value="+420">🇨🇿 +420</option>
                         </select>
-                        <Input placeholder="Número móvil" {...field} />
+                        <Input placeholder="Mobile number" {...field} />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -228,7 +211,7 @@ export default function ContactForm() {
                   <FormControl>
                     <Textarea
                       placeholder="Tell me about your project or just say hello..."
-                      className="min-h-[120px] resize-none"
+                      className="min-h-30 resize-none"
                       {...field}
                     />
                   </FormControl>
