@@ -43,17 +43,19 @@ export default function ContactSection({ contact }: ContactSectionProps) {
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
         const message = typeof body?.error === 'string' ? body.error : 'Request failed';
-        throw new Error(message);
+        if (message.includes('Failed to send message')) {
+          setErrorMessage('Could not send message. Configure TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in your environment variables.');
+        } else {
+          setErrorMessage(message);
+        }
+        setStatus('error');
+        return;
       }
 
       event.currentTarget.reset();
       setStatus('success');
-    } catch (error) {
-      if (error instanceof Error && error.message.includes('Failed to send message')) {
-        setErrorMessage('Could not send message. Configure TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in your environment variables.');
-      } else {
-        setErrorMessage('Could not send the message. Please try again.');
-      }
+    } catch {
+      setErrorMessage('Network error. Please try again.');
       setStatus('error');
     }
   }
