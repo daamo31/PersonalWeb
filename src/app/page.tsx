@@ -1,5 +1,7 @@
 import LeadForm from '@/components/sections/LeadForm';
+import { heroConfig } from '@/config/Hero';
 import portfolioData from '@/data/portfolio.json';
+import Image from 'next/image';
 
 export default function Page() {
   const data = portfolioData;
@@ -11,43 +13,60 @@ export default function Page() {
 
       <section className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
         <div className="line-grid rounded-3xl border border-primary/15 bg-card/80 p-7 backdrop-blur-md sm:p-10 lg:p-14">
-          <p className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            {data.hero.role}
-          </p>
+          <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <p className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                {data.hero.role}
+              </p>
 
-          <h1 className="mt-6 max-w-4xl text-balance text-4xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-            {data.hero.headline}
-          </h1>
+              <h1 className="mt-6 max-w-4xl text-balance text-4xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
+                {data.hero.headline}
+              </h1>
 
-          <p className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            {data.hero.summary}
-          </p>
+              <p className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
+                {data.hero.summary}
+              </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={data.hero.primaryCta.href}
-              className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
-            >
-              {data.hero.primaryCta.label}
-            </a>
-            <a
-              href={data.hero.secondaryCta.href}
-              className="rounded-full border border-primary/25 bg-background/80 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-background"
-            >
-              {data.hero.secondaryCta.label}
-            </a>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={data.hero.primaryCta.href}
+                  className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+                >
+                  {data.hero.primaryCta.label}
+                </a>
+                <a
+                  href={data.hero.secondaryCta.href}
+                  className="rounded-full border border-primary/25 bg-background/80 px-6 py-3 text-sm font-semibold text-primary transition hover:bg-background"
+                >
+                  {data.hero.secondaryCta.label}
+                </a>
+              </div>
+
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {data.hero.badges.map((badge) => (
+                  <li
+                    key={badge}
+                    className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-primary"
+                  >
+                    {badge}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mx-auto w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[2rem] border border-primary/20 bg-gradient-to-b from-primary/10 to-accent/10 shadow-2xl">
+                <Image
+                  src={heroConfig.avatar}
+                  alt={heroConfig.name}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 32vw"
+                />
+              </div>
+            </div>
           </div>
-
-          <ul className="mt-8 flex flex-wrap gap-2">
-            {data.hero.badges.map((badge) => (
-              <li
-                key={badge}
-                className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-primary"
-              >
-                {badge}
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 

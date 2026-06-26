@@ -23,6 +23,55 @@ const chatSchema = z.object({
     .default([]),
 });
 
+function isSpanish(text: string): boolean {
+  return /[¿¡]|\b(hola|proyecto|proyectos|servicios|contacto|trabajo|experiencia|tecnologias|tecnología|presupuesto|precio|automatizacion|automatización)\b/i.test(
+    text,
+  );
+}
+
+function getFallbackReply(message: string): string {
+  const msg = message.toLowerCase();
+  const inSpanish = isSpanish(message);
+
+  if (inSpanish) {
+    if (/(hola|buenas|hey|que tal|qué tal)/i.test(msg)) {
+      return 'Hola, soy Daniel. Ahora mismo el modo IA avanzado no está activo, pero puedo ayudarte. Puedo orientarte sobre proyectos, servicios y contacto.';
+    }
+
+    if (/(precio|presupuesto|coste|costo)/i.test(msg)) {
+      return 'Depende del alcance y del plazo. Si quieres, cuéntame objetivo, funcionalidades y fecha límite y te preparo una estimación inicial.';
+    }
+
+    if (/(servicio|servicios|automatiz|ia|api|web)/i.test(msg)) {
+      return 'Trabajo en desarrollo web, backend/APIs y automatización de procesos con IA. Si me compartes tu caso, te propongo una solución concreta.';
+    }
+
+    if (/(contact|email|correo|linkedin|github)/i.test(msg)) {
+      return 'Puedes contactarme en danieldelamo31@protonmail.com o por LinkedIn: https://www.linkedin.com/in/danieldelamotarrero/';
+    }
+
+    return 'Ahora mismo el asistente IA está en modo básico. Escríbeme qué necesitas (web, API o automatización) y te ayudo con los siguientes pasos.';
+  }
+
+  if (/(hello|hi|hey)/i.test(msg)) {
+    return 'Hi, I am Daniel. Advanced AI mode is not active right now, but I can still help with projects, services, and contact details.';
+  }
+
+  if (/(price|budget|cost|quote)/i.test(msg)) {
+    return 'Pricing depends on scope and timeline. Share your goals, required features, and deadline, and I can give you an initial estimate.';
+  }
+
+  if (/(service|services|automation|ai|api|web)/i.test(msg)) {
+    return 'I work on web development, backend/APIs, and AI process automation. Share your use case and I will suggest a concrete approach.';
+  }
+
+  if (/(contact|email|linkedin|github)/i.test(msg)) {
+    return 'You can reach me at danieldelamo31@protonmail.com or LinkedIn: https://www.linkedin.com/in/danieldelamotarrero/';
+  }
+
+  return 'The assistant is currently in basic mode. Tell me what you need (web app, API, or automation), and I will guide you on next steps.';
+}
+
 function sanitizeInput(input: string): string {
   const injectionPatterns = [
     /ignore previous instructions/gi,
@@ -130,15 +179,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      console.error('GEMINI_API_KEY not configured');
-      return NextResponse.json(
-        { error: 'AI service not configured' },
-        { status: 500 },
-      );
-    }
-
     let body;
     try {
       const text = await request.text();
@@ -158,6 +198,33 @@ export async function POST(request: NextRequest) {
     }
 
     const validatedData = chatSchema.parse(body);
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      const encoder = new TextEncoder();
+      const fallbackText = getFallbackReply(validatedData.message);
+
+      const stream = new ReadableStream({
+        start(controller) {
+          const sseData = `data: ${JSON.stringify({ text: fallbackText })}\n\n`;
+          controller.enqueue(encoder.encode(sseData));
+          controller.enqueue(encoder.encode('data: {"done": true}\n\n'));
+          controller.close();
+        },
+      });
+
+      return new NextResponse(stream, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          Connection: 'keep-alive',
+          'Access-Control-Allow-Origin': '*',
+          'X-RateLimit-Limit': RATE_LIMIT_MAX_REQUESTS.toString(),
+          'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+        },
+      });
+    }
 
     // Initialize Gemini client
     const genAI = new GoogleGenerativeAI(apiKey);
