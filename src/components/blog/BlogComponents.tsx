@@ -16,9 +16,11 @@ export const BlogComponents = {
     height,
     ...props
   }: React.ComponentPropsWithoutRef<'img'>) => {
-    if (!src) {
+    if (!src || typeof src !== 'string') {
       return null;
     }
+
+    const { loading: _loading, decoding: _decoding, ...imageProps } = props;
 
     return (
       <Image
@@ -29,7 +31,7 @@ export const BlogComponents = {
         className={className ?? 'mb-4 rounded-lg'}
         loading="lazy"
         style={{ width: '100%', height: 'auto' }}
-        {...props}
+        {...imageProps}
       />
     );
   },
