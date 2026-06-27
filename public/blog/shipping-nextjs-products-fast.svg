@@ -1,0 +1,32 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="0.55" stop-color="#1D4ED8"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="speed" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FDE68A"/>
+      <stop offset="1" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg2)"/>
+  <path d="M0 710C220 620 520 640 760 540C1020 432 1280 300 1600 350V900H0V710Z" fill="#0B1220" fill-opacity="0.52"/>
+
+  <rect x="150" y="140" width="1300" height="620" rx="34" fill="#0B1220" fill-opacity="0.62" stroke="#93C5FD" stroke-opacity="0.36"/>
+
+  <path d="M300 600L520 420L700 500L920 320L1120 400L1300 250" stroke="url(#speed)" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="1300" cy="250" r="20" fill="#FCD34D"/>
+
+  <rect x="280" y="250" width="280" height="34" rx="17" fill="#93C5FD" fill-opacity="0.78"/>
+  <rect x="280" y="310" width="500" height="22" rx="11" fill="#BFDBFE" fill-opacity="0.4"/>
+  <rect x="280" y="350" width="450" height="22" rx="11" fill="#BFDBFE" fill-opacity="0.32"/>
+
+  <text x="280" y="500" fill="#DBEAFE" font-family="Georgia, serif" font-size="58" font-weight="700">
+    Shipping Next.js
+  </text>
+  <text x="280" y="565" fill="#FDE68A" font-family="Arial, sans-serif" font-size="30" letter-spacing="1">
+    FAST WITHOUT BREAKING QUALITY
+  </text>
+</svg>

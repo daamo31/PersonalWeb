@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 
 // import BlogCard from "./BlogCard";
@@ -17,12 +16,11 @@ export const BlogComponents = {
     alt: string;
     [key: string]: unknown;
   }) => (
-    <Image
+    <img
       src={src}
       alt={alt}
-      width={800}
-      height={400}
-      className="rounded-lg"
+      className="mb-4 rounded-lg"
+      loading="lazy"
       {...props}
     />
   ),

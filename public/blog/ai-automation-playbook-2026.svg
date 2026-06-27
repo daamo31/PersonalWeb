@@ -1,0 +1,35 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#082F49"/>
+      <stop offset="0.5" stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#022C22"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#67E8F9"/>
+      <stop offset="1" stop-color="#5EEAD4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1370" cy="160" r="220" fill="#22D3EE" fill-opacity="0.15"/>
+  <circle cx="260" cy="780" r="280" fill="#2DD4BF" fill-opacity="0.12"/>
+
+  <rect x="180" y="180" width="1240" height="540" rx="36" fill="#0B1120" fill-opacity="0.68" stroke="#5EEAD4" stroke-opacity="0.35"/>
+
+  <rect x="280" y="280" width="300" height="300" rx="24" fill="#0F172A" stroke="#67E8F9" stroke-opacity="0.5"/>
+  <rect x="340" y="340" width="180" height="180" rx="20" fill="url(#chip)" fill-opacity="0.16" stroke="url(#chip)"/>
+  <path d="M430 360V500" stroke="#A5F3FC" stroke-width="6"/>
+  <path d="M360 430H500" stroke="#A5F3FC" stroke-width="6"/>
+
+  <rect x="650" y="310" width="620" height="22" rx="11" fill="#99F6E4" fill-opacity="0.6"/>
+  <rect x="650" y="360" width="480" height="18" rx="9" fill="#99F6E4" fill-opacity="0.45"/>
+  <rect x="650" y="402" width="560" height="18" rx="9" fill="#99F6E4" fill-opacity="0.35"/>
+
+  <text x="650" y="500" fill="#CCFBF1" font-family="Georgia, serif" font-size="56" font-weight="700">
+    AI Process Automation
+  </text>
+  <text x="650" y="558" fill="#99F6E4" font-family="Arial, sans-serif" font-size="30" letter-spacing="1">
+    PLAYBOOK 2026
+  </text>
+</svg>

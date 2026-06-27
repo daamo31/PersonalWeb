@@ -54,8 +54,8 @@ export default function Page() {
               </ul>
             </div>
 
-            <div className="mx-auto w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none">
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-[420px] overflow-hidden rounded-[2rem] border border-primary/20 bg-gradient-to-b from-primary/10 to-accent/10 shadow-2xl">
+            <div className="mx-auto w-full max-w-85 sm:max-w-95 lg:max-w-none">
+              <div className="relative mx-auto aspect-4/5 w-full max-w-105 overflow-hidden rounded-4xl border border-primary/20 bg-linear-to-b from-primary/10 to-accent/10 shadow-2xl">
                 <Image
                   src={heroConfig.avatar}
                   alt={heroConfig.name}

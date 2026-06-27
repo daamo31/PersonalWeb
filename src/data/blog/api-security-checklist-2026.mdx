@@ -1,0 +1,98 @@
+---
+title: 'API Security Checklist for Production Launches (2026)'
+description: 'A concise checklist to harden APIs before launch: validation, auth, rate limits, observability, and incident readiness.'
+image: '/blog/api-security-checklist-2026.svg'
+tags: ['api', 'security', 'backend']
+date: '2026-06-27'
+isPublished: true
+---
+
+## Why this checklist exists
+
+Most API incidents come from basic gaps, not advanced attacks.
+
+Before shipping, verify these fundamentals.
+
+## 1. Input validation everywhere
+
+Never trust request payloads.
+
+Required:
+
+- schema validation for body/query/params
+- strict type parsing
+- clear error responses
+
+## 2. Authentication and authorization
+
+Auth answers who, authorization answers what they can do.
+
+Required:
+
+- short-lived tokens
+- role-based permissions
+- endpoint-level access checks
+
+## 3. Rate limiting and abuse control
+
+Protect critical routes from brute-force and noisy clients.
+
+Required:
+
+- per-IP or per-user limits
+- stricter limits on login/contact endpoints
+- temporary block strategy
+
+## 4. Secure secrets and environment
+
+Secrets must never live in client code or logs.
+
+Required:
+
+- server-only env vars
+- key rotation plan
+- secret scanning in CI
+
+## 5. Observability and alerting
+
+You cannot fix what you cannot see.
+
+Required:
+
+- structured logs
+- request IDs
+- error alerts with context
+
+## 6. Safe failure behavior
+
+Production systems fail. Plan for it.
+
+Required:
+
+- retries with backoff
+- idempotency for write endpoints
+- graceful fallback messages
+
+## 7. Security headers and transport
+
+Baseline transport hardening:
+
+- HTTPS only
+- HSTS
+- CSP where relevant
+- secure cookies
+
+## 8. Pre-launch security review
+
+Run a short but strict review:
+
+- endpoint inventory
+- permission matrix
+- dependency audit
+- incident contact playbook
+
+## Final recommendation
+
+Treat API security as a release gate, not a future improvement.
+
+A 30-minute checklist before each deploy prevents weeks of cleanup.
