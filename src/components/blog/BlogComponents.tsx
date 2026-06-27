@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 // import BlogCard from "./BlogCard";
 import { CodeCopyButton } from './CodeCopyButton';
@@ -10,20 +11,28 @@ export const BlogComponents = {
   img: ({
     src,
     alt,
+    className,
+    width,
+    height,
     ...props
-  }: {
-    src: string;
-    alt: string;
-    [key: string]: unknown;
-  }) => (
-    <img
-      src={src}
-      alt={alt}
-      className="mb-4 rounded-lg"
-      loading="lazy"
-      {...props}
-    />
-  ),
+  }: React.ComponentPropsWithoutRef<'img'>) => {
+    if (!src) {
+      return null;
+    }
+
+    return (
+      <Image
+        src={src}
+        alt={alt ?? ''}
+        width={typeof width === 'number' ? width : 1200}
+        height={typeof height === 'number' ? height : 675}
+        className={className ?? 'mb-4 rounded-lg'}
+        loading="lazy"
+        style={{ width: '100%', height: 'auto' }}
+        {...props}
+      />
+    );
+  },
   // Custom heading with better styling
   h1: ({
     children,
