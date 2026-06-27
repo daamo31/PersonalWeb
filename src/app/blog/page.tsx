@@ -52,15 +52,21 @@ async function getTechNews(): Promise<TechNewsItem[]> {
           }
 
           const payloads = await Promise.all(validResponses.map((response) => response.json()));
-          const rawItems = payloads.flatMap((payload) => (Array.isArray(payload) ? payload : []));
+          const rawItems: unknown[] = payloads.flatMap((payload: unknown) =>
+            Array.isArray(payload) ? payload : [],
+          );
 
           return rawItems
-            .map((item) => ({
-              title: typeof item?.title === 'string' ? item.title : '',
-              url: typeof item?.url === 'string' ? item.url : '',
-              source: 'DEV Community',
-            }))
-            .filter((item) => item.title && item.url)
+            .map((item: unknown): TechNewsItem => {
+              const record = item as Record<string, unknown>;
+
+              return {
+                title: typeof record.title === 'string' ? record.title : '',
+                url: typeof record.url === 'string' ? record.url : '',
+                source: 'DEV Community',
+              };
+            })
+            .filter((item: TechNewsItem) => item.title !== '' && item.url !== '')
             .slice(0, 8);
         } catch {
           return [];
@@ -83,13 +89,14 @@ async function getTechNews(): Promise<TechNewsItem[]> {
           const hits = Array.isArray(data?.hits) ? data.hits : [];
 
           return hits
-            .map((item) => {
-              const title = typeof item?.title === 'string' ? item.title : '';
+            .map((item: unknown) => {
+              const record = item as Record<string, unknown>;
+              const title = typeof record.title === 'string' ? record.title : '';
               const url =
-                typeof item?.url === 'string'
-                  ? item.url
-                  : typeof item?.story_url === 'string'
-                    ? item.story_url
+                typeof record.url === 'string'
+                  ? record.url
+                  : typeof record.story_url === 'string'
+                    ? record.story_url
                     : '';
 
               return {
@@ -98,7 +105,7 @@ async function getTechNews(): Promise<TechNewsItem[]> {
                 source: 'Hacker News',
               };
             })
-            .filter((item) => item.title && item.url)
+            .filter((item: TechNewsItem) => item.title !== '' && item.url !== '')
             .slice(0, 8);
         } catch {
           return [];
@@ -121,13 +128,17 @@ async function getTechNews(): Promise<TechNewsItem[]> {
           const children = Array.isArray(data?.data?.children) ? data.data.children : [];
 
           return children
-            .map((entry) => {
-              const post = entry?.data;
-              const title = typeof post?.title === 'string' ? post.title : '';
+            .map((entry: unknown) => {
+              const entryRecord = entry as Record<string, unknown>;
+              const post =
+                entryRecord.data && typeof entryRecord.data === 'object'
+                  ? (entryRecord.data as Record<string, unknown>)
+                  : {};
+              const title = typeof post.title === 'string' ? post.title : '';
               const externalUrl =
-                typeof post?.url_overridden_by_dest === 'string'
+                typeof post.url_overridden_by_dest === 'string'
                   ? post.url_overridden_by_dest
-                  : typeof post?.url === 'string'
+                  : typeof post.url === 'string'
                     ? post.url
                     : '';
 
@@ -137,7 +148,7 @@ async function getTechNews(): Promise<TechNewsItem[]> {
                 source: 'Reddit /r/programming',
               };
             })
-            .filter((item) => item.title && item.url)
+            .filter((item: TechNewsItem) => item.title !== '' && item.url !== '')
             .slice(0, 8);
         } catch {
           return [];

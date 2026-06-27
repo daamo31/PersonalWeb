@@ -66,7 +66,7 @@ export default function ContactSection({ contact }: ContactSectionProps) {
       <div className="grid gap-8 md:grid-cols-2">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Contact</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Tell me your idea and let's build it</h2>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Tell me your idea and let&apos;s build it</h2>
           <p className="mt-4 text-muted-foreground">{contact.availability}</p>
           <p className="mt-6 text-sm text-muted-foreground">
             Email: <span className="font-medium text-foreground">{contact.email}</span>
