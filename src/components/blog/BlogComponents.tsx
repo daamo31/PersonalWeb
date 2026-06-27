@@ -20,7 +20,7 @@ export const BlogComponents = {
       return null;
     }
 
-    const { loading: _loading, decoding: _decoding, ...imageProps } = props;
+    const imageProps = props;
 
     return (
       <Image
