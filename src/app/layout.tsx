@@ -33,8 +33,8 @@ export default function RootLayout({
               {children}
 
               <Footer />
-              <ChatBubble />
             </ReactLenis>
+            <ChatBubble />
           </ThemeProvider>
         </body>
       </html>
