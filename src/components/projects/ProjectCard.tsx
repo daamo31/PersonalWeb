@@ -31,9 +31,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   return (
-    <Card className="group h-full w-full overflow-hidden transition-all duration-300 p-0 border border-border shadow-md hover:shadow-xl hover:border-primary dark:hover:border-secondary">
+    <Card className="group h-full w-full overflow-hidden border border-primary/12 p-0 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-xl">
       <CardHeader className="p-0">
-        <div className="group relative aspect-video overflow-hidden bg-linear-to-br from-muted to-muted-foreground/20">
+        <div className="group relative aspect-video overflow-hidden bg-linear-to-br from-primary/10 via-muted to-accent/10">
           <Image
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             src={project.image}
@@ -41,11 +41,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
             width={1920}
             height={1080}
           />
+          <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-background/40 bg-background/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground shadow-sm backdrop-blur">
+            <span className={`size-2 rounded-full ${project.isWorking ? 'bg-green-500' : 'bg-orange-500'}`} />
+            {project.isWorking ? 'Live product' : 'In development'}
+          </div>
+          <div className="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent" />
           {project.video && (
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
               <DialogTrigger asChild>
-                <div className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/30 opacity-0 transition-all duration-300 group-hover:opacity-100 backdrop-blur-sm">
-                  <button className="flex size-16 items-center justify-center rounded-full bg-secondary/90 backdrop-blur-sm transition-all duration-300 group-hover:bg-primary group-hover:scale-110 hover:scale-110">
+                <div className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/25 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
+                  <button className="flex size-16 items-center justify-center rounded-full bg-secondary/90 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-primary hover:scale-110">
                     <PlayCircle className="text-white" />
                   </button>
                 </div>
@@ -82,7 +87,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* Project Header - Title and Icons */}
           <div className="flex items-start justify-between gap-4">
             <Link href={project.projectDetailsPageSlug}>
-              <h3 className="text-xl font-bold leading-tight text-foreground group-hover:text-secondary transition-colors duration-300">
+              <h3 className="text-xl font-bold leading-tight text-foreground transition-colors duration-300 group-hover:text-primary">
                 {project.title}
               </h3>
             </Link>
@@ -125,14 +130,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Technologies */}
           <div>
-            <h4 className="text-xs font-semibold mb-3 text-foreground uppercase tracking-wide">
+            <h4 className="mb-3 text-xs font-semibold uppercase tracking-wide text-foreground">
               Tech Stack
             </h4>
             <div className="flex flex-wrap gap-2.5">
               {project.technologies.map((technology, index) => (
                 <Tooltip key={index} delayDuration={200}>
                   <TooltipTrigger asChild>
-                    <div className="size-7 flex items-center justify-center hover:scale-125 transition-all duration-300 cursor-pointer hover:brightness-125">
+                    <div className="flex size-7 cursor-pointer items-center justify-center transition-all duration-300 hover:scale-125 hover:brightness-125">
                       {technology.icon}
                     </div>
                   </TooltipTrigger>
@@ -147,7 +152,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </CardContent>
 
       {project.details && (
-        <CardFooter className="p-6 flex items-center justify-between border-t border-border">
+        <CardFooter className="flex items-center justify-between border-t border-border p-6">
           <div
             className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ${
               project.isWorking
@@ -160,7 +165,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
           <Link
             href={project.projectDetailsPageSlug}
-            className="text-secondary font-medium flex items-center gap-2 text-sm hover:text-primary hover:gap-3 transition-all duration-300 group/link"
+            className="group/link flex items-center gap-2 text-sm font-medium text-primary transition-all duration-300 hover:gap-3 hover:text-foreground"
           >
             Details
             <ArrowRight className="size-4 group-hover/link:translate-x-1 transition-transform" />

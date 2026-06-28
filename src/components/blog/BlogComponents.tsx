@@ -28,7 +28,7 @@ export const BlogComponents = {
         alt={alt ?? ''}
         width={typeof width === 'number' ? width : 1200}
         height={typeof height === 'number' ? height : 675}
-        className={className ?? 'mb-4 rounded-lg'}
+        className={className ?? 'mb-4 rounded-2xl border border-border/70'}
         loading="lazy"
         style={{ width: '100%', height: 'auto' }}
         {...imageProps}
@@ -43,7 +43,7 @@ export const BlogComponents = {
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <h1 className="mb-6 text-4xl font-bold" {...props}>
+    <h1 className="mb-6 text-4xl font-black tracking-tight" {...props}>
       {children}
     </h1>
   ),
@@ -54,7 +54,7 @@ export const BlogComponents = {
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <h2 className="mb-4 mt-8 text-3xl font-semibold" {...props}>
+    <h2 className="mb-4 mt-10 text-3xl font-semibold tracking-tight" {...props}>
       {children}
     </h2>
   ),
@@ -65,7 +65,7 @@ export const BlogComponents = {
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <h3 className="mb-3 mt-6 text-2xl font-medium" {...props}>
+    <h3 className="mb-3 mt-8 text-2xl font-medium tracking-tight" {...props}>
       {children}
     </h3>
   ),
@@ -77,7 +77,7 @@ export const BlogComponents = {
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <p className="mb-4 leading-7 text-muted-foreground" {...props}>
+    <p className="mb-5 leading-8 text-muted-foreground" {...props}>
       {children}
     </p>
   ),
@@ -89,7 +89,7 @@ export const BlogComponents = {
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <ul className="mb-4 ml-6 list-disc space-y-2" {...props}>
+    <ul className="mb-5 ml-6 list-disc space-y-2" {...props}>
       {children}
     </ul>
   ),
@@ -100,7 +100,7 @@ export const BlogComponents = {
     children: React.ReactNode;
     [key: string]: unknown;
   }) => (
-    <ol className="mb-4 ml-6 list-decimal space-y-2" {...props}>
+    <ol className="mb-5 ml-6 list-decimal space-y-2" {...props}>
       {children}
     </ol>
   ),
@@ -149,7 +149,7 @@ export const BlogComponents = {
     return (
       <div className="group relative mb-4">
         <pre
-          className="overflow-x-auto rounded-lg border bg-muted/30 p-4 text-sm [&>code]:bg-transparent [&>code]:p-0"
+          className="overflow-x-auto rounded-2xl border border-border/70 bg-muted/40 p-4 text-sm shadow-sm [&>code]:bg-transparent [&>code]:p-0"
           {...props}
         >
           {children}
@@ -193,7 +193,7 @@ export const BlogComponents = {
     [key: string]: unknown;
   }) => (
     <blockquote
-      className="mb-4 border-l-4 border-primary pl-4 italic text-muted-foreground"
+      className="mb-5 rounded-r-2xl border-l-4 border-primary bg-primary/5 py-1 pl-4 italic text-muted-foreground"
       {...props}
     >
       {children}

@@ -97,15 +97,21 @@ export default function ContactForm() {
   };
 
   return (
-    <Card className="border-none shadow-none bg-transparent">
-      <CardHeader>
-        <CardTitle>Send me a message</CardTitle>
-        <CardDescription>
-          Fill out the form below and I will get back to you as soon as
-          possible.
-        </CardDescription>
+    <Card className="border-none bg-transparent shadow-none">
+      <CardHeader className="px-4 pt-4 sm:px-6 sm:pt-6">
+        <div className="flex items-center gap-3">
+          <div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <Chat className="size-5" />
+          </div>
+          <div>
+            <CardTitle>Send me a message</CardTitle>
+            <CardDescription>
+              Fill out the form below and I will get back to you as soon as possible.
+            </CardDescription>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-4 sm:px-6 sm:pb-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -116,7 +122,7 @@ export default function ContactForm() {
                   <FormItem>
                     <FormLabel>Name *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your full name" {...field} />
+                      <Input className="bg-background/80" placeholder="Your full name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,7 +181,7 @@ export default function ContactForm() {
                           <option value="+32">🇧🇪 +32</option>
                           <option value="+420">🇨🇿 +420</option>
                         </select>
-                        <Input placeholder="Mobile number" {...field} />
+                        <Input className="bg-background/80" placeholder="Mobile number" {...field} />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -192,6 +198,7 @@ export default function ContactForm() {
                   <FormLabel>Email *</FormLabel>
                   <FormControl>
                     <Input
+                        className="bg-background/80"
                       placeholder="your.email@example.com"
                       type="email"
                       {...field}
@@ -210,8 +217,8 @@ export default function ContactForm() {
                   <FormLabel>Message *</FormLabel>
                   <FormControl>
                     <Textarea
+                        className="min-h-30 resize-none bg-background/80"
                       placeholder="Tell me about your project or just say hello..."
-                      className="min-h-30 resize-none"
                       {...field}
                     />
                   </FormControl>
@@ -220,7 +227,7 @@ export default function ContactForm() {
               )}
             />
 
-            <Button type="submit" className="w-fit" disabled={isSubmitting}>
+            <Button type="submit" className="w-full sm:w-fit" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

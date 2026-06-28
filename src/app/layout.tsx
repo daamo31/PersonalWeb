@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
-        <body className={`font-hanken-grotesk antialiased`}>
+        <body className="font-sans antialiased">
           <AnimatedBackground />
           <ThemeProvider
             attribute="class"

@@ -202,44 +202,68 @@ async function getTechNews(): Promise<TechNewsItem[]> {
 export default async function BlogPage() {
   const posts = getPublishedBlogPosts();
   const techNews = await getTechNews();
+  const stats = [
+    { label: 'Published posts', value: String(posts.length) },
+    { label: 'News sources', value: '3' },
+    { label: 'Active focus', value: 'Engineering' },
+  ];
 
   return (
     <Container className="py-14">
       <div className="space-y-10">
-        <div className="line-grid rounded-3xl border border-primary/15 bg-card/80 p-8 text-center backdrop-blur-md sm:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">Editorial</p>
-          <h1 className="mt-2 text-4xl font-black tracking-tight lg:text-6xl">Blog</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            Notes on engineering, product building, and modern web development.
-          </p>
+        <div className="line-grid overflow-hidden rounded-[2rem] border border-primary/15 bg-card/85 p-8 shadow-sm backdrop-blur-md sm:p-10">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary/80">Editorial</p>
+              <h1 className="mt-2 text-4xl font-black tracking-tight lg:text-6xl">Blog</h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+                Notes on engineering, product building, and modern web development.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-border/70 bg-background/70 p-4">
+                  <p className="text-2xl font-black tracking-tight text-foreground">{stat.value}</p>
+                  <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <section className="space-y-5 rounded-3xl border border-primary/15 bg-card/90 p-6 sm:p-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold tracking-tight">Articles</h2>
+        <section className="space-y-5 rounded-[2rem] border border-primary/15 bg-card/90 p-6 shadow-sm sm:p-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary/80">Articles</p>
+              <h2 className="section-title mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Latest writing</h2>
+            </div>
             <span className="text-sm text-muted-foreground">{posts.length} published</span>
           </div>
           <BlogList posts={posts} />
         </section>
 
-        <section className="space-y-5 rounded-3xl border border-primary/15 bg-card/90 p-6 sm:p-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold tracking-tight">Developer News</h2>
+        <section className="space-y-5 rounded-[2rem] border border-primary/15 bg-card/90 p-6 shadow-sm sm:p-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary/80">Developer News</p>
+              <h2 className="section-title mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Curated signal</h2>
+            </div>
             <span className="text-sm text-muted-foreground">Auto-updated from multiple sources</span>
           </div>
 
           {techNews.length > 0 ? (
-            <ul className="space-y-3">
+            <ul className="grid gap-3 lg:grid-cols-2">
               {techNews.map((item) => (
                 <li key={`${item.source}-${item.url}`}>
                   <a
                     href={item.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-start justify-between gap-4 rounded-xl border border-border bg-background/60 px-4 py-3 transition hover:border-primary/35"
+                    className="flex h-full flex-col justify-between gap-4 rounded-2xl border border-border/70 bg-background/70 p-4 transition hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md"
                   >
-                    <span className="text-sm font-medium leading-snug">{item.title}</span>
-                    <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary">
+                    <span className="text-sm font-medium leading-snug text-foreground">{item.title}</span>
+                    <span className="inline-flex w-fit rounded-full bg-primary/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-primary">
                       {item.source}
                     </span>
                   </a>
@@ -247,7 +271,7 @@ export default async function BlogPage() {
               ))}
             </ul>
           ) : (
-            <p className="rounded-xl border border-dashed border-border bg-background/50 px-4 py-3 text-sm text-muted-foreground">
+            <p className="rounded-2xl border border-dashed border-border bg-background/50 px-4 py-3 text-sm text-muted-foreground">
               News feed temporarily unavailable. Please try again later.
             </p>
           )}
