@@ -16,6 +16,7 @@ import { heroConfig } from '@/config/Hero';
 import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
 import { cn } from '@/lib/utils';
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import ReactMarkdown from 'react-markdown';
 
 import SendIcon from '../svgs/SendIcon';
@@ -275,7 +276,7 @@ const ChatBubble: React.FC = () => {
 
   if (!isMounted) return null;
 
-  return (
+  const chat = (
     <ExpandableChat
       className="hover:cursor-pointer max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-4rem)] md:max-w-xl max-h-[95vh] no-print"
       position="bottom-right"
@@ -430,6 +431,8 @@ const ChatBubble: React.FC = () => {
       </ExpandableChatFooter>
     </ExpandableChat>
   );
+
+  return createPortal(chat, document.body);
 };
 
 export default ChatBubble;
