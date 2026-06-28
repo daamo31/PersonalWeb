@@ -157,7 +157,7 @@
 
   body {
     @apply bg-background text-foreground;
-    animation: pageEntrance 0.45s ease-out both;
+    animation: pageFadeIn 0.45s ease-out both;
   }
 
   ::selection {
@@ -271,12 +271,20 @@
 @keyframes pageEntrance {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
