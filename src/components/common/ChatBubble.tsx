@@ -279,7 +279,7 @@ const ChatBubble: React.FC = () => {
   const chat = (
     <ExpandableChat
       className="hover:cursor-pointer max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-4rem)] md:max-w-xl max-h-[95vh] no-print"
-      position="bottom-right"
+      position="top-right"
       size="lg"
       icon={<ChatBubbleIcon className="h-6 w-6" />}
     >
