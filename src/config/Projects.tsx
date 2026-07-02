@@ -15,6 +15,29 @@ import { Project } from '@/types/project';
 
 export const projects: Project[] = [
   {
+    title: 'ClosetAI',
+    description:
+      'Smart wardrobe app powered by AI. Digitize your wardrobe, get outfit suggestions based on the weather and your personal style, with a virtual try-on feature and Telegram bot integration.',
+    image: '/project/closetai.png',
+    video: '',
+    link: '',
+    technologies: [
+      { name: 'Next.js 15', icon: <NextJs key="nextjs" /> },
+      { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
+      { name: 'Tailwind CSS', icon: <TailwindCss key="tailwindcss" /> },
+      { name: 'shadcn/ui', icon: <Shadcn key="shadcn" /> },
+      { name: 'Supabase', icon: <PostgreSQL key="supabase" /> },
+      { name: 'OpenAI API', icon: <Github key="openai" /> },
+      { name: 'Telegram Bot', icon: <Github key="telegram" /> },
+      { name: 'Weather API', icon: <Github key="weatherapi" /> },
+    ],
+    github: 'https://github.com/daamo31/ClosetAi',
+    live: '',
+    details: true,
+    projectDetailsPageSlug: '/projects/closet-ai',
+    isWorking: false,
+  },
+  {
     title: 'BSB Capital',
     description:
       'A comprehensive financial services platform specializing in cryptocurrencies and investments. It includes a membership system, personalized consulting, analysis tools (BSB Maker), an educational academy, and an administrative dashboard with a modern interface and interactive animations.',

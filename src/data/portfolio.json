@@ -52,6 +52,14 @@
   ],
   "projects": [
     {
+      "id": "closet-ai",
+      "title": "ClosetAI",
+      "description": "Smart wardrobe app powered by AI. Get outfit suggestions based on weather and your style, with virtual try-on and Telegram bot integration.",
+      "stack": ["Next.js 15", "TypeScript", "Supabase", "OpenAI API", "Telegram Bot API"],
+      "url": "",
+      "repo": "https://github.com/daamo31/ClosetAi"
+    },
+    {
       "id": "bsb-capital",
       "title": "BSB Capital",
       "description": "Comprehensive financial platform for crypto and investments, including memberships, academy, admin dashboard and interactive animations.",
