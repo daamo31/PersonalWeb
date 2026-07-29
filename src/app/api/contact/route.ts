@@ -9,7 +9,14 @@ const RATE_LIMIT_MAX_REQUESTS = 5;
 const contactSchema = z.object({
   name: z.string().min(2).max(100),
   email: z.string().email(),
-  phone: z.string().min(10).max(20),
+  phone: z
+    .string()
+    .min(10)
+    .max(30)
+    .refine(
+      (val) => val.replace(/\D/g, '').length >= 10,
+      { message: 'Phone number must contain at least 10 digits.' },
+    ),
   message: z.string().min(10).max(1000),
 });
 

@@ -27,6 +27,9 @@ import * as z from 'zod';
 
 import Chat from '../svgs/Chat';
 
+// Full phone (prefix + local digits) must have at least 10 digits total.
+// A Spanish number (+34 = 2 extra digits) + 9 local digits = 11 chars → still passes.
+// But a bare 9-digit local number without a prefix is blocked.
 const contactFormSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
@@ -34,9 +37,19 @@ const contactFormSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address.',
   }),
-  phone: z.string().regex(/^[\+]?[0-9]{10,20}$/, {
-    message: 'Please enter a valid phone number (10-20 digits).',
-  }),
+  phone: z
+    .string()
+    .regex(/^\+?[0-9\s\-().]{10,25}$/, {
+      message: 'Please enter a valid phone number (minimum 10 digits).',
+    })
+    .refine(
+      (val) => {
+        // Count only actual digits – must be at least 10
+        const digits = val.replace(/\D/g, '');
+        return digits.length >= 10;
+      },
+      { message: 'Phone number must contain at least 10 digits.' },
+    ),
   message: z
     .string()
     .min(10, {
@@ -51,6 +64,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phonePrefix, setPhonePrefix] = useState('+34');
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -139,9 +153,13 @@ export default function ContactForm() {
                         <select
                           className="border rounded px-2 py-1 bg-background"
                           style={{ minWidth: '80px' }}
-                          defaultValue="+34"
+                          value={phonePrefix}
                           onChange={e => {
-                            field.onChange(e.target.value + (field.value?.replace(/^\+?[0-9]*/, '') || ''));
+                            const newPrefix = e.target.value;
+                            setPhonePrefix(newPrefix);
+                            // Keep the local digits already typed, update full value
+                            const localDigits = field.value.replace(/^\+\d+\s*/, '');
+                            field.onChange(newPrefix + ' ' + localDigits);
                           }}
                         >
                           <option value="+1">🇺🇸 +1</option>
@@ -179,9 +197,20 @@ export default function ContactForm() {
                           <option value="+43">🇦🇹 +43</option>
                           <option value="+31">🇳🇱 +31</option>
                           <option value="+32">🇧🇪 +32</option>
-                          <option value="+420">🇨🇿 +420</option>
                         </select>
-                        <Input className="bg-background/80" placeholder="Mobile number" {...field} />
+                        <Input
+                          className="bg-background/80"
+                          placeholder="Local number (min 7 digits)"
+                          value={field.value.replace(/^\+\d+\s*/, '')}
+                          onChange={e => {
+                            // Only allow digits, spaces, dashes, dots, parentheses
+                            const localPart = e.target.value.replace(/[^\d\s\-().]/g, '');
+                            field.onChange(phonePrefix + ' ' + localPart);
+                          }}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          ref={field.ref}
+                        />
                       </div>
                     </FormControl>
                     <FormMessage />
