@@ -1,8 +1,10 @@
 import Expo from '@/components/technologies/Expo';
+import ExpressJs from '@/components/technologies/ExpressJs';
 import FastAPI from '@/components/technologies/FastAPI';
 import Github from '@/components/technologies/Github';
 import Motion from '@/components/technologies/Motion';
 import NextJs from '@/components/technologies/NextJs';
+import NodeJs from '@/components/technologies/NodeJs';
 import PostgreSQL from '@/components/technologies/PostgreSQL';
 import Python from '@/components/technologies/Python';
 import ReactIcon from '@/components/technologies/ReactIcon';
@@ -14,6 +16,32 @@ import Vercel from '@/components/technologies/Vercel';
 import { Project } from '@/types/project';
 
 export const projects: Project[] = [
+  {
+    title: 'Agroplan',
+    description:
+      'Progressive web app (PWA) for agricultural management: geolocated parcels on satellite map, field activity records (irrigation, fertilization, phytosanitary, harvest), exportable PDF/Excel reports and real-time weather. Works offline via IndexedDB with automatic sync on reconnect.',
+    image: '/project/agroplan.png',
+    video: '',
+    link: '',
+    technologies: [
+      { name: 'Next.js 15', icon: <NextJs key="nextjs" /> },
+      { name: 'React 19', icon: <ReactIcon key="react" /> },
+      { name: 'TypeScript', icon: <TypeScript key="typescript" /> },
+      { name: 'Tailwind CSS', icon: <TailwindCss key="tailwindcss" /> },
+      { name: 'Node.js', icon: <NodeJs key="nodejs" /> },
+      { name: 'Express', icon: <ExpressJs key="express" /> },
+      { name: 'PostgreSQL', icon: <PostgreSQL key="postgresql" /> },
+      { name: 'PostGIS', icon: <PostgreSQL key="postgis" /> },
+      { name: 'Docker', icon: <Github key="docker" /> },
+      { name: 'Leaflet', icon: <Github key="leaflet" /> },
+      { name: 'PWA / IndexedDB', icon: <Github key="pwa" /> },
+    ],
+    github: 'https://github.com/daamo31/Agroplan',
+    live: '',
+    details: true,
+    projectDetailsPageSlug: '/projects/agroplan',
+    isWorking: true,
+  },
   {
     title: 'ClosetAI',
     description:

@@ -1,0 +1,95 @@
+---
+title: 'Agroplan'
+description: 'Progressive web app (PWA) for agricultural management: geolocated parcels on satellite map, field activity records, exportable PDF/Excel reports and real-time weather. Works offline via IndexedDB with automatic sync on reconnect.'
+image: '/project/agroplan.png'
+technologies:
+  [
+    'Next.js 15',
+    'React 19',
+    'TypeScript',
+    'Tailwind CSS',
+    'Node.js',
+    'Express',
+    'PostgreSQL',
+    'PostGIS',
+    'Docker',
+    'Leaflet',
+    'PWA / IndexedDB',
+  ]
+github: 'https://github.com/daamo31/Agroplan'
+live: ''
+timeline: '3 months'
+role: 'Full Stack Developer'
+team: 'Solo'
+status: 'Completed'
+featured: true
+challenges:
+  [
+    'Offline-first architecture with IndexedDB and idempotent sync',
+    'Spatial data storage with PostGIS (MULTIPOLYGON / GIST index)',
+    'PDF and Excel report generation filtered by parcel and date range',
+    'Leaflet map integration with SSR in Next.js (dynamic imports)',
+    'Parcel color state derived from latest field activity',
+    'Docker Compose orchestration of frontend, backend and PostgreSQL',
+  ]
+learnings:
+  [
+    'PWA Service Worker and manifest setup',
+    'Offline sync patterns with external_id for idempotency',
+    'PostGIS geometry storage and querying',
+    'PDFKit and ExcelJS for report generation',
+    'Leaflet with Next.js App Router (SSR-safe dynamic import)',
+    'npm workspaces monorepo structure',
+  ]
+isPublished: true
+---
+
+# Agroplan — Cuaderno de Campo Digital
+
+## Description
+
+Agroplan is a Progressive Web App (PWA) for agricultural management that allows technicians and farmers to record field activities—irrigation, fertilization, phytosanitary treatments and harvests—even without internet access. Data is stored locally in IndexedDB and automatically synced to the backend when the connection is restored.
+
+## Main Features
+
+- **Parcel Map**: Visualize geolocated parcels as GeoJSON polygons on a satellite layer (Esri World Imagery) and OSM. Click a parcel in the list to auto-focus the map.
+- **Parcel State Colors**: Each parcel is colored by its latest recorded activity (blue → irrigation, green → fertilization, amber → phytosanitary, orange/brown → harvest, grey → no activity).
+- **Field Activity Registry**: Log irrigation, fertilization, phytosanitary and harvest events linked to a parcel, product and dose per hectare.
+- **Product Catalogue**: Manage fertilizers, phytosanitary products and seeds with units of measure.
+- **Official Reports**: Export PDF and Excel reports filtered by parcel, activity type and date range—including company metadata, inspector, signature and stamp fields.
+- **Real-Time Weather**: Current conditions and 5-day forecast via OpenWeather API, with basic agronomic alerts for pulverization.
+- **Offline Mode**: Full write capability without network; idempotent sync via `external_id` UUID on reconnect.
+
+## Architecture
+
+- **Frontend**: Next.js 15 (App Router) + React 19 + TypeScript + Tailwind CSS. Leaflet loaded as a dynamic import to avoid SSR issues. IndexedDB managed via `idb` wrapper.
+- **Backend**: Node.js 20 + Express 4 REST API, validated with Zod, secured with Helmet and CORS.
+- **Database**: PostgreSQL 15 + PostGIS 3.4 for spatial geometry (MULTIPOLYGON, SRID 4326, GIST index) + pgcrypto for native UUID v4.
+- **Infrastructure**: Docker Compose orchestrates frontend, backend and database services. npm workspaces monorepo at root.
+
+## API Endpoints
+
+| Method | Route | Description |
+|---|---|---|
+| GET/POST | `/api/v1/parcelas` | List / create parcels |
+| GET | `/api/v1/parcelas/geojson` | GeoJSON for map rendering |
+| GET/POST | `/api/v1/registros-campo` | Field records |
+| POST | `/api/v1/registros-campo/sync` | Offline sync batch |
+| GET/POST | `/api/v1/productos` | Product catalogue |
+| GET | `/api/v1/reportes/registros-campo?format=pdf\|xlsx` | Export report |
+| GET | `/api/v1/clima/actual` | Current weather |
+| GET | `/api/v1/clima/pronostico-5d` | 5-day forecast |
+
+## Quick Start
+
+```bash
+# Clone and start all services
+docker compose up -d --build
+
+# Frontend: http://localhost:3000
+# Backend:  http://localhost:4000
+```
+
+## Status
+
+Project completed and fully functional. All core modules (map, registry, reports, weather, offline sync) are operational.
