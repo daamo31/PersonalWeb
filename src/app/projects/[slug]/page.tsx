@@ -77,8 +77,36 @@ export default async function ProjectCaseStudyPage({
   const navigation = await getProjectNavigation(slug);
   const relatedProjects = await getRelatedProjectCaseStudies(slug, 2);
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteConfig.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: `${siteConfig.url}/projects` },
+      { '@type': 'ListItem', position: 3, name: caseStudy.frontmatter.title, item: `${siteConfig.url}/projects/${slug}` },
+    ],
+  };
+
+  const projectSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: caseStudy.frontmatter.title,
+    description: caseStudy.frontmatter.description,
+    image: caseStudy.frontmatter.image,
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: `${siteConfig.url}/`,
+    },
+    keywords: caseStudy.frontmatter.technologies.join(', '),
+    url: `${siteConfig.url}/projects/${slug}`,
+  };
+
   return (
-    <Container className="py-16">
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }} />
+      <Container className="py-16">
       <div className="space-y-12">
         {/* Back Button */}
         <div>
@@ -175,5 +203,6 @@ export default async function ProjectCaseStudyPage({
         </div>
       </div>
     </Container>
+    </>
   );
 }

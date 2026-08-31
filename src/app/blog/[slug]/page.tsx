@@ -71,8 +71,44 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const relatedPosts = await getRelatedPosts(slug, 3);
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteConfig.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteConfig.url}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.frontmatter.title, item: `${siteConfig.url}/blog/${slug}` },
+    ],
+  };
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.frontmatter.title,
+    description: post.frontmatter.description,
+    image: post.frontmatter.image,
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: `${siteConfig.url}/`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteConfig.url}/assets/logo.png`,
+      },
+    },
+    datePublished: post.frontmatter.date,
+    mainEntityOfPage: `${siteConfig.url}/blog/${slug}`,
+    keywords: post.frontmatter.tags.join(', '),
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <Container className="py-14 sm:py-16">
         <div className="space-y-10">
           <div className="hero-panel line-grid overflow-hidden rounded-[2rem] border border-primary/15 p-6 shadow-sm backdrop-blur-md sm:p-8">

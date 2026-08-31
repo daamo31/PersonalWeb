@@ -20,6 +20,10 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <meta name="robots" content="index,follow" />
+          <meta name="referrer" content="strict-origin-when-cross-origin" />
+        </head>
         <body className="font-sans antialiased">
           <AnimatedBackground />
           <ThemeProvider

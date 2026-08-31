@@ -7,14 +7,17 @@ export interface PageMeta {
   keywords?: string[];
   ogImage?: string;
   twitterCard?: 'summary' | 'summary_large_image';
+  canonicalPath?: string;
 }
 
 // Base site configuration
 export const siteConfig = {
   name: heroConfig.name,
-  title: 'Sleek Portfolio',
-  description: 'Sleek Portfolio by Daniel Del Amo',
-  url: process.env.NEXT_PUBLIC_URL || 'http://localhost:3000',
+  title:
+    'Daniel Del Amo | Full Stack Developer & Automation Specialist',
+  description:
+    'Full Stack Developer and Automation Specialist with experience building scalable web products, internal tools, workflows, and polished user experiences with React, Next.js, TypeScript, and modern backend systems.',
+  url: process.env.NEXT_PUBLIC_URL || 'https://danieldelamo.dev',
   ogImage: '/meta/opengraph-image.png',
   author: {
     name: about.name,
@@ -31,6 +34,8 @@ export const siteConfig = {
     'nextjs',
     'typescript',
     'web development',
+    'automation specialist',
+    'daniel del amo',
     heroConfig.name.toLowerCase(),
   ],
 };
@@ -38,34 +43,39 @@ export const siteConfig = {
 export const pageMetadata: Record<string, PageMeta> = {
   // Home page
   '/': {
-    title: `${heroConfig.name} - ${heroConfig.title}`,
-    description: `${about.description} Explore my projects, experience, and technical expertise.`,
+    title: `${heroConfig.name} | Full Stack Developer & Automation Specialist`,
+    description:
+      'Portfolio of Daniel Del Amo: full stack developer, automation specialist, and product builder focused on UX, scalable systems, and modern web experiences.',
     keywords: [
       'portfolio',
       'developer',
       'full-stack',
       'web development',
       'projects',
+      'automation',
+      'daniel del amo',
     ],
     ogImage: '/meta/hero.png',
     twitterCard: 'summary_large_image',
+    canonicalPath: '/',
   },
 
   // Contact page
   '/contact': {
-    title: 'Contact - Get in Touch',
+    title: 'Contact Daniel Del Amo | Full Stack Developer',
     description:
-      "Get in touch with me for collaborations, projects, or opportunities. I'd love to hear from you!",
+      'Get in touch for web projects, automation, product development, and technical collaborations with a senior full stack engineer.',
     keywords: ['contact', 'hire', 'collaboration', 'freelance', 'developer'],
     ogImage: '/assets/logo.png',
     twitterCard: 'summary',
+    canonicalPath: '/contact',
   },
 
   // Work Experience page
   '/work-experience': {
-    title: 'Work Experience - Professional Journey',
+    title: 'Work Experience | Daniel Del Amo',
     description:
-      'Explore my professional work experience across different companies and roles in software development.',
+      'Review the professional journey of Daniel Del Amo in software development, automation, and product engineering across multiple industries.',
     keywords: [
       'work experience',
       'career',
@@ -75,44 +85,49 @@ export const pageMetadata: Record<string, PageMeta> = {
     ],
     ogImage: '/meta/work.png',
     twitterCard: 'summary_large_image',
+    canonicalPath: '/work-experience',
   },
 
   // Projects page
   '/projects': {
-    title: 'Projects - My Work & Projects Portfolio',
+    title: 'Projects | Web Apps, Products & Case Studies',
     description:
-      'Discover my projects and work across different technologies and domains. From web apps to mobile solutions.',
+      'Explore selected web applications, product work, and technical case studies built with React, Next.js, TypeScript, and modern automation workflows.',
     keywords: [
       'projects',
       'portfolio',
       'web development',
       'applications',
       'software',
+      'nextjs projects',
     ],
     ogImage: '/meta/projects.png',
     twitterCard: 'summary_large_image',
+    canonicalPath: '/projects',
   },
 
   // Blog page
   '/blog': {
-    title: 'Blog - Thoughts & Tutorials',
+    title: 'Blog | Engineering Notes, Tutorials & Product Thinking',
     description:
-      'Read my thoughts, tutorials, and insights on engineering, programming, and web development.',
+      'Read practical notes on engineering, full stack development, automation, product thinking, and modern web workflows from Daniel Del Amo.',
     keywords: [
       'blog',
       'tutorials',
       'programming',
       'web development',
       'technical writing',
+      'engineering notes',
     ],
     ogImage: '/meta/blogs.png',
     twitterCard: 'summary_large_image',
+    canonicalPath: '/blog',
   },
 
   // Resume page
   '/resume': {
-    title: 'Resume - Professional CV',
-    description: `View and download ${heroConfig.name}'s professional resume and CV. Technical skills, experience, and qualifications.`,
+    title: 'Resume | Daniel Del Amo | Full Stack Developer',
+    description: `View the professional resume and CV of ${heroConfig.name}, including software engineering experience, skills, and product delivery expertise.`,
     keywords: [
       'resume',
       'cv',
@@ -123,13 +138,14 @@ export const pageMetadata: Record<string, PageMeta> = {
     ],
     ogImage: '/meta/resume.png',
     twitterCard: 'summary',
+    canonicalPath: '/resume',
   },
 
   // Gears page
   '/gears': {
-    title: 'Gears - My Setup & Tools',
+    title: 'Tools & Setup | Developer Workflow',
     description:
-      'Discover the tools, devices, and software I use to get my work done efficiently.',
+      'Explore the hardware, setup, tools, and software used by Daniel Del Amo to build products efficiently and maintain a strong engineering workflow.',
     keywords: [
       'setup',
       'tools',
@@ -140,13 +156,14 @@ export const pageMetadata: Record<string, PageMeta> = {
     ],
     ogImage: '/meta/gears.png',
     twitterCard: 'summary_large_image',
+    canonicalPath: '/gears',
   },
 
   // Setup page
   '/setup': {
-    title: 'Setup Guide - VS Code Configuration',
+    title: 'Developer Setup Guide | VS Code Configuration',
     description:
-      'Complete guide to setting up VS Code with my preferred configuration, extensions, and fonts for optimal development.',
+      'Complete guide to setting up VS Code with my preferred configuration, extensions, fonts, and productivity tools for a clean development workflow.',
     keywords: [
       'vscode',
       'setup',
@@ -157,6 +174,7 @@ export const pageMetadata: Record<string, PageMeta> = {
     ],
     ogImage: '/meta/setup.png',
     twitterCard: 'summary_large_image',
+    canonicalPath: '/setup',
   },
 };
 
@@ -168,6 +186,8 @@ export function getPageMetadata(pathname: string): PageMeta {
 // Helper function to generate complete metadata object for Next.js
 export function generateMetadata(pathname: string) {
   const pageMeta = getPageMetadata(pathname);
+  const canonicalPath = pageMeta.canonicalPath || pathname;
+  const normalizedPath = canonicalPath === '/' ? '/' : canonicalPath;
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -178,10 +198,11 @@ export function generateMetadata(pathname: string) {
     creator: siteConfig.author.name,
     openGraph: {
       type: 'website',
-      url: `${siteConfig.url}${pathname}`,
+      url: `${siteConfig.url}${normalizedPath}`,
       title: pageMeta.title,
       description: pageMeta.description,
       siteName: siteConfig.title,
+      locale: 'en_US',
       images: [
         {
           url: pageMeta.ogImage || siteConfig.ogImage,
@@ -210,7 +231,7 @@ export function generateMetadata(pathname: string) {
       },
     },
     alternates: {
-      canonical: `${siteConfig.url}${pathname}`,
+      canonical: `${siteConfig.url}${normalizedPath}`,
     },
   };
 }

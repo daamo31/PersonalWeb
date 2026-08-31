@@ -3,6 +3,8 @@ import { heroConfig } from '@/config/Hero';
 import portfolioData from '@/data/portfolio.json';
 import Image from 'next/image';
 
+import { JsonLd } from '@/components/seo/JsonLd';
+
 export default function Page() {
   const data = portfolioData;
   const heroStats = [
@@ -11,11 +13,43 @@ export default function Page() {
     { label: 'Selected projects', value: String(data.projects.length) },
   ];
 
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: heroConfig.name,
+    jobTitle: heroConfig.title,
+    url: 'https://danieldelamo.dev',
+    sameAs: [
+      'https://www.linkedin.com/in/danieldelamotarrero/',
+      'https://github.com/daamo31',
+    ],
+    image: 'https://danieldelamo.dev/assets/avatar.jpg',
+    description:
+      'Full Stack Developer and Automation Specialist focused on scalable products, UX and modern web engineering.',
+  };
+
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: heroConfig.name,
+    url: 'https://danieldelamo.dev',
+    description:
+      'Portfolio and personal website of Daniel Del Amo featuring projects, services, and engineering notes.',
+    inLanguage: 'en',
+    author: {
+      '@type': 'Person',
+      name: heroConfig.name,
+    },
+  };
+
   return (
-    <main className="relative overflow-hidden pb-24 pt-10 sm:pt-14">
-      <div className="mesh-background pointer-events-none absolute inset-0" />
-      <div className="grain-overlay pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+    <>
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={websiteSchema} />
+      <main className="relative overflow-hidden pb-24 pt-10 sm:pt-14" itemScope itemType="https://schema.org/WebPage">
+      <div className="mesh-background pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="grain-overlay pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
 
       <section className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
         <div className="hero-panel line-grid overflow-hidden rounded-[2rem] border border-primary/15 p-6 shadow-[0_20px_60px_rgba(12,32,59,0.08)] sm:p-8 lg:p-10">
@@ -264,6 +298,7 @@ export default function Page() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
