@@ -1,27 +1,64 @@
-# Sleek Portfolio by ramxcodes
+# Daniel Del Amo — Full Stack Developer & Automation Specialist
 
-A modern, responsive portfolio website built with Next.js 15, TypeScript, Tailwind CSS, and Shadcn UI. Features a blog system, project showcase, work experience timeline, and contact form with Telegram integration.
+A high-performance, design-focused portfolio website showcasing full-stack development expertise, process automation solutions, and AI integration capabilities. Built with modern web technologies and optimized for both technical excellence and recruiter visibility.
 
 ![Portfolio Preview](/public/meta/hero.png)
 
-## Deploy 
+## 🎯 Overview
 
-Click here to your portfolio template now:
+Professional portfolio and personal website for **Daniel Del Amo**, a Full Stack Developer and Automation Specialist with 6+ years of experience in scalable web applications, cloud architecture, and AI-powered automation solutions.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Framxcodes%2Fsleek-portfolio&env=TELEGRAM_BOT_TOKEN,TELEGRAM_CHAT_ID,GEMINI_API_KEY,NEXT_PUBLIC_URL,NEXT_PUBLIC_UMAMI_SRC,NEXT_PUBLIC_UMAMI_ID)
+**Live:** [danieldelamo.dev](https://danieldelamo.dev)
 
-## Features
+## ✨ Features
 
-- **Next.js 15** with App Router
-- **Tailwind CSS** for styling
-- **Shadcn UI** components
-- **Dark/Light** mode
-- **Responsive** design
-- **MDX** for blog posts and project details
-- **Contact Form** with Telegram integration
-- **SEO** optimized
-- **TypeScript** for type safety
+### 🎨 Design & UX
+- **Neumorphic Design** with iOS-inspired aesthetic (blue tones, soft shadows)
+- **Dark/Light Mode** with seamless theme switching
+- **Responsive** mobile-first design optimized for all devices
+- **90+ Lighthouse Scores** for performance, accessibility, and SEO
+
+### 🔧 Technical Stack
+- **Next.js 15** with App Router for modern, efficient routing
+- **React 19** with server components for optimal performance
+- **TypeScript** for type-safe, maintainable code
+- **Tailwind CSS** with custom theme configuration
+- **Shadcn UI** components for consistent, accessible interfaces
+- **Bun** runtime for fast builds and development
+
+### 🚀 Performance & SEO
+- **Server-Side Rendering (SSR)** for improved SEO
+- **Static Site Generation (SSG)** for 42+ optimized pages
+- **JSON-LD Structured Data** (Person, WebSite, Article, Project schemas)
+- **Open Graph & Twitter Card** optimization for social media
+- **Canonical URLs** and semantic HTML5 structure
+- **Code Splitting & Lazy Loading** for reduced bundle size
+- **Image Optimization** with Next.js Image component
+
+### 📝 Content Management
+- **MDX Support** for blog posts and project case studies
+- **Frontmatter Metadata** with automatic parsing
+- **Blog System** with categories, tags, and timestamps
+- **Project Showcase** with filtering and detailed case studies
+- **Work Experience Timeline** with technologies and achievements
+
+### 🤖 Automation & AI
+- **AI-Powered Chat** assistant with streaming responses
+- **Contact Form** with email validation and Telegram integration
+- **Process Automation** configuration examples
+- **API Integrations** patterns and best practices
+
+### 📊 Analytics & Monitoring
 - **Umami Analytics** for privacy-focused web analytics
+- **Error Tracking** and performance monitoring
+- **Dark Mode Analytics** support
+
+### ♿ Accessibility
+- **WCAG 2.1 AA Compliant** structure
+- **Semantic HTML5** markup
+- **ARIA Labels** for interactive components
+- **Keyboard Navigation** support
+- **High Contrast** color modes
 
 ## Prerequisites
 
