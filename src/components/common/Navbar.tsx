@@ -9,7 +9,7 @@ import { ThemeToggleButton } from './ThemeSwitch';
 export default function Navbar() {
   return (
     <Container className="sticky top-4 z-20 py-4">
-      <div className="rounded-3xl border border-border/60 bg-background/75 px-4 py-3 shadow-lg backdrop-blur-xl sm:rounded-full sm:px-5">
+      <div className="neo-surface rounded-[1.75rem] px-4 py-3 backdrop-blur-xl sm:rounded-full sm:px-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/">

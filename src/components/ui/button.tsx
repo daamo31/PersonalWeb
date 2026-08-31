@@ -7,20 +7,20 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import * as React from 'react';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground btn-inner-shadow hover:bg-primary/90 hover:cursor-pointer',
+          'neo-button bg-primary/10 text-foreground hover:-translate-y-0.5 hover:shadow-[8px_8px_18px_rgba(163,177,198,0.7),-8px_-8px_18px_rgba(255,255,255,0.85)] dark:text-foreground',
         destructive:
-          'bg-destructive text-white btn-inner-shadow hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+          'neo-button bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
-          'border bg-background btn-inner-shadow hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
+          'neo-surface border border-white/40 bg-background/60 text-foreground hover:-translate-y-0.5 dark:border-white/10',
         secondary:
-          'bg-secondary text-secondary-foreground btn-inner-shadow hover:bg-secondary/80',
+          'neo-button bg-secondary text-secondary-foreground hover:bg-secondary/90',
         ghost:
-          'btn-inner-shadow hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
+          'neo-button bg-transparent text-foreground hover:bg-muted/70 dark:hover:bg-muted/40',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
