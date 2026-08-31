@@ -37,7 +37,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
             <div className="flex items-center gap-2">
               <h3
                 className={cn(
-                  'text-lg font-bold',
+                  'text-lg font-bold text-foreground',
                   experience.isBlur ? 'blur-[5px]' : 'blur-none',
                 )}
               >
@@ -106,11 +106,11 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
                 </div>
               )}
             </div>
-            <p>{experience.position}</p>
+            <p className="text-foreground">{experience.position}</p>
           </div>
         </div>
         {/* Right Side */}
-        <div className="text-secondary flex flex-col md:text-right">
+        <div className="text-foreground flex flex-col md:text-right">
           <p>
             {experience.startDate} -{' '}
             {experience.isCurrent ? 'Present' : experience.endDate}
@@ -121,7 +121,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
 
       {/* Technologies */}
       <div>
-        <h4 className="text-md mt-4 mb-2 font-semibold">Technologies</h4>
+        <h4 className="text-md mt-4 mb-2 font-semibold text-foreground">Technologies</h4>
         <div className="flex flex-wrap gap-2">
           {experience.technologies.map((technology, techIndex: number) => (
             <Skill
@@ -136,11 +136,12 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
       </div>
 
       {/* Description */}
-      <div className="text-secondary flex flex-col">
+      <div className="text-foreground flex flex-col space-y-2">
         {experience.description.map(
           (description: string, descIndex: number) => (
             <p
               key={descIndex}
+              className="text-sm leading-relaxed"
               dangerouslySetInnerHTML={{
                 __html: `• ${parseDescription(description)}`,
               }}
