@@ -41,7 +41,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             width={1920}
             height={1080}
           />
-          <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-background/40 bg-background/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground shadow-sm backdrop-blur">
+          <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-background/60 bg-card/95 backdrop-blur px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-card-foreground shadow-sm">
             <span className={`size-2 rounded-full ${project.isWorking ? 'bg-green-500' : 'bg-orange-500'}`} />
             {project.isWorking ? 'Live product' : 'In development'}
           </div>

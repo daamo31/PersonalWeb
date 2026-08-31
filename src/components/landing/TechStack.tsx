@@ -40,7 +40,7 @@ export default function TechStack() {
                 <Badge
                   key={skill}
                   variant="secondary"
-                  className="tag-inner-shadow bg-linear-to-r from-secondary/70 to-accent/70 text-white hover:from-secondary hover:to-accent transition-all duration-300 hover:scale-105 cursor-default"
+                  className="tag-inner-shadow bg-linear-to-r from-secondary/70 to-accent/70 text-foreground hover:from-secondary hover:to-accent transition-all duration-300 hover:scale-105 cursor-default"
                 >
                   {skill}
                 </Badge>
