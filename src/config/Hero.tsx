@@ -88,7 +88,7 @@ export const heroConfig = {
   // Description Configuration
   description: {
     template:
-      "👨‍💻 About Me: Full Stack Developer & Automation Specialist\nI am a Programmer in Training with a solid track record of over 6 years of technical experience in industrial environments, where I developed strong skills in automation and analytical problem solving. My career is currently focused on software development with an emphasis on scalability, security, and—crucially—exceptional user experience (UX).",
+      "Full Stack Developer & Automation Specialist\n\nI build production-ready web applications and AI-powered automation solutions. 6+ years translating business requirements into scalable, secure systems. Expert in modern full-stack development (React, Next.js, TypeScript, FastAPI) and process automation. Currently at Colorius, designing high-performance frontend experiences.",
   },
 
   // Buttons Configuration

@@ -6,8 +6,8 @@
   "hero": {
     "name": "Daniel Del Amo",
     "role": "Full Stack Developer & Automation Specialist",
-    "headline": "Scalability, security, and UX for your digital product",
-    "summary": "Developer with over 6 years of technical experience in industrial environments, specialized in automation and in building scalable, secure software with excellent user experience.",
+    "headline": "Building AI-powered, high-performance web apps with React, Next.js & TypeScript",
+    "summary": "6+ years building scalable, secure full-stack applications and process automation solutions. Expertise: React, Next.js, FastAPI, cloud architecture, and AI workflow integration. Proven track record delivering systems that drive measurable business impact.",
     "primaryCta": {
       "label": "Let's discuss your project",
       "href": "#contact"
@@ -21,33 +21,33 @@
   "services": [
     {
       "id": "web-dev",
-      "title": "Web Development",
-      "description": "Full-stack web applications built with modern frameworks. From frontend to backend, API design to deployment.",
-      "items": ["Next.js", "React", "Tailwind CSS"]
+      "title": "Full-Stack Web Development",
+      "description": "End-to-end modern web applications using Next.js and React. From database design to deployment. Optimized for performance, SEO, and user experience.",
+      "items": ["Next.js 15", "React 19", "TypeScript", "Performance Optimization"]
     },
     {
       "id": "api-dev",
-      "title": "Backend Development",
-      "description": "Robust backend solutions using Python, FastAPI, and cloud platforms. Scalable APIs and microservices.",
-      "items": ["Python", "FastAPI", "Microservices"]
+      "title": "Backend & API Architecture",
+      "description": "Scalable backend systems with FastAPI, Node.js, and cloud platforms. RESTful and GraphQL APIs, microservices architecture, real-time data handling.",
+      "items": ["FastAPI", "Node.js", "PostgreSQL", "Microservices", "Cloud Architecture"]
     },
     {
       "id": "automation",
-      "title": "AI Process Automation",
-      "description": "Automate repetitive workflows with AI assistants, integrations, and custom process logic to save time and reduce errors.",
-      "items": ["Workflow automation", "AI-powered assistants", "API integrations"]
+      "title": "AI & Process Automation",
+      "description": "Automate complex workflows with AI assistants (OpenAI, Claude), intelligent integrations, and custom logic. Reduce manual work, improve accuracy.",
+      "items": ["AI Workflows", "OpenAI Integration", "Zapier/Make", "Custom Automations", "Bot Development"]
     },
     {
       "id": "frontend-dev",
-      "title": "Frontend Development",
-      "description": "Beautiful, responsive UI/UX with React and Next.js. Performance optimization and modern design principles.",
-      "items": ["UI/UX", "Performance", "Responsive Design"]
+      "title": "Frontend Engineering",
+      "description": "Beautiful, performant, accessible interfaces. Responsive design, state management, animation, real-time features. Focus on exceptional UX.",
+      "items": ["React Components", "Tailwind CSS", "Performance", "Accessibility", "UX/UI"]
     },
     {
       "id": "consulting",
-      "title": "Technical Consulting",
-      "description": "Architecture guidance, best practices, and technology selection for your projects.",
-      "items": ["Architecture", "Best Practices", "Tech Selection"]
+      "title": "Technical Consulting & Architecture",
+      "description": "Strategic guidance on tech stack selection, system architecture, performance optimization, and best practices. Help you build the right solution.",
+      "items": ["Architecture Design", "Tech Stack Guidance", "Performance Audits", "Code Review", "Best Practices"]
     }
   ],
   "projects": [

@@ -14,9 +14,9 @@ export interface PageMeta {
 export const siteConfig = {
   name: heroConfig.name,
   title:
-    'Daniel Del Amo | Full Stack Developer & Automation Specialist',
+    'Daniel Del Amo | Full Stack Developer & Automation Specialist | React • Next.js • TypeScript',
   description:
-    'Full Stack Developer and Automation Specialist with experience building scalable web products, internal tools, workflows, and polished user experiences with React, Next.js, TypeScript, and modern backend systems.',
+    'Full Stack Developer and Automation Specialist with experience building scalable web products, internal tools, automation workflows, and polished user experiences using React, Next.js, TypeScript, and modern backend technologies.',
   url: process.env.NEXT_PUBLIC_URL || 'https://danieldelamo.dev',
   ogImage: '/meta/opengraph-image.png',
   author: {
