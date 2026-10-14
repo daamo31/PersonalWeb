@@ -1,0 +1,58 @@
+---
+title: 'BSB Capital: Making Stripe and Supabase Agree on Memberships'
+description: 'A practical look at the hardest part of a membership platform: turning payment events into reliable access control across Stripe, Supabase, and multiple product areas.'
+image: '/project/bsbcapital.png'
+tags: ['bsb-capital', 'stripe', 'supabase', 'payments']
+date: '2026-10-14'
+isPublished: true
+---
+
+Building BSB Capital meant bringing several parts of a financial services product together: paid memberships, educational content, consulting, analysis tools, and an administrative dashboard. Stripe and Supabase each solve important pieces of that puzzle, but connecting them is not just a matter of adding a checkout button.
+
+The real challenge is deciding what happens after the payment: which account owns it, what access it grants, how long that access lasts, and what the application should do when payment state changes.
+
+## A successful redirect is not proof of payment
+
+The first tempting shortcut is to grant access when the customer returns to the site after checkout. That return is useful for the interface, but it is not a trustworthy billing signal. A browser can close, a network request can fail, or a user can reach a return URL without the application having confirmed the final payment state.
+
+The reliable flow is based on server-to-server events. The application creates a checkout session for an authenticated user, Stripe processes the payment, and a verified webhook reports the resulting event. The application can then update its own membership records and show the new access state.
+
+That separation also keeps payment credentials out of the application. Stripe handles the sensitive payment details; the product stores only the references and state it needs to operate the account.
+
+## Translate billing into product access
+
+Stripe knows about customers, subscriptions, invoices, and payment statuses. BSB Capital needs to answer a different question: what can this member use right now?
+
+Those concepts should not be collapsed into a single `isPremium` boolean. A subscription can be active, past due, canceled at the end of a billing period, or incomplete. Each state can have different consequences for access, renewal messaging, and the admin dashboard.
+
+A useful boundary is an internal membership model: associate a verified billing customer with the application user, record the provider and plan, and represent the access period and current status explicitly. Then the academy, consulting features, and analysis tools can check product entitlements without each area needing to understand Stripe's event vocabulary.
+
+This boundary becomes even more valuable when a product accepts payments through more than one provider. Stripe and Hotmart can have different identifiers and lifecycle events; the application should still have one clear way to answer, “What access does this account have?”
+
+## Treat webhooks as unreliable delivery
+
+Webhook delivery is designed to be retried. An event can arrive more than once, and separate events may not arrive in the order a developer expects. A handler that assumes exactly-once, perfectly ordered delivery can accidentally duplicate records or restore an old state.
+
+The handler should verify the provider's signature, identify the event, and apply changes in a way that is safe to repeat. Persisting processed event identifiers or using another idempotent update strategy prevents a retry from granting duplicate membership records. When an event describes an older state, the application should avoid letting it overwrite newer billing data.
+
+It is also important to have a way to inspect failures and reconcile local records with the payment provider. A webhook error that goes unnoticed can leave a customer charged but without the expected product access.
+
+## Keep Supabase security in the loop
+
+Supabase Auth identifies the signed-in user, while PostgreSQL Row Level Security (RLS) controls which records that user can read or change. Billing state connects the two, so the trust boundary needs to stay clear.
+
+The browser should not be allowed to declare that a payment succeeded or promote its own membership. Only trusted server-side processing should write billing state based on a verified provider event. Any privileged Supabase credential must remain on the server, because the service role bypasses RLS.
+
+For reads, policies should make it possible for a user to see their own membership and for protected data to be available only when the relevant entitlement is valid. That is stronger than hiding a navigation link: every protected query or operation needs an authorization check at the data or server boundary.
+
+## Make the system observable and testable
+
+Payment integrations need more than a happy-path test. A useful test plan includes a successful checkout, a failed or abandoned payment, a renewal, cancellation, duplicate webhook delivery, and a temporarily unavailable database or webhook endpoint.
+
+The admin dashboard matters here too. It should help answer practical questions: which provider owns the subscription, what state was last received, and whether a recent event failed to update the local record. Clear logs and event identifiers make those investigations much faster than trying to infer the problem from a user's screenshot.
+
+## The main lesson
+
+Stripe and Supabase have different jobs. Stripe is the authority for payment events; Supabase is where the application authenticates users, stores its operational membership state, and protects product data. The integration layer translates between those responsibilities.
+
+That boundary takes careful work, especially when memberships unlock several parts of a product and more than one payment provider is involved. Get the state model and trust boundaries right, and checkout becomes one part of a dependable membership system rather than a button that merely looks finished.

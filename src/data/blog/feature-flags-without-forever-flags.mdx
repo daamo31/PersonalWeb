@@ -1,0 +1,80 @@
+---
+title: 'Feature Flags Without Creating Forever Flags'
+description: 'A practical approach to shipping changes gradually, controlling risk, and removing feature flags before they become permanent complexity.'
+image: '/blog/workspace.png'
+tags: ['deployment', 'product', 'engineering']
+date: '2026-10-14'
+isPublished: true
+---
+
+Feature flags let a team deploy code without immediately exposing every change to every user. That separation is useful, but it comes with a cost: each flag adds another possible state to understand, test, and support.
+
+The goal is not to put a switch around everything. It is to make risky changes easier to release and easier to reverse.
+
+## Start with the kind of flag you need
+
+Different flags answer different questions. Naming the purpose helps determine who owns the flag and when it should be removed.
+
+- **Release flags** hide unfinished or newly shipped functionality while it is being rolled out.
+- **Operational flags** let the team disable an expensive or unstable path during an incident.
+- **Experiment flags** compare product variants and need a clear success metric and end date.
+- **Permission checks** decide what a user is allowed to do. These belong in the authorization system, not in a convenient UI toggle.
+
+The last distinction matters. Hiding a button in the browser is not access control. The server must still verify permissions for every protected operation.
+
+## Keep the decision close to the boundary
+
+Evaluate a flag where its result can be applied consistently. For a user-facing page, that might be a server component or a route handler. For an operational switch, it might be the service that calls the dependency you want to protect.
+
+Avoid scattering flag checks throughout unrelated components. A small decision boundary is easier to test and easier to delete once the rollout is complete.
+
+When a decision is made on the server, pass only the resulting state the client needs. Do not expose private targeting rules or sensitive configuration in a browser bundle.
+
+## Roll out in deliberate steps
+
+A gradual rollout works best when every step has an observation attached to it:
+
+1. Enable the change for the team or an internal test group.
+2. Check error rates, latency, and the main user flow.
+3. Expand to a small percentage or a carefully chosen cohort.
+4. Compare the results with the baseline before increasing exposure.
+5. Complete the rollout or turn the flag off and investigate.
+
+Percentages alone are not a strategy. Choose cohorts that help reveal the risk: a region, a platform, a type of account, or a small slice of traffic. Make sure the assignment stays stable for a user, or the experience may change between requests.
+
+## Define the off state before launch
+
+Every flag should have a safe default. If the flag service is unavailable, decide whether the system should keep the feature off, use a cached value, or continue with the last known configuration. The right choice depends on the consequence of failure.
+
+For a cosmetic improvement, a cached value may be acceptable. For a change that can affect data integrity or cost, a conservative fallback is usually better. Write down the decision and test it; an outage is a poor time to discover what `undefined` means.
+
+## Test behavior, not every combination
+
+Flags multiply possible states, and testing every combination quickly becomes impractical. Focus on the important boundaries:
+
+- the default state when configuration is missing
+- the enabled path and its main outcome
+- the disabled path and its fallback
+- authorization enforced by the server regardless of the flag
+- the behavior when the flag provider cannot be reached
+
+Use a small number of representative integration tests for the complete flow. Keep most component tests focused on the component's own behavior rather than rebuilding the entire flag system in each test.
+
+## Put cleanup on the calendar
+
+A release flag is temporary by design. Record an owner and a removal date when creating it. Once the rollout is complete, remove the flag check, the unused branch, and any tests that only existed to support the old state.
+
+Operational flags may need a longer life, but they still need an owner, a documented purpose, and a review. If nobody knows whether a switch is safe to remove, it has already become a maintenance risk.
+
+## A small checklist
+
+Before shipping a flag, confirm:
+
+- its purpose and owner are clear
+- the default and provider-failure behavior are defined
+- server-side authorization does not depend on a UI flag
+- rollout steps have observable success and failure signals
+- tests cover the important enabled and disabled paths
+- a removal or review date is recorded
+
+Feature flags are most valuable when they shorten the distance between deployment and learning. Keep the decision local, watch the outcome, and remove temporary switches when they have served their purpose.
