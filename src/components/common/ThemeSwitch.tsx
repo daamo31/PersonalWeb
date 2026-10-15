@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 
 import Moon from '../svgs/Moon';
 import Sun from '../svgs/Sun';
@@ -20,12 +20,7 @@ export const useThemeToggle = ({
   gifUrl?: string;
 } = {}) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
-
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    setIsDark(resolvedTheme === 'dark');
-  }, [resolvedTheme]);
+  const isDark = resolvedTheme === 'dark';
 
   const styleId = 'theme-transition-styles';
 
@@ -49,8 +44,6 @@ export const useThemeToggle = ({
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setIsDark(!isDark);
-
     const animation = createAnimation(variant, start, blur, gifUrl);
 
     updateStyles(animation.css, animation.name);
@@ -75,13 +68,9 @@ export const useThemeToggle = ({
     blur,
     gifUrl,
     updateStyles,
-    isDark,
-    setIsDark,
   ]);
 
   const setCrazyLightTheme = useCallback(() => {
-    setIsDark(false);
-
     const animation = createAnimation(variant, start, blur, gifUrl);
 
     updateStyles(animation.css, animation.name);
@@ -98,11 +87,9 @@ export const useThemeToggle = ({
     }
 
     document.startViewTransition(switchTheme);
-  }, [setTheme, variant, start, blur, gifUrl, updateStyles, setIsDark]);
+  }, [setTheme, variant, start, blur, gifUrl, updateStyles]);
 
   const setCrazyDarkTheme = useCallback(() => {
-    setIsDark(true);
-
     const animation = createAnimation(variant, start, blur, gifUrl);
 
     updateStyles(animation.css, animation.name);
@@ -119,11 +106,10 @@ export const useThemeToggle = ({
     }
 
     document.startViewTransition(switchTheme);
-  }, [setTheme, variant, start, blur, gifUrl, updateStyles, setIsDark]);
+  }, [setTheme, variant, start, blur, gifUrl, updateStyles]);
 
   return {
     isDark,
-    setIsDark,
     toggleTheme,
     setCrazyLightTheme,
     setCrazyDarkTheme,

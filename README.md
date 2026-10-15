@@ -19,12 +19,12 @@ Professional portfolio and personal website for **Daniel Del Amo**, a Full Stack
 - **90+ Lighthouse Scores** for performance, accessibility, and SEO
 
 ### 🔧 Technical Stack
-- **Next.js 15** with App Router for modern, efficient routing
+- **Next.js 16** with App Router for modern, efficient routing
 - **React 19** with server components for optimal performance
 - **TypeScript** for type-safe, maintainable code
 - **Tailwind CSS** with custom theme configuration
 - **Shadcn UI** components for consistent, accessible interfaces
-- **Bun** runtime for fast builds and development
+- **npm** with a committed lockfile for reproducible installs and builds
 
 ### 🚀 Performance & SEO
 - **Server-Side Rendering (SSR)** for improved SEO
@@ -62,8 +62,8 @@ Professional portfolio and personal website for **Daniel Del Amo**, a Full Stack
 
 ## 📋 Prerequisites
 
-- **Node.js** v18+ or v20+
-- **Bun** v1.0+ (recommended) or npm 9+
+- **Node.js** v20.9+
+- **npm** v11.9
 - **Git** for version control
 
 ## 🚀 Getting Started
@@ -78,11 +78,7 @@ cd webpersonal
 ### 2. Install Dependencies
 
 ```bash
-# Using Bun (recommended for faster installs)
-bun install
-
-# Or using npm
-npm install
+npm ci
 ```
 
 ### 3. Environment Configuration
@@ -101,6 +97,10 @@ TELEGRAM_CHAT_ID="your-chat-id"
 # Optional: AI Chat Integration
 GEMINI_API_KEY="your-gemini-api-key"
 
+# Required for production API rate limiting
+UPSTASH_REDIS_REST_URL="https://your-database.upstash.io"
+UPSTASH_REDIS_REST_TOKEN="your-token"
+
 # Site Configuration
 NEXT_PUBLIC_URL="http://localhost:3000"
 NODE_ENV="development"
@@ -109,10 +109,6 @@ NODE_ENV="development"
 ### 4. Run Development Server
 
 ```bash
-# Using Bun
-bun dev
-
-# Using npm
 npm run dev
 ```
 
@@ -121,11 +117,6 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 ### 5. Build for Production
 
 ```bash
-# Using Bun
-bun run build
-bun start
-
-# Using npm
 npm run build
 npm start
 ```
@@ -258,7 +249,7 @@ Optimized for Applicant Tracking Systems:
 ## 🛠 Tech Stack Details
 
 ### Frontend
-- **Next.js 15** - React framework with App Router
+- **Next.js 16** - React framework with App Router
 - **React 19** - Modern UI library with server components
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
@@ -276,7 +267,7 @@ Optimized for Applicant Tracking Systems:
 - **Dark/Light Mode** - Automatic theme switching
 
 ### Development Tools
-- **Bun** - Fast JavaScript runtime
+- **npm** - Reproducible dependency management
 - **ESLint** - Code quality linting
 - **TypeScript** - Type checking
 - **Tailwind CSS** - Utility classes
@@ -303,10 +294,10 @@ Optimized for Applicant Tracking Systems:
 
 ```bash
 # Build production bundle
-bun run build
+npm run build
 
 # Start production server
-bun start
+npm start
 ```
 
 ## 📄 License

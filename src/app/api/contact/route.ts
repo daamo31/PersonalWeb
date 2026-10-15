@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
+import { readBoundedBody } from '@/lib/request-body';
 import * as z from 'zod';
-
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
@@ -19,55 +19,6 @@ const contactSchema = z.object({
     ),
   message: z.string().min(10).max(1000),
 });
-
-function getClientIP(request: NextRequest): string {
-  // Get IP from various headers in order of preference
-  const forwarded = request.headers.get('x-forwarded-for');
-  const realIP = request.headers.get('x-real-ip');
-  const cfConnectingIP = request.headers.get('cf-connecting-ip');
-
-  if (forwarded) {
-    return forwarded.split(',')[0].trim();
-  }
-  if (realIP) {
-    return realIP;
-  }
-  if (cfConnectingIP) {
-    return cfConnectingIP;
-  }
-
-  return 'unknown';
-}
-
-function checkRateLimit(clientIP: string): {
-  allowed: boolean;
-  remaining: number;
-} {
-  const now = Date.now();
-  const clientData = rateLimitStore.get(clientIP);
-
-  if (!clientData || now > clientData.resetTime) {
-    // First request or window expired
-    rateLimitStore.set(clientIP, {
-      count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW,
-    });
-    return { allowed: true, remaining: RATE_LIMIT_MAX_REQUESTS - 1 };
-  }
-
-  if (clientData.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  // Increment count
-  clientData.count++;
-  rateLimitStore.set(clientIP, clientData);
-
-  return {
-    allowed: true,
-    remaining: RATE_LIMIT_MAX_REQUESTS - clientData.count,
-  };
-}
 
 async function sendToTelegram(data: {
   name: string;
@@ -109,6 +60,15 @@ ${data.message.trim()}
 📍 *Timezone:* ${timezone}
   `.trim();
 
+  const escapedMessage = message.replace(/[&<>]/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+    };
+    return entities[character];
+  });
+
   try {
     const telegramUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
 
@@ -119,9 +79,10 @@ ${data.message.trim()}
       },
       body: JSON.stringify({
         chat_id: telegramChatId,
-        text: message,
-        parse_mode: 'Markdown',
+        text: escapedMessage,
+        parse_mode: 'HTML',
       }),
+      signal: AbortSignal.timeout(8000),
     });
 
     if (response.ok) {
@@ -139,8 +100,18 @@ ${data.message.trim()}
 
 export async function POST(request: NextRequest) {
   try {
+    const contentLength = Number(request.headers.get('content-length') ?? 0);
+    if (contentLength > 8_000) {
+      return NextResponse.json({ error: 'Request body too large' }, { status: 413 });
+    }
+
     const clientIP = getClientIP(request);
-    const rateLimit = checkRateLimit(clientIP);
+    const rateLimit = await checkRateLimit(
+      'contact',
+      clientIP,
+      RATE_LIMIT_MAX_REQUESTS,
+      RATE_LIMIT_WINDOW,
+    );
 
     if (!rateLimit.allowed) {
       return NextResponse.json(
@@ -153,13 +124,26 @@ export async function POST(request: NextRequest) {
           headers: {
             'X-RateLimit-Limit': RATE_LIMIT_MAX_REQUESTS.toString(),
             'X-RateLimit-Remaining': rateLimit.remaining.toString(),
-            'X-RateLimit-Reset': (Date.now() + RATE_LIMIT_WINDOW).toString(),
+            'X-RateLimit-Reset': rateLimit.resetAt.toString(),
           },
         },
       );
     }
 
-    const body = await request.json();
+    const rawBody = await readBoundedBody(request, 8_000);
+    if (rawBody === null) {
+      return NextResponse.json({ error: 'Request body too large' }, { status: 413 });
+    }
+    if (!rawBody) {
+      return NextResponse.json({ error: 'Empty request body' }, { status: 400 });
+    }
+
+    let body: unknown;
+    try {
+      body = JSON.parse(rawBody);
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    }
     const validatedData = contactSchema.parse(body);
 
     const telegramSent = await sendToTelegram(validatedData);
@@ -193,6 +177,13 @@ export async function POST(request: NextRequest) {
           details: error.errors,
         },
         { status: 400 },
+      );
+    }
+
+    if (error instanceof Error && error.message.includes('rate limit storage')) {
+      return NextResponse.json(
+        { error: 'Service temporarily unavailable' },
+        { status: 503 },
       );
     }
 

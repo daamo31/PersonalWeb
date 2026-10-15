@@ -42,6 +42,7 @@ async function getTechNews(): Promise<TechNewsItem[]> {
             devTags.map((tag) =>
               fetch(`https://dev.to/api/articles?tag=${tag}&top=10&per_page=3`, {
                 next: { revalidate: 1800 },
+                signal: AbortSignal.timeout(5000),
               }),
             ),
           );
@@ -78,6 +79,7 @@ async function getTechNews(): Promise<TechNewsItem[]> {
             'https://hn.algolia.com/api/v1/search_by_date?tags=story&query=ai%20OR%20typescript%20OR%20frontend',
             {
               next: { revalidate: 1800 },
+              signal: AbortSignal.timeout(5000),
             },
           );
 
@@ -115,6 +117,7 @@ async function getTechNews(): Promise<TechNewsItem[]> {
         try {
           const response = await fetch('https://www.reddit.com/r/programming/top.json?t=day&limit=10', {
             next: { revalidate: 1800 },
+            signal: AbortSignal.timeout(5000),
             headers: {
               'User-Agent': 'personalweb-news-feed/1.0',
             },

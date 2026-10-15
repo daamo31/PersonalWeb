@@ -15,22 +15,16 @@ function ScrollArea({
   ...props
 }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
   const viewportRef = React.useRef<HTMLDivElement | null>(null);
-  const [lenisInstance, setLenisInstance] = React.useState<LenisLike | null>(null);
-
-  React.useEffect(() => {
-    type WindowWithLenis = Window & { lenis?: LenisLike };
-    if (typeof window !== 'undefined' && (window as WindowWithLenis).lenis) {
-      setLenisInstance((window as WindowWithLenis).lenis!);
-    }
-  }, []);
 
   const onMouseEnter = () => {
+    const lenisInstance = getLenisInstance();
     if (lenisInstance && typeof lenisInstance.stop === 'function') {
       lenisInstance.stop(); // Stop Lenis scrolling when mouse inside chat
     }
   };
 
   const onMouseLeave = () => {
+    const lenisInstance = getLenisInstance();
     if (lenisInstance && typeof lenisInstance.start === 'function') {
       lenisInstance.start(); // Resume Lenis scrolling when mouse leaves chat
     }
@@ -74,6 +68,11 @@ function ScrollArea({
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   );
+}
+
+function getLenisInstance(): LenisLike | undefined {
+  if (typeof window === 'undefined') return undefined;
+  return (window as Window & { lenis?: LenisLike }).lenis;
 }
 
 function ScrollBar({

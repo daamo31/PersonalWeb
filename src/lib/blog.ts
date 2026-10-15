@@ -1,6 +1,6 @@
 import { BlogFrontmatter, BlogPost, BlogPostPreview } from '@/types/blog';
+import { parseFrontmatter } from '@/lib/frontmatter';
 import fs from 'fs';
-import matter from 'gray-matter';
 import path from 'path';
 
 const blogDirectory = path.join(process.cwd(), 'src/data/blog');
@@ -24,6 +24,9 @@ export function getBlogPostSlugs(): string[] {
  */
 export function getBlogPostBySlug(slug: string): BlogPost | null {
   try {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+      return null;
+    }
     const fullPath = path.join(blogDirectory, `${slug}.mdx`);
 
     if (!fs.existsSync(fullPath)) {
@@ -31,10 +34,10 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+    const { data, content } = parseFrontmatter<BlogFrontmatter>(fileContents);
 
     // Validate frontmatter
-    const frontmatter = data as BlogFrontmatter;
+    const frontmatter = data;
     if (!frontmatter.title || !frontmatter.description) {
       throw new Error(`Invalid frontmatter in ${slug}.mdx`);
     }

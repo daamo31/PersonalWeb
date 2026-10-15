@@ -7,7 +7,6 @@ import { Separator } from '@/components/ui/separator';
 import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
 import { BlogPostPreview } from '@/types/blog';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 interface BlogPageClientProps {
   initialPosts: BlogPostPreview[];
@@ -33,21 +32,10 @@ export function BlogPageClient({
   const router = useRouter();
   const { triggerHaptic, isMobile } = useHapticFeedback();
 
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [filteredPosts, setFilteredPosts] = useState(initialPosts);
-
-  // Get tag from URL params on mount
-  useEffect(() => {
-    const tagParam = searchParams.get('tag');
-    if (tagParam) {
-      setSelectedTag(tagParam);
-      const filtered = getBlogPostsByTagClient(initialPosts, tagParam);
-      setFilteredPosts(filtered);
-    } else {
-      setSelectedTag(null);
-      setFilteredPosts(initialPosts);
-    }
-  }, [searchParams, initialPosts]);
+  const selectedTag = searchParams.get('tag');
+  const filteredPosts = selectedTag
+    ? getBlogPostsByTagClient(initialPosts, selectedTag)
+    : initialPosts;
 
   // Handle tag click
   const handleTagClick = (tag: string) => {
@@ -56,13 +44,8 @@ export function BlogPageClient({
     }
 
     if (selectedTag === tag) {
-      setSelectedTag(null);
-      setFilteredPosts(initialPosts);
       router.replace('/blog');
     } else {
-      setSelectedTag(tag);
-      const filtered = getBlogPostsByTagClient(initialPosts, tag);
-      setFilteredPosts(filtered);
       router.replace(`/blog?tag=${encodeURIComponent(tag)}`);
     }
   };

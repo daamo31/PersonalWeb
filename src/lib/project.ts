@@ -1,11 +1,11 @@
 import { projects } from '@/config/Projects';
+import { parseFrontmatter } from '@/lib/frontmatter';
 import {
   ProjectCaseStudy,
   ProjectCaseStudyFrontmatter,
   ProjectCaseStudyPreview,
 } from '@/types/project';
 import fs from 'fs';
-import matter from 'gray-matter';
 import path from 'path';
 
 const projectsDirectory = path.join(process.cwd(), 'src/data/projects');
@@ -31,6 +31,9 @@ export function getProjectCaseStudyBySlug(
   slug: string,
 ): ProjectCaseStudy | null {
   try {
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+      return null;
+    }
     const fullPath = path.join(projectsDirectory, `${slug}.mdx`);
 
     if (!fs.existsSync(fullPath)) {
@@ -38,10 +41,11 @@ export function getProjectCaseStudyBySlug(
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+    const { data, content } =
+      parseFrontmatter<ProjectCaseStudyFrontmatter>(fileContents);
 
     // Validate frontmatter
-    const frontmatter = data as ProjectCaseStudyFrontmatter;
+    const frontmatter = data;
     if (!frontmatter.title || !frontmatter.description) {
       throw new Error(`Invalid frontmatter in ${slug}.mdx`);
     }

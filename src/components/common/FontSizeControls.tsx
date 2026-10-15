@@ -17,25 +17,25 @@ export default function FontSizeControls() {
   const [fontSize, setFontSize] = useState<number>(16);
   const { triggerHaptic, isMobile } = useHapticFeedback();
 
+  const applyFontSize = (size: number) => {
+    document.documentElement.style.setProperty('--blog-font-size', `${size}px`);
+  };
+
   // Load font size from localStorage on mount
   useEffect(() => {
     const savedFontSize = localStorage.getItem('blog-font-size');
     if (savedFontSize) {
-      const size = parseInt(savedFontSize, 10);
-      setFontSize(size);
-      applyFontSize(size);
+      const parsedSize = Number.parseInt(savedFontSize, 10);
+      if (!Number.isFinite(parsedSize)) return;
+
+      const size = Math.max(12, Math.min(24, parsedSize));
+      const frame = requestAnimationFrame(() => {
+        setFontSize(size);
+        applyFontSize(size);
+      });
+      return () => cancelAnimationFrame(frame);
     }
   }, []);
-
-  // Apply font size to the document
-  const applyFontSize = (size: number) => {
-    if (typeof window !== 'undefined') {
-      document.documentElement.style.setProperty(
-        '--blog-font-size',
-        `${size}px`,
-      );
-    }
-  };
 
   // Save to localStorage and apply
   const updateFontSize = (newSize: number) => {

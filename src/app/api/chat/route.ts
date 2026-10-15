@@ -1,11 +1,9 @@
 import { systemPrompt } from '@/config/ChatPrompt';
+import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
+import { readBoundedBody } from '@/lib/request-body';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
 import * as z from 'zod';
-import * as fs from 'fs';
-import * as path from 'path';
-
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
@@ -16,9 +14,10 @@ const chatSchema = z.object({
     .array(
       z.object({
         role: z.enum(['user', 'model']),
-        parts: z.array(z.object({ text: z.string() })),
-      }),
+        parts: z.array(z.object({ text: z.string().max(2000) })).min(1).max(1),
+      }).strict(),
     )
+    .max(10)
     .optional()
     .default([]),
 });
@@ -111,56 +110,20 @@ function sanitizeInput(input: string): string {
   return sanitized;
 }
 
-function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  const realIP = request.headers.get('x-real-ip');
-  const cfConnectingIP = request.headers.get('cf-connecting-ip');
-
-  if (forwarded) {
-    return forwarded.split(',')[0].trim();
-  }
-  if (realIP) {
-    return realIP;
-  }
-  if (cfConnectingIP) {
-    return cfConnectingIP;
-  }
-
-  return 'unknown';
-}
-
-function checkRateLimit(clientIP: string): {
-  allowed: boolean;
-  remaining: number;
-} {
-  const now = Date.now();
-  const clientData = rateLimitStore.get(clientIP);
-
-  if (!clientData || now > clientData.resetTime) {
-    rateLimitStore.set(clientIP, {
-      count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW,
-    });
-    return { allowed: true, remaining: RATE_LIMIT_MAX_REQUESTS - 1 };
-  }
-
-  if (clientData.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  clientData.count++;
-  rateLimitStore.set(clientIP, clientData);
-
-  return {
-    allowed: true,
-    remaining: RATE_LIMIT_MAX_REQUESTS - clientData.count,
-  };
-}
-
 export async function POST(request: NextRequest) {
   try {
+    const contentLength = Number(request.headers.get('content-length') ?? 0);
+    if (contentLength > 24_000) {
+      return NextResponse.json({ error: 'Request body too large' }, { status: 413 });
+    }
+
     const clientIP = getClientIP(request);
-    const rateLimit = checkRateLimit(clientIP);
+    const rateLimit = await checkRateLimit(
+      'chat',
+      clientIP,
+      RATE_LIMIT_MAX_REQUESTS,
+      RATE_LIMIT_WINDOW,
+    );
 
     if (!rateLimit.allowed) {
       return NextResponse.json(
@@ -173,24 +136,24 @@ export async function POST(request: NextRequest) {
           headers: {
             'X-RateLimit-Limit': RATE_LIMIT_MAX_REQUESTS.toString(),
             'X-RateLimit-Remaining': rateLimit.remaining.toString(),
-            'X-RateLimit-Reset': (Date.now() + RATE_LIMIT_WINDOW).toString(),
+            'X-RateLimit-Reset': rateLimit.resetAt.toString(),
           },
         },
       );
     }
 
-    let body;
+    const text = await readBoundedBody(request, 24_000);
+    if (text === null) {
+      return NextResponse.json({ error: 'Request body too large' }, { status: 413 });
+    }
+    if (!text) {
+      return NextResponse.json({ error: 'Empty request body' }, { status: 400 });
+    }
+
+    let body: unknown;
     try {
-      const text = await request.text();
-      if (!text) {
-        return NextResponse.json(
-          { error: 'Empty request body' },
-          { status: 400 }
-        );
-      }
       body = JSON.parse(text);
-    } catch (e) {
-      console.error('Error parsing request body:', e);
+    } catch {
       return NextResponse.json(
         { error: 'Invalid JSON body' },
         { status: 400 }
@@ -300,18 +263,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Chat API Error:', error);
 
-    // Write error to file for debugging
-    try {
-      const logPath = path.join(process.cwd(), 'debug-log.txt');
-      const timestamp = new Date().toISOString();
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      const errorStack = error instanceof Error ? error.stack : '';
-      const logEntry = `[${timestamp}] API Error: ${errorMessage}\nStack: ${errorStack}\n\n`;
-      fs.appendFileSync(logPath, logEntry);
-    } catch (logError) {
-      console.error('Failed to write to debug log:', logError);
-    }
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         {
@@ -319,6 +270,13 @@ export async function POST(request: NextRequest) {
           details: error.errors,
         },
         { status: 400 },
+      );
+    }
+
+    if (error instanceof Error && error.message.includes('rate limit storage')) {
+      return NextResponse.json(
+        { error: 'Service temporarily unavailable' },
+        { status: 503 },
       );
     }
 

@@ -15,7 +15,7 @@ import { chatSuggestions } from '@/config/ChatPrompt';
 import { heroConfig } from '@/config/Hero';
 import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
 import { cn } from '@/lib/utils';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import ReactMarkdown from 'react-markdown';
 
@@ -30,29 +30,29 @@ interface Message {
 }
 
 const ChatBubble: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      text: `Hello! I'm ${heroConfig.name}'s Portfolio Assistant. How can I help you?`,
+      sender: 'bot',
+      timestamp: '',
+    },
+  ]);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Initialize messages on client mount to avoid hydration mismatch
-  useEffect(() => {
-    setIsMounted(true);
-    const initialMessages: Message[] = [
-      {
-        id: 1,
-        text: `Hello! I'm ${heroConfig.name}'s Portfolio Assistant. How can I help you?`,
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-      },
-    ];
-    setMessages(initialMessages);
-  }, []);
+  const isMounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const nextMessageId = useRef(1);
   const { triggerHaptic, isMobile } = useHapticFeedback();
+
+  const createMessageId = () => {
+    nextMessageId.current += 1;
+    return nextMessageId.current;
+  };
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -76,7 +76,7 @@ const ChatBubble: React.FC = () => {
 
     const messageText = newMessage.trim();
     const userMessage: Message = {
-      id: Date.now(),
+      id: createMessageId(),
       text: messageText,
       sender: 'user',
       timestamp: new Date().toLocaleTimeString([], {
@@ -90,7 +90,7 @@ const ChatBubble: React.FC = () => {
     setIsLoading(true);
 
     // Create a temporary bot message for streaming
-    const botMessageId = Date.now() + 1;
+    const botMessageId = createMessageId();
     const botMessage: Message = {
       id: botMessageId,
       text: '',
@@ -124,7 +124,7 @@ const ChatBubble: React.FC = () => {
     setNewMessage(suggestion);
     // Auto-send the suggestion
     const userMessage: Message = {
-      id: Date.now(),
+      id: createMessageId(),
       text: suggestion,
       sender: 'user',
       timestamp: new Date().toLocaleTimeString([], {
@@ -137,7 +137,7 @@ const ChatBubble: React.FC = () => {
     setIsLoading(true);
 
     // Create a temporary bot message for streaming
-    const botMessageId = Date.now() + 1;
+    const botMessageId = createMessageId();
     const botMessage: Message = {
       id: botMessageId,
       text: '',
@@ -203,8 +203,6 @@ const ChatBubble: React.FC = () => {
         throw new Error('No reader available');
       }
 
-      let accumulatedText = '';
-
       while (true) {
         const { done, value } = await reader.read();
 
@@ -223,13 +221,11 @@ const ChatBubble: React.FC = () => {
               }
 
               if (data.text) {
-                accumulatedText += data.text;
-
                 // Update the streaming message in real-time
                 setMessages((prev) =>
                   prev.map((msg) =>
                     msg.id === botMessageId
-                      ? { ...msg, text: accumulatedText, isStreaming: true }
+                      ? { ...msg, text: msg.text + data.text, isStreaming: true }
                       : msg,
                   ),
                 );
@@ -240,7 +236,7 @@ const ChatBubble: React.FC = () => {
                 setMessages((prev) =>
                   prev.map((msg) =>
                     msg.id === botMessageId
-                      ? { ...msg, text: accumulatedText, isStreaming: false }
+                      ? { ...msg, isStreaming: false }
                       : msg,
                   ),
                 );
