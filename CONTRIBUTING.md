@@ -207,7 +207,8 @@ const Button = ({
 
 ## Testing
 
-- just run `bun run build` if build is successful only then push it.
+- Run `npm test`, `npm run lint`, and `npm run build` before submitting changes.
+- Use `npm ci` to install the exact dependency versions from the lockfile.
 
 ## Documentation
 

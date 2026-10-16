@@ -1,6 +1,12 @@
-import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
-import nextTypeScript from 'eslint-config-next/typescript';
+import reactHooks from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
 
-const eslintConfig = [...nextCoreWebVitals, ...nextTypeScript];
+const eslintConfig = [
+	...tseslint.configs.recommended,
+	reactHooks.configs.flat.recommended,
+	{
+		ignores: ['.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
+	},
+];
 
 export default eslintConfig;

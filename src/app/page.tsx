@@ -1,5 +1,6 @@
 import LeadForm from '@/components/sections/LeadForm';
 import { heroConfig } from '@/config/Hero';
+import { featuredProjects } from '@/config/Projects';
 import portfolioData from '@/data/portfolio.json';
 import Image from 'next/image';
 
@@ -10,7 +11,7 @@ export default function Page() {
   const heroStats = [
     { label: 'Years of experience', value: '6+' },
     { label: 'Core services', value: String(data.services.length) },
-    { label: 'Selected projects', value: String(data.projects.length) },
+    { label: 'Selected projects', value: String(featuredProjects.length) },
   ];
 
   const organizationSchema = {
@@ -194,7 +195,7 @@ export default function Page() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-2">
-          {data.projects.map((project, index) => {
+          {featuredProjects.map((project, index) => {
             const label = String(index + 1).padStart(2, '0');
 
             return (
@@ -215,9 +216,9 @@ export default function Page() {
                       <div>
                         <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted-foreground">Stack</p>
                         <ul className="mt-3 flex flex-wrap gap-2">
-                          {project.stack.slice(0, 4).map((tech) => (
-                            <li key={tech} className="rounded-full border border-border bg-muted/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-                              {tech}
+                          {project.technologies.slice(0, 4).map((technology) => (
+                            <li key={technology.name} className="rounded-full border border-border bg-muted/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                              {technology.name}
                             </li>
                           ))}
                         </ul>
@@ -235,9 +236,9 @@ export default function Page() {
                     </div>
 
                     <div className="mt-5 flex flex-wrap gap-2">
-                      {project.url ? (
+                      {project.live ? (
                         <a
-                          href={project.url}
+                          href={project.live}
                           target="_blank"
                           rel="noreferrer"
                           className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/20"
@@ -245,9 +246,9 @@ export default function Page() {
                           View demo
                         </a>
                       ) : null}
-                      {project.repo ? (
+                      {project.github ? (
                         <a
-                          href={project.repo}
+                          href={project.github}
                           target="_blank"
                           rel="noreferrer"
                           className="inline-flex items-center justify-center rounded-full border border-primary/20 px-4 py-2 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:bg-primary/5"

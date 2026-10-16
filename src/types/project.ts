@@ -1,4 +1,5 @@
 export interface Project {
+  id: string;
   title: string;
   description: string;
   image: string;
@@ -10,6 +11,7 @@ export interface Project {
   details: boolean;
   projectDetailsPageSlug: string;
   isWorking: boolean;
+  featuredOnHome: boolean;
 }
 
 export interface ProjectCaseStudyFrontmatter {

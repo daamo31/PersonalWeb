@@ -50,40 +50,6 @@
       "items": ["Architecture Design", "Tech Stack Guidance", "Performance Audits", "Code Review", "Best Practices"]
     }
   ],
-  "projects": [
-    {
-      "id": "closet-ai",
-      "title": "ClosetAI",
-      "description": "Smart wardrobe app powered by AI. Get outfit suggestions based on weather and your style, with virtual try-on and Telegram bot integration.",
-      "stack": ["Next.js 15", "TypeScript", "Supabase", "OpenAI API", "Telegram Bot API"],
-      "url": "https://closet-ai-omega.vercel.app",
-      "repo": "https://github.com/daamo31/ClosetAi"
-    },
-    {
-      "id": "bsb-capital",
-      "title": "BSB Capital",
-      "description": "Comprehensive financial platform for crypto and investments, including memberships, academy, admin dashboard and interactive animations.",
-      "stack": ["React 18", "TypeScript", "Tailwind CSS", "Stripe", "PostgreSQL"],
-      "url": "https://bsbcapital.io",
-      "repo": "https://github.com/daamo31/bsbcapital"
-    },
-    {
-      "id": "noircheck",
-      "title": "NoirCheck",
-      "description": "Digital content authenticity verification platform using blockchain and zkTLS, with mobile app, web app and realtime stats.",
-      "stack": ["Python", "FastAPI", "Next.js", "React Native", "TypeScript"],
-      "url": "",
-      "repo": "https://github.com/daamo31/noircheck"
-    },
-    {
-      "id": "chuches-inventario",
-      "title": "Chuches Inventario",
-      "description": "Professional inventory management app for Android and desktop with OCR, camera support, reporting and tests.",
-      "stack": ["Python", "Kivy", "KivyMD", "OCR", "pytest"],
-      "url": "",
-      "repo": ""
-    }
-  ],
   "contact": {
     "email": "danieldelamo31@protonmail.com",
     "phone": "Available on request",

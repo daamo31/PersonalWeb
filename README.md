@@ -176,21 +176,28 @@ Your blog content here...
 
 ### Adding Projects
 
-Create a new `.mdx` file in `src/data/projects/`:
+Add shared card metadata once to `src/data/projects.json`. Use a unique `id`, set `featuredOnHome` to control home-page visibility, and use `/projects/<id>` for `projectDetailsPageSlug`.
+
+Then create the matching `.mdx` file in `src/data/projects/`. Keep case-study-specific fields such as `timeline`, `role`, `status`, `challenges`, and `learnings` there. Common metadata (title, description, image, technologies, and links) comes from the JSON catalog.
+
+Example case study frontmatter:
 
 ```mdx
 ---
-title: "Your Project Title"
-description: "Project description"
-image: "/project/thumbnail.jpg"
-link: "https://project-url.com"
-github: "https://github.com/yourusername/project"
-technologies: ["React", "Next.js", "TypeScript"]
-isWorking: true
+timeline: '3 months'
+role: 'Full Stack Developer'
+team: 'Solo'
+status: 'in-progress'
+featured: true
+challenges: ['Offline sync']
+learnings: ['PWA architecture']
+isPublished: true
 ---
 
 Detailed project case study...
 ```
+
+Run `npm test`, `npm run lint`, and `npm run build` before submitting changes.
 
 ### Adding Technology Icons
 

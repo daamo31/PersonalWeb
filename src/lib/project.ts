@@ -42,10 +42,25 @@ export function getProjectCaseStudyBySlug(
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } =
-      parseFrontmatter<ProjectCaseStudyFrontmatter>(fileContents);
+      parseFrontmatter<Partial<ProjectCaseStudyFrontmatter>>(fileContents);
+    const catalogProject = projects.find(
+      (project) => project.projectDetailsPageSlug === `/projects/${slug}`,
+    );
+    const frontmatter = {
+      ...data,
+      ...(catalogProject
+        ? {
+            title: catalogProject.title,
+            description: catalogProject.description,
+            image: catalogProject.image,
+            technologies: catalogProject.technologies.map(({ name }) => name),
+            github: catalogProject.github ?? '',
+            live: catalogProject.live,
+          }
+        : {}),
+    } as ProjectCaseStudyFrontmatter;
 
     // Validate frontmatter
-    const frontmatter = data;
     if (!frontmatter.title || !frontmatter.description) {
       throw new Error(`Invalid frontmatter in ${slug}.mdx`);
     }
