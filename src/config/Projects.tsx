@@ -52,3 +52,7 @@ export const projects: Project[] = projectCatalog.map((project) => ({
 export const featuredProjects = projects.filter(
   (project) => project.featuredOnHome,
 );
+
+export const listedProjects = projects.filter(
+  (project) => project.listedOnProjects,
+);

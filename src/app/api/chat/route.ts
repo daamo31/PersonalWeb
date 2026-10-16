@@ -261,8 +261,6 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Chat API Error:', error);
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         {
@@ -272,6 +270,8 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+
+    console.error('Chat API Error:', error);
 
     if (error instanceof Error && error.message.includes('rate limit storage')) {
       return NextResponse.json(

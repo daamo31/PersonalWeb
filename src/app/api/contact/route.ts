@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 import { readBoundedBody } from '@/lib/request-body';
+import { formatTelegramMessage } from '@/lib/telegram';
 import * as z from 'zod';
 
 const RATE_LIMIT_WINDOW = 60 * 1000;
@@ -46,28 +47,7 @@ async function sendToTelegram(data: {
     timeZone: timezone,
   }).format(new Date());
 
-  const message = `
-🔔 *New Contact Form Submission*
-
-👤 *Name:* ${data.name.trim()}
-📧 *Email:* ${data.email.trim()}
-📱 *Phone:* ${data.phone.trim()}
-
-💬 *Message:*
-${data.message.trim()}
-
-⏰ *Submitted:* ${submittedAt}
-📍 *Timezone:* ${timezone}
-  `.trim();
-
-  const escapedMessage = message.replace(/[&<>]/g, (character) => {
-    const entities: Record<string, string> = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-    };
-    return entities[character];
-  });
+  const message = formatTelegramMessage(data, submittedAt, timezone);
 
   try {
     const telegramUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
@@ -79,7 +59,7 @@ ${data.message.trim()}
       },
       body: JSON.stringify({
         chat_id: telegramChatId,
-        text: escapedMessage,
+        text: message,
         parse_mode: 'HTML',
       }),
       signal: AbortSignal.timeout(8000),
@@ -168,8 +148,6 @@ export async function POST(request: NextRequest) {
       },
     );
   } catch (error) {
-    console.error('API Error:', error);
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         {
@@ -179,6 +157,8 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+
+    console.error('API Error:', error);
 
     if (error instanceof Error && error.message.includes('rate limit storage')) {
       return NextResponse.json(

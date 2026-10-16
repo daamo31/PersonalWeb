@@ -1,5 +1,5 @@
 import { projects } from '@/config/Projects';
-import { parseFrontmatter } from '@/lib/frontmatter';
+import projectCatalog from '@/data/projects.json';
 import {
   ProjectCaseStudy,
   ProjectCaseStudyFrontmatter,
@@ -41,23 +41,17 @@ export function getProjectCaseStudyBySlug(
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } =
-      parseFrontmatter<Partial<ProjectCaseStudyFrontmatter>>(fileContents);
-    const catalogProject = projects.find(
-      (project) => project.projectDetailsPageSlug === `/projects/${slug}`,
-    );
+    const catalogProject = projectCatalog.find((project) => project.id === slug);
+    if (!catalogProject) return null;
+
     const frontmatter = {
-      ...data,
-      ...(catalogProject
-        ? {
-            title: catalogProject.title,
-            description: catalogProject.description,
-            image: catalogProject.image,
-            technologies: catalogProject.technologies.map(({ name }) => name),
-            github: catalogProject.github ?? '',
-            live: catalogProject.live,
-          }
-        : {}),
+      title: catalogProject.title,
+      description: catalogProject.description,
+      image: catalogProject.image,
+      technologies: catalogProject.technologies,
+      github: catalogProject.github,
+      live: catalogProject.live,
+      ...catalogProject.caseStudy,
     } as ProjectCaseStudyFrontmatter;
 
     // Validate frontmatter
@@ -68,7 +62,7 @@ export function getProjectCaseStudyBySlug(
     return {
       slug,
       frontmatter,
-      content,
+      content: fileContents,
     };
   } catch (error) {
     console.error(`Error reading project case study ${slug}:`, error);

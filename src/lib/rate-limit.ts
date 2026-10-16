@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { isIP } from 'node:net';
 
 type RateLimitResult = {
   allowed: boolean;
@@ -7,14 +8,19 @@ type RateLimitResult = {
 };
 
 const localStore = new Map<string, { count: number; resetAt: number }>();
+const MAX_LOCAL_ENTRIES = 1000;
 
 export function getClientIP(request: NextRequest): string {
-  return (
-    request.headers.get('x-real-ip') ??
-    request.headers.get('cf-connecting-ip') ??
-    request.headers.get('x-forwarded-for')?.split(',').at(-1)?.trim() ??
-    'unknown'
-  );
+  const clientIP = request.headers.get('x-real-ip')?.trim();
+  return clientIP && isIP(clientIP) ? clientIP : 'unknown';
+}
+
+function pruneExpiredLocalEntries(now: number): void {
+  for (const [key, entry] of localStore) {
+    if (entry.resetAt <= now) {
+      localStore.delete(key);
+    }
+  }
 }
 
 export async function checkRateLimit(
@@ -35,6 +41,14 @@ export async function checkRateLimit(
     const now = Date.now();
     const current = localStore.get(key);
     if (!current || current.resetAt <= now) {
+      if (current) localStore.delete(key);
+      if (localStore.size >= MAX_LOCAL_ENTRIES) {
+        pruneExpiredLocalEntries(now);
+      }
+      if (localStore.size >= MAX_LOCAL_ENTRIES) {
+        return { allowed: false, remaining: 0, resetAt: now + windowMs };
+      }
+
       const entry = { count: 1, resetAt: now + windowMs };
       localStore.set(key, entry);
       return { allowed: true, remaining: limit - 1, resetAt: entry.resetAt };

@@ -9,8 +9,9 @@ import {
 import { getBlogPostBySlug } from '../src/lib/blog';
 
 import { parseFrontmatter } from '../src/lib/frontmatter';
-import { checkRateLimit } from '../src/lib/rate-limit';
+import { checkRateLimit, getClientIP } from '../src/lib/rate-limit';
 import { readBoundedBody } from '../src/lib/request-body';
+import { formatTelegramMessage } from '../src/lib/telegram';
 
 const originalRedisUrl = process.env.UPSTASH_REDIS_REST_URL;
 const originalRedisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -37,6 +38,23 @@ test('parses YAML frontmatter and leaves markdown content intact', () => {
 
 test('rejects content without a frontmatter block', () => {
   assert.throws(() => parseFrontmatter('No frontmatter'), /frontmatter/);
+});
+
+test('formats Telegram messages as HTML and escapes submitted fields', () => {
+  const message = formatTelegramMessage(
+    {
+      name: '<script>&',
+      email: 'person@example.com',
+      phone: '+1 555 555 5555',
+      message: '<b>Injected</b> & text',
+    },
+    '16 October 2026',
+    'Europe/Madrid',
+  );
+
+  assert.match(message, /<b>Name:<\/b> &lt;script&gt;&amp;/);
+  assert.match(message, /&lt;b&gt;Injected&lt;\/b&gt; &amp; text/);
+  assert.doesNotMatch(message, /\*Name:\*/);
 });
 
 test('reads request bodies up to the byte limit', async () => {
@@ -68,6 +86,36 @@ test('enforces the local rate limit for repeated requests', async () => {
   assert.equal(third.remaining, 0);
 });
 
+test('caps the number of local rate-limit identities', async () => {
+  let lastResult = { allowed: true, remaining: 1, resetAt: 0 };
+  for (let index = 0; index < 1100; index += 1) {
+    lastResult = await checkRateLimit(
+      'capacity-test',
+      `capacity-client-${index}`,
+      1,
+      60_000,
+    );
+  }
+
+  assert.equal(lastResult.allowed, false);
+  assert.equal(lastResult.remaining, 0);
+});
+
+test('uses only a valid proxy-provided client IP', () => {
+  const request = new NextRequest('http://localhost/api/test', {
+    headers: {
+      'x-real-ip': '203.0.113.8',
+      'x-forwarded-for': '198.51.100.4',
+    },
+  });
+  const untrustedRequest = new NextRequest('http://localhost/api/test', {
+    headers: { 'x-forwarded-for': '198.51.100.4' },
+  });
+
+  assert.equal(getClientIP(request), '203.0.113.8');
+  assert.equal(getClientIP(untrustedRequest), 'unknown');
+});
+
 test('project catalog has unique ids and valid detail routes', () => {
   const ids = projectCatalog.map((project) => project.id);
   const detailRoutes = projectCatalog.map((project) => project.projectDetailsPageSlug);
@@ -80,13 +128,16 @@ test('project catalog has unique ids and valid detail routes', () => {
     ),
   );
   assert.equal(projectCatalog.filter((project) => project.featuredOnHome).length, 4);
+  assert.equal(projectCatalog.filter((project) => project.listedOnProjects).length, 5);
 });
 
 test('every catalog entry has a matching case study with canonical shared metadata', () => {
-  const caseStudySlugs = new Set(getProjectCaseStudySlugs());
+  assert.deepEqual(
+    getProjectCaseStudySlugs().sort(),
+    projectCatalog.map((project) => project.id).sort(),
+  );
 
   for (const catalogEntry of projectCatalog) {
-    assert.ok(caseStudySlugs.has(catalogEntry.id));
     const caseStudy = getProjectCaseStudyBySlug(catalogEntry.id);
     assert.ok(caseStudy, `Missing case study for ${catalogEntry.id}`);
     assert.equal(caseStudy.frontmatter.title, catalogEntry.title);
@@ -98,6 +149,8 @@ test('every catalog entry has a matching case study with canonical shared metada
     );
     assert.equal(caseStudy.frontmatter.github, catalogEntry.github);
     assert.equal(caseStudy.frontmatter.live, catalogEntry.live);
+    assert.equal(caseStudy.frontmatter.isPublished, catalogEntry.caseStudy.isPublished);
+    assert.equal(caseStudy.content.startsWith('---'), false);
   }
 });
 

@@ -12,6 +12,7 @@ export interface Project {
   projectDetailsPageSlug: string;
   isWorking: boolean;
   featuredOnHome: boolean;
+  listedOnProjects: boolean;
 }
 
 export interface ProjectCaseStudyFrontmatter {

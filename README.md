@@ -106,6 +106,8 @@ NEXT_PUBLIC_URL="http://localhost:3000"
 NODE_ENV="development"
 ```
 
+Production rate limiting identifies callers only from a valid `x-real-ip` header. Deploy behind a trusted proxy that overwrites this header; forwarded headers supplied by clients are ignored.
+
 ### 4. Run Development Server
 
 ```bash
@@ -120,6 +122,63 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 npm run build
 npm start
 ```
+
+## 🔐 Engineering Audit & Remediation
+
+Audit and remediation completed on **2026-10-16**. This section records the reviewed risks, implemented changes, validation performed, and operational requirements.
+
+### Architecture and maintainability
+
+- Consolidated project card and case-study metadata in `src/data/projects.json` for all 16 project routes.
+- Project MDX files now contain case-study content only; their metadata is loaded from the catalog.
+- Added `featuredOnHome` and `listedOnProjects` flags. Four projects appear in the home-page featured section and five in the projects listing; the remaining published case studies remain available by their existing routes without being added to those lists.
+- Replaced `gray-matter` with the maintained `yaml` parser for blog and journey frontmatter. Project metadata is no longer duplicated in MDX frontmatter.
+- Added automated checks for catalog IDs, routes, project metadata parity, MDX content, and path-traversal rejection.
+
+### API security and reliability
+
+- Added shared Upstash Redis rate limiting for the contact and chat endpoints. Production fails closed with `503` when Redis is missing or unavailable; development and tests use a bounded in-memory limiter.
+- Limited HTTP body reads, contact form fields, chat message length, and chat history size.
+- Project and blog loaders accept only kebab-case slugs before constructing file paths.
+- Contact notifications use Telegram HTML mode with user-submitted values escaped. The Telegram request has an 8-second timeout.
+- Removed API error writes to the repository's `debug-log.txt`. Invalid user input is returned as `400` without logging expected validation errors.
+- The API trusts only a valid `x-real-ip` value. Production must run behind a trusted proxy that overwrites this header; client-supplied forwarded IP headers are ignored.
+- Added mocked handler tests for invalid contact data, escaped Telegram payloads, and the chat SSE fallback. External provider accounts are not contacted by the test suite.
+
+### Performance and frontend quality
+
+- Added 5-second timeouts to the DEV, Hacker News, and Reddit requests used by the blog feed; the existing 30-minute revalidation remains in place.
+- Updated React components flagged by the active lint rules to avoid redundant state and impure render-time calculations.
+- Migrated linting to ESLint flat configuration with TypeScript and React Hooks rules. `eslint-config-next` was removed because its dependency chain brought in a vulnerable `braces` package; as a result, Next-specific ESLint rules are not currently enabled.
+
+### Dependencies and reproducible builds
+
+- Updated Next.js and `@next/mdx` to 16.4, retained React 19, and committed the npm lockfile.
+- Vercel and local setup use `npm ci` so installs resolve from the same lockfile.
+- Removed vulnerable production dependency chains by replacing `gray-matter`; added a patched `postcss-selector-parser` override.
+- Current `npm audit` result: **0 vulnerabilities** across production and development dependencies.
+
+### Verification performed
+
+The following commands passed against the final changes:
+
+```bash
+npm ci
+npm test
+npm run lint
+npm run build
+npm audit
+git diff --check
+```
+
+The test suite contains **15 passing tests**. The production build generated **43 routes**.
+
+### Production requirements and scope
+
+- Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in the production environment. Without them, contact and chat requests intentionally return `503`.
+- Ensure the deployment proxy sets a trustworthy `x-real-ip` header. Local in-memory rate limiting is for development/testing only and is not shared across server instances.
+- API integrations were tested with mocks. Live connectivity, credentials, proxy header behavior, and rate-limit behavior on the deployed platform have not been tested from this repository.
+- The audit and automated tests improve confidence but are not a penetration test or a guarantee that every vulnerability is absent.
 
 ## ⚙️ Configuration Guide
 
@@ -176,24 +235,11 @@ Your blog content here...
 
 ### Adding Projects
 
-Add shared card metadata once to `src/data/projects.json`. Use a unique `id`, set `featuredOnHome` to control home-page visibility, and use `/projects/<id>` for `projectDetailsPageSlug`.
+Add each project's card and case-study metadata to `src/data/projects.json`. Use a unique `id`, set `featuredOnHome` for the home page and `listedOnProjects` for the projects list, and use `/projects/<id>` for `projectDetailsPageSlug`. Put fields such as `timeline`, `role`, `status`, `challenges`, `learnings`, and `isPublished` inside the entry's `caseStudy` object.
 
-Then create the matching `.mdx` file in `src/data/projects/`. Keep case-study-specific fields such as `timeline`, `role`, `status`, `challenges`, and `learnings` there. Common metadata (title, description, image, technologies, and links) comes from the JSON catalog.
-
-Example case study frontmatter:
+Then create the matching `.mdx` file in `src/data/projects/`. It contains the case study body only; do not duplicate metadata in frontmatter.
 
 ```mdx
----
-timeline: '3 months'
-role: 'Full Stack Developer'
-team: 'Solo'
-status: 'in-progress'
-featured: true
-challenges: ['Offline sync']
-learnings: ['PWA architecture']
-isPublished: true
----
-
 Detailed project case study...
 ```
 

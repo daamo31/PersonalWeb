@@ -1,6 +1,6 @@
 import Container from '@/components/common/Container';
 import { ProjectList } from '@/components/projects/ProjectList';
-import { projects } from '@/config/Projects';
+import { listedProjects } from '@/config/Projects';
 import { generateMetadata as getMetadata } from '@/config/Meta';
 import { Metadata } from 'next';
 
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   const stats = [
-    { label: 'Case studies', value: String(projects.length) },
-    { label: 'Live products', value: projects.filter((project) => project.isWorking).length > 0 ? '2+' : '0' },
+    { label: 'Case studies', value: String(listedProjects.length) },
+    { label: 'Live products', value: listedProjects.filter((project) => project.isWorking).length > 0 ? '2+' : '0' },
     { label: 'Stacks covered', value: '6+' },
   ];
 
@@ -54,17 +54,17 @@ export default function ProjectsPage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="section-title text-2xl font-semibold">
               All Projects
-              {projects.length > 0 && (
+              {listedProjects.length > 0 && (
                 <span className="ml-2 text-sm font-normal text-muted-foreground">
-                  ({projects.length}{' '}
-                  {projects.length === 1 ? 'project' : 'projects'})
+                  ({listedProjects.length}{' '}
+                  {listedProjects.length === 1 ? 'project' : 'projects'})
                 </span>
               )}
             </h2>
             <p className="text-sm text-muted-foreground">Selected products, case studies, and experiments.</p>
           </div>
 
-          <ProjectList projects={projects} />
+          <ProjectList projects={listedProjects} />
         </div>
       </div>
     </Container>
