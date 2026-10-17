@@ -86,6 +86,19 @@ test('enforces the local rate limit for repeated requests', async () => {
   assert.equal(third.remaining, 0);
 });
 
+test('allows the chat to use its bounded local limit when shared storage is absent', async () => {
+  const result = await checkRateLimit(
+    'chat-fallback-test',
+    'chat-fallback-client',
+    1,
+    60_000,
+    true,
+  );
+
+  assert.equal(result.allowed, true);
+  assert.equal(result.remaining, 0);
+});
+
 test('caps the number of local rate-limit identities', async () => {
   let lastResult = { allowed: true, remaining: 1, resetAt: 0 };
   for (let index = 0; index < 1100; index += 1) {

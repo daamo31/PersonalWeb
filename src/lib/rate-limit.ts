@@ -9,6 +9,7 @@ type RateLimitResult = {
 
 const localStore = new Map<string, { count: number; resetAt: number }>();
 const MAX_LOCAL_ENTRIES = 1000;
+let warnedAboutLocalProductionLimit = false;
 
 export function getClientIP(request: NextRequest): string {
   const clientIP = request.headers.get('x-real-ip')?.trim();
@@ -28,14 +29,29 @@ export async function checkRateLimit(
   clientIP: string,
   limit: number,
   windowMs: number,
+  allowLocalFallbackInProduction = false,
 ): Promise<RateLimitResult> {
   const key = `rate-limit:${scope}:${clientIP}`;
   const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
   if (!redisUrl || !redisToken) {
-    if (process.env.NODE_ENV === 'production') {
+    if (
+      process.env.NODE_ENV === 'production' &&
+      !allowLocalFallbackInProduction
+    ) {
       throw new Error('Shared rate limit storage is not configured');
+    }
+
+    if (
+      process.env.NODE_ENV === 'production' &&
+      allowLocalFallbackInProduction &&
+      !warnedAboutLocalProductionLimit
+    ) {
+      console.warn(
+        'Chat rate limiting is using per-instance memory because Upstash is not configured.',
+      );
+      warnedAboutLocalProductionLimit = true;
     }
 
     const now = Date.now();

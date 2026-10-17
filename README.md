@@ -137,7 +137,8 @@ Audit and remediation completed on **2026-10-16**. This section records the revi
 
 ### API security and reliability
 
-- Added shared Upstash Redis rate limiting for the contact and chat endpoints. Production fails closed with `503` when Redis is missing or unavailable; development and tests use a bounded in-memory limiter.
+- Added shared Upstash Redis rate limiting for the contact endpoint. Production fails closed with `503` when Redis is missing or unavailable; development and tests use a bounded in-memory limiter.
+- The chat uses the same shared Redis limiter when configured, but falls back to bounded per-instance memory when Upstash credentials are absent so the assistant remains available. A warning is emitted; this fallback is weaker across serverless instances and Redis should still be configured for production.
 - Limited HTTP body reads, contact form fields, chat message length, and chat history size.
 - Project and blog loaders accept only kebab-case slugs before constructing file paths.
 - Contact notifications use Telegram HTML mode with user-submitted values escaped. The Telegram request has an 8-second timeout.
@@ -175,7 +176,7 @@ The test suite contains **15 passing tests**. The production build generated **4
 
 ### Production requirements and scope
 
-- Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in the production environment. Without them, contact and chat requests intentionally return `503`.
+- Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in the production environment for shared rate limiting. Without them, contact requests return `503`; chat remains available with a per-instance in-memory limit.
 - Ensure the deployment proxy sets a trustworthy `x-real-ip` header. Local in-memory rate limiting is for development/testing only and is not shared across server instances.
 - API integrations were tested with mocks. Live connectivity, credentials, proxy header behavior, and rate-limit behavior on the deployed platform have not been tested from this repository.
 - The audit and automated tests improve confidence but are not a penetration test or a guarantee that every vulnerability is absent.

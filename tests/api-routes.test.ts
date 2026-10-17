@@ -7,6 +7,7 @@ import { POST as contactPost } from '../src/app/api/contact/route';
 const originalRedisUrl = process.env.UPSTASH_REDIS_REST_URL;
 const originalRedisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 const originalGeminiKey = process.env.GEMINI_API_KEY;
+const originalNodeEnv = process.env.NODE_ENV;
 
 delete process.env.UPSTASH_REDIS_REST_URL;
 delete process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -21,6 +22,9 @@ after(() => {
 
   if (originalGeminiKey === undefined) delete process.env.GEMINI_API_KEY;
   else process.env.GEMINI_API_KEY = originalGeminiKey;
+
+  if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
+  else process.env.NODE_ENV = originalNodeEnv;
 });
 
 test('contact route rejects invalid form data without calling Telegram', async () => {
@@ -90,4 +94,24 @@ test('chat route returns its fallback as a server-sent event stream', async () =
   assert.match(response.headers.get('content-type') ?? '', /text\/event-stream/);
   assert.match(stream, /Hola, soy Daniel/);
   assert.match(stream, /"done": true/);
+});
+
+test('chat remains available in production without Upstash or Gemini credentials', async () => {
+  process.env.NODE_ENV = 'production';
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  delete process.env.GEMINI_API_KEY;
+
+  const request = new NextRequest('http://localhost/api/chat', {
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.104' },
+    body: JSON.stringify({ message: 'hola', history: [] }),
+  });
+
+  const response = await chatPost(request);
+  const stream = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get('content-type') ?? '', /text\/event-stream/);
+  assert.match(stream, /Hola, soy Daniel/);
 });

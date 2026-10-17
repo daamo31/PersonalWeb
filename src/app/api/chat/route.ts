@@ -123,6 +123,7 @@ export async function POST(request: NextRequest) {
       clientIP,
       RATE_LIMIT_MAX_REQUESTS,
       RATE_LIMIT_WINDOW,
+      true,
     );
 
     if (!rateLimit.allowed) {
