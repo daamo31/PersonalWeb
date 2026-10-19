@@ -38,6 +38,7 @@ const technologyIcons: Record<string, () => React.ReactNode> = {
   'Tailwind CSS': () => <TailwindCss />,
   TypeScript: () => <TypeScript />,
   Vite: () => <Vercel />,
+  Vercel: () => <Vercel />,
   Supabase: () => <PostgreSQL />,
 };
 

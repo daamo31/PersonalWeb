@@ -1,0 +1,52 @@
+# TurboCita — Appointment SaaS for Barbershops & Salons
+
+## Overview
+
+TurboCita is a full-featured SaaS platform that lets barbershops and salons manage their entire business from a single dashboard. Clients book online through a branded, mobile-friendly page; the business manages their agenda, team, loyalty program, inventory and billing — all in one place.
+
+**Live demo:** [turbocita.vercel.app/reservar/barber-noir](https://turbocita.vercel.app/reservar/barber-noir)
+
+## Key Features
+
+- **Online Booking Flow**: A clean 3-step wizard (Service → Date & Time → Client Details) with real-time slot availability. Clients can select multiple services in one booking.
+- **Loyalty Card System**: Gamified stamp-card program. Earn one stamp per completed visit, unlock rewards at 5 stamps (50% discount) and 10 stamps (free service). Visualized as an interactive card in the booking form.
+- **Business Dashboard**: Full agenda view with a weekly calendar, pending-confirmation alerts, and per-day appointment list.
+- **Staff & Team Management**: Add team members, assign services per professional, and configure individual schedules and availability.
+- **Inventory Module**: Track products and stock consumed per service or manual adjustment.
+- **Billing & Invoices**: Register payments per appointment and generate invoices for clients.
+- **Appearance Customization**: Owners can pick from 12+ color themes, 3 layout templates (Classic, Cover, Split), and set their brand color — all reflected instantly on the public booking page.
+- **Fidelización (Loyalty Program Config)**: Define stamp thresholds and rewards directly from the dashboard.
+- **Client Management**: Browse and search client history, contact details and loyalty standing.
+
+## Screenshots
+
+| Agenda | Booking — Service Selection |
+|---|---|
+| ![Agenda](/project/turbocita/agenda.png) | ![Booking](/project/turbocita/booking.png) |
+
+| Loyalty Card | Appearance Settings |
+|---|---|
+| ![Loyalty](/project/turbocita/loyalty.png) | ![Appearance](/project/turbocita/appearance.png) |
+
+## Architecture
+
+- **Frontend & Backend**: Next.js 15 (App Router) + React 19 + TypeScript. API routes handle server-side logic within the same monorepo.
+- **UI**: Tailwind CSS + shadcn/ui components for a consistent design system.
+- **Database & Auth**: Supabase — PostgreSQL with Row-Level Security for multi-tenant data isolation, Supabase Auth for session management.
+- **Deployment**: Vercel with edge functions for low-latency booking operations.
+
+## Quick Start
+
+```bash
+git clone https://github.com/daamo31/turbocita
+cd turbocita
+npm install
+cp .env.example .env.local  # Add your Supabase credentials
+npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) to open the app, or go to `/reservar/barber-noir` to see a sample booking page.
+
+## Status
+
+Production-ready and deployed on Vercel. Core booking, loyalty and dashboard modules are fully operational.

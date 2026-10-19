@@ -1,5 +1,31 @@
 [
   {
+    "id": "turbocita",
+    "title": "TurboCita",
+    "description": "SaaS platform for appointment management tailored for barbershops and salons. Features online booking, loyalty card system, staff management, inventory, billing, and fully customizable appearance.",
+    "image": "/project/turbocita.png",
+    "video": "",
+    "link": "https://turbocita.vercel.app/reservar/barber-noir",
+    "technologies": ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "shadcn/ui", "Supabase", "Vercel"],
+    "github": "https://github.com/daamo31/turbocita",
+    "live": "https://turbocita.vercel.app/reservar/barber-noir",
+    "details": true,
+    "projectDetailsPageSlug": "/projects/turbocita",
+    "isWorking": true,
+    "featuredOnHome": true,
+    "listedOnProjects": true,
+    "caseStudy": {
+      "timeline": "2 months",
+      "role": "Full Stack Developer",
+      "team": "Solo",
+      "status": "completed",
+      "featured": true,
+      "challenges": ["Multi-step booking flow with real-time availability", "Loyalty stamp card system with reward tiers", "Fully customizable booking page appearance", "Staff and schedule management", "Inventory and billing modules"],
+      "learnings": ["SaaS multi-tenant architecture", "Real-time scheduling logic", "Gamified loyalty systems", "White-label UI customization", "Supabase RLS policies"],
+      "isPublished": true
+    }
+  },
+  {
     "id": "agroplan",
     "title": "Agroplan",
     "description": "Progressive web app for agricultural management with geolocated parcels, field activity records, reports, weather, and offline synchronization.",
