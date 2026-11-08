@@ -1,0 +1,172 @@
+---
+title: 'API Security Best Practices in 2026'
+description: 'Essential security patterns for building robust APIs: authentication, rate limiting, input validation, and protecting against common vulnerabilities.'
+image: '/blog/api-security-checklist-2026.svg'
+tags: ['security', 'backend', 'api', 'best-practices']
+date: '2026-11-08'
+isPublished: true
+---
+
+Building a secure API is not a one-time checklist—it is a continuous practice of understanding threats, applying proven patterns, and staying ahead of common attack vectors. This guide covers the foundational security practices every API should implement.
+
+## Authentication: Verify who is calling your API
+
+Authentication proves the caller is who they claim to be. Without it, anyone can impersonate a user or service.
+
+**Use JWT with secure storage:**
+- Store tokens in `HttpOnly` cookies, not localStorage. This prevents XSS attacks from stealing tokens.
+- Include an expiration time. Shorter-lived tokens reduce the window of compromise.
+- Sign tokens with a strong secret or RSA key. Verify the signature on every request.
+
+**Avoid homegrown schemes:**
+- Never store plaintext passwords. Hash them with bcrypt, Argon2, or PBKDF2.
+- Never rely on obfuscation or custom encoding. Use industry-standard algorithms.
+- Never trust the client to validate its own permissions.
+
+**Implement refresh tokens for long sessions:**
+- Issue a short-lived access token (15 minutes) for API calls.
+- Issue a longer-lived refresh token (7 days) to obtain new access tokens without re-entering credentials.
+- Revoke refresh tokens on logout or suspicious activity.
+
+## Authorization: Verify what an authenticated user can do
+
+Authentication answers "who are you?" Authorization answers "what are you allowed to do?"
+
+**Principle of Least Privilege:**
+- Grant users only the permissions they need for their role.
+- Review permissions regularly; remove unused access.
+- Never grant admin access by default.
+
+**Authorization at the API boundary:**
+- Check permissions on the server before executing the requested operation.
+- Do not rely on hiding UI elements or client-side checks. A determined user can bypass them.
+- Return 403 Forbidden (not 404 or 500) when a user lacks permission. This prevents leaking information about hidden resources.
+
+**Role-based and attribute-based access control:**
+- RBAC assigns permissions to roles. Simple and works for most applications.
+- ABAC assigns permissions based on attributes (user role, resource type, time of day). More flexible for complex rules.
+- Use middleware to centralize authorization checks rather than scattering them throughout route handlers.
+
+## Rate limiting: Prevent abuse and denial of service
+
+Rate limiting is your first defense against brute-force attacks, API scraping, and accidental overload.
+
+**Implement layered rate limiting:**
+- **Per-IP rate limit:** Allow 100 requests per minute from a single IP.
+- **Per-user rate limit:** Allow 1,000 requests per hour for an authenticated user.
+- **Per-endpoint rate limit:** Expensive operations like password reset allow 3 attempts per hour.
+- **Global rate limit:** If total traffic exceeds capacity, shed load fairly.
+
+**Handle rate limit gracefully:**
+- Return 429 Too Many Requests with a `Retry-After` header.
+- Include `RateLimit-Limit`, `RateLimit-Remaining`, and `RateLimit-Reset` headers so clients can back off intelligently.
+- Log rate limit violations; they often signal an attack.
+
+**Choose the right window:**
+- Fixed windows (reset at the top of the hour) are simple but vulnerable to burst attacks at window boundaries.
+- Sliding windows (track the last N seconds) are more precise and harder to game.
+- Token bucket algorithms allow occasional bursts while maintaining long-term limits.
+
+## Input validation: Reject malformed or malicious data
+
+Unvalidated input is the root cause of SQL injection, XSS, command injection, and buffer overflows.
+
+**Validate early and close to the source:**
+- Check the type, length, and format of every input.
+- Reject input that does not match the expected schema. Do not try to "fix" bad input.
+- Validate on the server, even if the client validates first. Client validation can be bypassed.
+
+**Use a schema validation library:**
+- Zod, Joi, Yup, and Pydantic are battle-tested frameworks for defining and enforcing schemas.
+- Define the expected shape of request bodies and query parameters.
+- Fail fast and return 400 Bad Request with a clear error message.
+
+**Sanitize output before sending it to clients:**
+- If an API returns user-generated content, escape HTML characters to prevent XSS: `<` becomes `&lt;`, etc.
+- If data is embedded in an SQL query, use parameterized queries or an ORM, not string concatenation.
+- If data is passed to a shell command, use function arguments, not shell interpolation.
+
+## HTTPS and encryption: Protect data in transit
+
+Every API call should travel over HTTPS. Plain HTTP exposes authentication tokens and sensitive data to eavesdropping.
+
+**Enforce HTTPS everywhere:**
+- Redirect HTTP requests to HTTPS.
+- Set the `Strict-Transport-Security` header to tell browsers never to connect over HTTP.
+- Use TLS 1.2 or later. Do not support deprecated SSL or TLS versions.
+
+**Encrypt sensitive data at rest:**
+- Passwords must be hashed, not encrypted (hashing is one-way; you cannot "decrypt" a password).
+- API keys, database credentials, and secrets should be encrypted or stored in a secrets manager.
+- Personally identifiable information (PII) may require encryption depending on regulations (GDPR, HIPAA, etc.).
+
+## Error handling: Do not leak information
+
+Error messages are a goldmine for attackers. Overly detailed errors can reveal database structure, file paths, or validation logic.
+
+**Return generic error messages to clients:**
+- Bad request: "Invalid input provided."
+- Unauthorized: "Authentication required."
+- Not found: "Resource not found." (even if it exists but the user lacks permission)
+- Server error: "An error occurred. Please try again later."
+
+**Log detailed errors internally:**
+- Include the full stack trace, request details, and system state.
+- Store logs securely and do not expose them to clients.
+- Monitor logs for patterns that indicate an attack.
+
+## CORS: Control cross-origin requests
+
+Cross-Origin Resource Sharing (CORS) lets browsers safely call APIs from different domains.
+
+**Avoid wildcard origins:**
+- Setting `Access-Control-Allow-Origin: *` opens the API to any website.
+- Instead, whitelist specific trusted domains.
+
+**Restrict methods and headers:**
+- Set `Access-Control-Allow-Methods` to only the methods the API uses (GET, POST, etc.).
+- Set `Access-Control-Allow-Headers` to only the headers the API expects.
+- If credentials are required, set `Access-Control-Allow-Credentials: true` and avoid wildcard origins.
+
+## Secrets management: Never hardcode API keys
+
+Hardcoded secrets in source code are discovered by attackers scanning GitHub.
+
+**Use environment variables or a secrets manager:**
+- Store secrets in `.env` files (added to `.gitignore`), not in code.
+- Better: use a secrets manager (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault).
+- Rotate secrets regularly. If a secret is leaked, rotation limits the damage.
+- Use different secrets for different environments. The production API key should be different from the development key.
+
+## Audit logging: Track what happened and when
+
+Audit logs are your evidence when investigating a breach or compliance violation.
+
+**Log security-relevant events:**
+- Successful and failed authentication attempts.
+- Authorization failures (a user tried to access a resource they do not have permission for).
+- Changes to sensitive data (user roles, payment methods, etc.).
+- Administrative actions.
+
+**Include enough context:**
+- Timestamp, user ID, IP address, action performed, resource affected, and outcome.
+- Store logs securely; do not allow users to delete or modify them.
+- Retain logs for compliance periods (often 90 days to 7 years, depending on regulations).
+
+## A quick checklist
+
+Before deploying an API:
+
+- Authentication is enforced on all endpoints.
+- Tokens are short-lived and refreshable.
+- Authorization is checked on the server for every protected operation.
+- Rate limiting is in place and monitored.
+- Input validation uses a schema library, not ad-hoc checks.
+- HTTPS is enforced; HTTP redirects to HTTPS.
+- Error messages are generic; detailed logs are kept internal.
+- Secrets are in environment variables, not in code.
+- CORS is configured to allow only trusted origins.
+- Audit logging captures security-relevant events.
+- Dependencies are kept up to date; vulnerabilities are patched promptly.
+
+Security is a practice, not a destination. Start with these foundations, stay informed about emerging threats, and review your API security regularly. Your users and your business depend on it.

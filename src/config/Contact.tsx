@@ -1,7 +1,7 @@
 export const contactConfig = {
   title: 'Contact Daniel Del Amo',
   description:
-    'Get in touch with me using the form below. I will get back to you as soon as possible. You can also reach me directly at danieldelamo31@protonmail.com. Based in Zaragoza, Spain.',
+    'Get in touch with me using the form below. I will get back to you as soon as possible. You can also reach me directly at danieldelamo31@protonmail.com. Based in Spain. Ready to relocate to LATAM within 4-6 weeks of an offer.',
   form: {
     labels: {
       name: 'Name',
