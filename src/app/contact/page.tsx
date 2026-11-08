@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   const contactPoints = [
     { label: 'Response', value: 'Fast turnaround' },
-    { label: 'Base', value: 'Zaragoza, ES · Reubicación a LatAm en 4-6 semanas' },
+    { label: 'Base', value: 'Zaragoza, ES · Relocating to LATAM in 4-6 weeks' },
     { label: 'Collab mode', value: 'Freelance & teams' },
   ];
 

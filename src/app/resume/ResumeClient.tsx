@@ -15,8 +15,8 @@ export default function ResumeClient() {
 
     const highlights = [
         { label: 'Focus', value: 'Full Stack + Automation' },
-        { label: 'Base', value: 'Zaragoza, ES · Reubicación a LatAm en 4-6 semanas' },
-        { label: 'Availability', value: 'Remoto LATAM / Híbrido' },
+        { label: 'Base', value: 'Zaragoza, ES · Relocating to LATAM in 4-6 weeks' },
+        { label: 'Availability', value: 'Remote LATAM / Hybrid' },
     ];
 
     return (
