@@ -1,0 +1,105 @@
+.stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  background:
+    radial-gradient(ellipse at 75% 4%, rgba(80, 84, 180, 0.22), transparent 34rem),
+    linear-gradient(145deg, #0d1020 0%, #111429 48%, #0c1523 100%);
+  color: #f7f8ff;
+  box-shadow: 0 34px 100px rgba(8, 12, 30, 0.28);
+}
+
+.aurora {
+  position: absolute;
+  z-index: -1;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 25% 35%, rgba(80, 190, 255, 0.18), transparent 30%),
+    radial-gradient(ellipse at 75% 48%, rgba(158, 111, 255, 0.17), transparent 32%),
+    radial-gradient(ellipse at 55% 85%, rgba(54, 206, 191, 0.12), transparent 28%);
+  filter: blur(44px);
+  animation: aurora-drift 24s ease-in-out infinite alternate;
+}
+
+.glass {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(145deg, rgba(33, 39, 63, 0.78), rgba(20, 26, 45, 0.64)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(188, 202, 255, 0.08) 48%, rgba(91, 199, 255, 0.2)) border-box;
+  box-shadow:
+    0 24px 70px rgba(3, 7, 22, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(26px) saturate(155%);
+  backdrop-filter: blur(26px) saturate(155%);
+}
+
+.glassSubtle {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.navItem {
+  color: rgba(224, 230, 255, 0.56);
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.navItem:hover,
+.navItem:focus-visible {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.navActive {
+  color: white;
+  background: linear-gradient(135deg, rgba(119, 147, 255, 0.28), rgba(80, 195, 234, 0.12));
+  box-shadow: inset 0 0 0 1px rgba(177, 196, 255, 0.18);
+}
+
+.eyebrow {
+  color: rgba(181, 197, 255, 0.72);
+  letter-spacing: 0.22em;
+}
+
+.accentText {
+  background: linear-gradient(100deg, #b6c4ff 4%, #86e1ef 55%, #c1a8ff 100%);
+  background-clip: text;
+  color: transparent;
+}
+
+.avatarGlow {
+  position: absolute;
+  inset: 12%;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(104, 173, 255, 0.45), rgba(183, 119, 255, 0.42));
+  filter: blur(34px);
+}
+
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(0.96) rotate(-2deg);
+  }
+  to {
+    transform: translate3d(2%, 1%, 0) scale(1.05) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none;
+  }
+
+  .navItem {
+    transition: none;
+  }
+}
