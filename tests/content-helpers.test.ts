@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { after, test } from 'node:test';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { NextRequest } from 'next/server';
 import projectCatalog from '../src/data/projects.json';
 import {
@@ -181,6 +183,23 @@ test('project case study uses catalog metadata and retains editorial MDX fields'
   );
   assert.equal(project.frontmatter.timeline, '6 months');
   assert.ok(project.frontmatter.challenges?.length);
+});
+
+test('TurboCita exposes both destinations and all four screenshots', () => {
+  const project = projectCatalog.find(({ id }) => id === 'turbocita');
+  const caseStudy = getProjectCaseStudyBySlug('turbocita');
+
+  assert.ok(project);
+  assert.ok(caseStudy);
+  assert.equal(project.live, 'https://turbocita.vercel.app/reservar/barber-noir');
+  assert.equal(project.website, 'https://turbocita.vercel.app/');
+  assert.ok(caseStudy.content.includes(project.live));
+  assert.ok(caseStudy.content.includes(project.website));
+
+  for (const filename of ['website.png', 'agenda-overview.png', 'appearance-preview.png', 'booking-details.png']) {
+    assert.ok(caseStudy.content.includes(`/project/turbocita/${filename}`));
+    assert.ok(existsSync(join(process.cwd(), 'public/project/turbocita', filename)));
+  }
 });
 
 test('content loaders reject path traversal slugs', () => {

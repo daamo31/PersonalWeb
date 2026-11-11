@@ -42,6 +42,8 @@ export default function Page() {
     description: project.description,
     technologies: project.technologies.slice(0, 3).map(({ name }) => name),
     live: project.live || undefined,
+    website: project.website,
+    detailsHref: project.details ? project.projectDetailsPageSlug : undefined,
     github: project.github || undefined,
   }));
 

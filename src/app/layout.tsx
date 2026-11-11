@@ -2,6 +2,7 @@ import AnimatedBackground from '@/components/common/AnimatedBackground';
 import ChatBubble from '@/components/common/ChatBubble';
 import Footer from '@/components/common/Footer';
 import Navbar from '@/components/common/Navbar';
+import SpatialNavigation from '@/components/common/SpatialNavigation';
 
 import { ThemeProvider } from '@/components/common/ThemeProviders';
 import { generateMetadata as getMetadata } from '@/config/Meta';
@@ -37,6 +38,7 @@ export default function RootLayout({
               {children}
 
               <Footer />
+              <SpatialNavigation />
             </ReactLenis>
             <ChatBubble />
           </ThemeProvider>

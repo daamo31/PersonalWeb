@@ -32,7 +32,7 @@ export const experiences: Experience[] = [
     isCurrent: true,
     company: 'Colorius',
     position: 'Web Developer',
-    location: 'Zaragoza, Spain (Remote)',
+    location: 'Spain (Remote)',
     image: '/experience/colorius.png',
     description: [
       'Lead frontend architecture and component design for multi-tenant platform serving 1000+ users.',
@@ -79,7 +79,7 @@ export const experiences: Experience[] = [
     isCurrent: false,
     company: 'GRUPO COBRA',
     position: 'Maintenance Technician',
-    location: 'Zaragoza, Spain',
+    location: 'Spain',
     image: '/experience/Grupo_cobra.png',
     description: [
       'Performed preventive and corrective maintenance on industrial machinery.',
@@ -100,7 +100,7 @@ export const experiences: Experience[] = [
     isCurrent: false,
     company: 'Rivasam Intercontinental',
     position: 'Maintenance Technician',
-    location: 'Zaragoza, Spain',
+    location: 'Spain',
     image: '/experience/Rivasam.png',
     description: [
       'Preventive and corrective maintenance of meat processing equipment, including saws, automatic blades, and packaging lines (Multivac, Ulma).',
@@ -122,7 +122,7 @@ export const experiences: Experience[] = [
       isCurrent: false,
       company: 'Edainpro Ingenieras y Proyectos',
       position: 'Electrician Technician',
-      location: 'Zaragoza, Spain',
+      location: 'Spain',
       image: '/experience/Edainpro.png',
       description: [
         'Installed and assembled electrical production lines.',

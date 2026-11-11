@@ -48,7 +48,7 @@ export const education = [
   {
     title: "Master's in Python Programming Language",
     institution: 'Universidad San Jorge',
-    location: 'Zaragoza, Spain',
+    location: 'Spain',
     startDate: '2024',
     endDate: '2024',
     description: 'Advanced training in Python programming, including scripting, OOP, and automation.',
@@ -56,7 +56,7 @@ export const education = [
   {
     title: 'FPII Automated Electrical Systems',
     institution: 'IES GALLICUM',
-    location: 'Zaragoza, Spain',
+    location: 'Spain',
     startDate: '2013',
     endDate: '2015',
     description: 'Vocational training focused on automated electrical systems and industrial maintenance.',

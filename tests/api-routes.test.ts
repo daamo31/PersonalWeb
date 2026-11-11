@@ -37,6 +37,47 @@ test('contact route rejects invalid form data without calling Telegram', async (
 
   const response = await contactPost(request);
   assert.equal(response.status, 400);
+  const body = await response.json();
+  assert.equal(body.error, 'Invalid form data');
+  assert.ok(Array.isArray(body.details));
+  assert.ok(body.details.some((issue: { path: string[] }) => issue.path.includes('email')));
+});
+
+test('chat route rejects oversized history and returns validation details', async () => {
+  const request = new NextRequest('http://localhost/api/chat', {
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.105' },
+    body: JSON.stringify({
+      message: 'hello',
+      history: Array.from({ length: 11 }, () => ({
+        role: 'user',
+        parts: [{ text: 'hello' }],
+      })),
+    }),
+  });
+
+  const response = await chatPost(request);
+  assert.equal(response.status, 400);
+  const body = await response.json();
+  assert.equal(body.error, 'Invalid request data');
+  assert.ok(Array.isArray(body.details));
+  assert.ok(body.details.some((issue: { path: string[] }) => issue.path.includes('history')));
+});
+
+test('chat route rejects extra fields in history entries', async () => {
+  const request = new NextRequest('http://localhost/api/chat', {
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.106' },
+    body: JSON.stringify({
+      message: 'hello',
+      history: [{ role: 'user', parts: [{ text: 'hello' }], extra: true }],
+    }),
+  });
+
+  const response = await chatPost(request);
+  assert.equal(response.status, 400);
+  const body = await response.json();
+  assert.ok(body.details.some((issue: { code: string }) => issue.code === 'unrecognized_keys'));
 });
 
 test('contact route sends escaped HTML to Telegram', async () => {

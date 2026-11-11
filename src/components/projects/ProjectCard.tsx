@@ -128,6 +128,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* Description */}
           <p className="text-muted-foreground line-clamp-3 text-sm leading-relaxed">{project.description}</p>
 
+          {project.website && (
+            <a
+              href={project.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex text-sm font-medium text-primary hover:underline"
+            >
+              Product website
+            </a>
+          )}
+
           {/* Technologies */}
           <div>
             <h4 className="mb-3 text-xs font-semibold uppercase tracking-wide text-foreground">

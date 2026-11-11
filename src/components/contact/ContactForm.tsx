@@ -19,48 +19,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { contactFormSchema, type ContactFormValues } from '@/lib/contact-form-schema';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import * as z from 'zod';
 
 import Chat from '../svgs/Chat';
-
-// Full phone (prefix + local digits) must have at least 10 digits total.
-// A Spanish number (+34 = 2 extra digits) + 9 local digits = 11 chars → still passes.
-// But a bare 9-digit local number without a prefix is blocked.
-const contactFormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
-  }),
-  email: z.string().email({
-    message: 'Please enter a valid email address.',
-  }),
-  phone: z
-    .string()
-    .regex(/^\+?[0-9\s\-().]{10,25}$/, {
-      message: 'Please enter a valid phone number (minimum 10 digits).',
-    })
-    .refine(
-      (val) => {
-        // Count only actual digits – must be at least 10
-        const digits = val.replace(/\D/g, '');
-        return digits.length >= 10;
-      },
-      { message: 'Phone number must contain at least 10 digits.' },
-    ),
-  message: z
-    .string()
-    .min(10, {
-      message: 'Message must be at least 10 characters.',
-    })
-    .max(1000, {
-      message: 'Message must not exceed 1000 characters.',
-    }),
-});
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

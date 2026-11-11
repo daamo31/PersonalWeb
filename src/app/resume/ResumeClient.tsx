@@ -15,7 +15,7 @@ export default function ResumeClient() {
 
     const highlights = [
         { label: 'Focus', value: 'Full Stack + Automation' },
-        { label: 'Base', value: 'Zaragoza, ES · Relocating to LATAM in 4-6 weeks' },
+        { label: 'Base', value: 'Spain' },
         { label: 'Availability', value: 'Remote LATAM / Hybrid' },
     ];
 
@@ -64,7 +64,7 @@ export default function ResumeClient() {
                 </div>
 
                 <div className="cv-contact mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-base">
-                    <div><strong>Location:</strong> Zaragoza (ES) · Relocating to LATAM in 4-6 weeks</div>
+                    <div><strong>Location:</strong> Spain</div>
                     <div><strong>Email:</strong> <a href="mailto:danieldelamo31@protonmail.com" className="underline">danieldelamo31@protonmail.com</a></div>
                     <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/danieldelamotarrero/" target="_blank" rel="noreferrer" className="underline">danieldelamotarrero</a></div>
                     <div><strong>GitHub:</strong> <a href="https://github.com/daamo31" target="_blank" rel="noreferrer" className="underline">daamo31</a></div>

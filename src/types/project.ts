@@ -8,6 +8,7 @@ export interface Project {
   technologies: { name: string; icon: React.ReactNode }[];
   github?: string;
   live: string;
+  website?: string;
   details: boolean;
   projectDetailsPageSlug: string;
   isWorking: boolean;

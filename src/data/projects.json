@@ -9,6 +9,7 @@
     "technologies": ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "shadcn/ui", "Supabase", "Vercel"],
     "github": "https://github.com/daamo31/turbocita",
     "live": "https://turbocita.vercel.app/reservar/barber-noir",
+    "website": "https://turbocita.vercel.app/",
     "details": true,
     "projectDetailsPageSlug": "/projects/turbocita",
     "isWorking": true,

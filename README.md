@@ -14,6 +14,7 @@ Professional portfolio and personal website for **Daniel Del Amo**, a Full Stack
 
 ### 🎨 Design & UX
 - **Neumorphic Design** with iOS-inspired aesthetic (blue tones, soft shadows)
+- **Spatial homepage** with translucent glass panels, a lazy-loaded React Three Fiber accent, and persistent section shortcuts
 - **Dark/Light Mode** with seamless theme switching
 - **Responsive** mobile-first design optimized for all devices
 - **90+ Lighthouse Scores** for performance, accessibility, and SEO
@@ -59,6 +60,7 @@ Professional portfolio and personal website for **Daniel Del Amo**, a Full Stack
 - **ARIA Labels** for interactive components
 - **Keyboard Navigation** support
 - **High Contrast** color modes
+- **Reduced motion** disables the decorative 3D animation on the homepage
 
 ## 📋 Prerequisites
 
